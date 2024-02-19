@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "200924479038",
+    "project_id": "raijin-anime",
+    "storage_bucket": "raijin-anime.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:200924479038:android:2ae95da84ea29591645b6f",
+        "android_client_info": {
+          "package_name": "com.josumaru.raijin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5aTnJiEgqUSZeJkWCMU27IZK8QXk4_d0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

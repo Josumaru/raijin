@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:raijin/core/constants/constants.dart';
-import 'package:raijin/core/services/injection_container.dart';
 import 'package:raijin/features/anime/presentation/bloc/anime/anime_bloc.dart';
 import 'package:raijin/features/anime/presentation/bloc/complete_anime/complete_anime_bloc.dart';
 import 'package:raijin/features/detail/presentation/bloc/detail_bloc.dart';

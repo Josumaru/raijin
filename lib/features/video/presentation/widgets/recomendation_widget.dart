@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raijin/features/anime/domain/entities/anime_entity.dart';
 import 'package:raijin/features/detail/presentation/bloc/detail_bloc.dart';
-import 'package:raijin/features/video/presentation/bloc/video_bloc.dart';
 
 class RecommendationWidget extends StatelessWidget {
   const RecommendationWidget({
@@ -19,7 +18,7 @@ class RecommendationWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // context.read<VideoBloc>().add(GetVideoEvent(endpoint: animeEntity.endpoint));
-        context.read<DetailBloc>().add(GetDetailEvent(endpoint: animeEntity.endpoint));
+        context.read<DetailBloc>().add(GetDetailEvent(endpoint: animeEntity.endpoint!));
         Navigator.of(context).popAndPushNamed('/detail');
       },
       child: Padding(
@@ -27,7 +26,7 @@ class RecommendationWidget extends StatelessWidget {
         child: Row(
           children: [
             CachedNetworkImage(
-              imageUrl: animeEntity.thumbnail,
+              imageUrl: animeEntity.thumbnail!,
               imageBuilder: (context, imageProvider) {
                 return Container(
                   width: MediaQuery.of(context).size.width / 3,
@@ -52,7 +51,7 @@ class RecommendationWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      animeEntity.title,
+                      animeEntity.title!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyLarge,

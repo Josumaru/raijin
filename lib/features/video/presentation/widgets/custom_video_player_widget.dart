@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,18 +11,19 @@ import 'package:raijin/features/video/domain/entities/video_entity.dart';
 import 'package:video_player/video_player.dart';
 
 class CustomVideoPlayerWidget extends StatefulWidget {
-  CustomVideoPlayerWidget({
-    Key? key,
-    required this.videoEntity,
-  }) : super(key: key);
+  CustomVideoPlayerWidget({super.key, required this.videoEntity});
+
   final List<VideoEntity> videoEntity;
-  late bool isPlaying = false,
-      showControl = true,
-      isBuffering = true,
-      isBackward = false,
-      isForward = false;
-  late int videoPosition = 0, videoDuration = 0;
+
+  late bool isPlaying = false;
+  late bool showControl = true;
+  late bool isBuffering = true;
+  late bool isBackward = false;
+  late bool isForward = false;
+  late int videoPosition = 0;
+  late int videoDuration = 0;
   late double sliderPosition = 0;
+
   @override
   State<CustomVideoPlayerWidget> createState() =>
       _CustomVideoPlayerWidgetState();
@@ -29,12 +31,17 @@ class CustomVideoPlayerWidget extends StatefulWidget {
 
 class _CustomVideoPlayerWidgetState extends State<CustomVideoPlayerWidget> {
   late VideoPlayerController _videoPlayerController;
+
   @override
   void initState() {
     super.initState();
     try {
-      _videoPlayerController = VideoPlayerController.networkUrl(
-          Uri.parse(widget.videoEntity[0].endpoint))
+
+      _videoPlayerController = VideoPlayerController.contentUri(
+        Uri.parse(
+          widget.videoEntity[0].endpoint!,
+        ),
+      )
         ..initialize()
         ..play().then(
           (value) {
@@ -42,7 +49,10 @@ class _CustomVideoPlayerWidgetState extends State<CustomVideoPlayerWidget> {
           },
         );
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Error while load the video, try reload the apps'), duration: Duration(seconds: 2),));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Error while load the video, try reload the apps'),
+        duration: Duration(seconds: 2),
+      ));
     }
     _videoPlayerController.addListener(() {
       setState(() {
@@ -50,17 +60,16 @@ class _CustomVideoPlayerWidgetState extends State<CustomVideoPlayerWidget> {
         widget.videoPosition = _videoPlayerController.value.position.inSeconds;
         widget.isPlaying = _videoPlayerController.value.isPlaying;
         widget.isBuffering = _videoPlayerController.value.isBuffering;
-        widget.sliderPosition = widget.videoPosition.toDouble() /
-            _videoPlayerController.value.duration.inSeconds;
+        widget.sliderPosition = widget.videoPosition.toDouble() / _videoPlayerController.value.duration.inSeconds;
       });
 
-      if (widget.showControl) {
-        Future.delayed(const Duration(seconds: 4), () {
-          setState(() {
-            widget.showControl = false;
-          });
-        });
-      }
+      // if (widget.showControl) {
+      //   Future.delayed(const Duration(seconds: 4), () {
+      //     setState(() {
+      //       widget.showControl = false;
+      //     });
+      //   });
+      // }
     });
   }
 
@@ -104,7 +113,7 @@ class _CustomVideoPlayerWidgetState extends State<CustomVideoPlayerWidget> {
             child: Stack(
               children: [
                 CachedNetworkImage(
-                  imageUrl: widget.videoEntity[0].poster,
+                  imageUrl: widget.videoEntity[0].poster.toString(),
                   imageBuilder: (context, imageProvider) => Container(
                     width: double.infinity,
                     height: double.infinity,

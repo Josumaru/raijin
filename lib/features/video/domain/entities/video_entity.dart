@@ -1,13 +1,13 @@
 class VideoEntity {
-  final String poster, endpoint, codename;
-  final int episode, season, part;
+  final String? poster, endpoint, codename;
+  final int? episode, season, part;
 
   const VideoEntity({
-    required this.poster,
-    required this.endpoint,
-    required this.codename,
-    required this.episode,
-    required this.part,
-    required this.season,
+    this.poster,
+    this.endpoint,
+    this.codename,
+    this.episode,
+    this.part,
+    this.season,
   });
 }

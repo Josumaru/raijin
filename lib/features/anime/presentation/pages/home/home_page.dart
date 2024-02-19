@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:raijin/core/constants/constants.dart';
-import 'package:raijin/features/anime/domain/entities/anime_entity.dart';
 import 'package:raijin/features/anime/presentation/bloc/anime/anime_bloc.dart';
 import 'package:raijin/features/anime/presentation/bloc/complete_anime/complete_anime_bloc.dart';
 import 'package:raijin/features/anime/presentation/widgets/anime_card.dart';
@@ -127,7 +126,7 @@ class HomePage extends StatelessWidget {
                                     context.read<DetailBloc>().add(
                                           GetDetailEvent(
                                             endpoint: state
-                                                .animeEntity[index].endpoint,
+                                                .animeEntity[index].endpoint!,
                                           ),
                                         );
                                   },
@@ -194,7 +193,7 @@ class HomePage extends StatelessWidget {
                                     context.read<DetailBloc>().add(
                                           GetDetailEvent(
                                             endpoint: state
-                                                .animeEntity[index].endpoint,
+                                                .animeEntity[index].endpoint!,
                                           ),
                                         );
                                   },

@@ -14,7 +14,7 @@ class AnimeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl: animeEntity.thumbnail,
+      imageUrl: animeEntity.thumbnail!,
       imageBuilder: (context, imageProvider) => Column(
         children: [
           Container(
@@ -46,7 +46,7 @@ class AnimeCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5)
                     ),
                     child: Text(
-                      animeEntity.date,
+                      animeEntity.date!,
                       style: Theme.of(context).textTheme.headlineMedium,
                       textAlign: TextAlign.center,
                     ),
@@ -72,7 +72,7 @@ class AnimeCard extends StatelessWidget {
             width: MediaQuery.of(context).size.width / 3.5,
             height: 50,
             child: Text(
-              animeEntity.title,
+              animeEntity.title!,
               style: Theme.of(context).textTheme.bodyMedium,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,

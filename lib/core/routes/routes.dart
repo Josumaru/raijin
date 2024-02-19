@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:raijin/features/auth/presentation/pages/auth_page/auth_page.dart';
 import 'package:raijin/features/detail/presentation/pages/detail_page.dart';
 import 'package:raijin/features/anime/presentation/pages/main_page.dart';
 import 'package:raijin/features/auth/presentation/pages/welcome_page/welcome_page.dart';
@@ -18,6 +19,8 @@ class AppRoutes {
         return _materiaPagelRoute(const DetailPage());
       case '/video':
         return _materiaPagelRoute(const VideoPage());
+      case '/auth':
+        return _materiaPagelRoute(const AuthPage());
       default:
         return _materiaPagelRoute(MainPage());
     }

@@ -45,6 +45,11 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   dio: ^5.4.0
   video_player: ^2.8.2
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  firebase_core: ^2.25.4
+  firebase_ui_auth: ^1.13.0
+  html: ^0.15.4
 
 dev_dependencies:
   flutter_test:

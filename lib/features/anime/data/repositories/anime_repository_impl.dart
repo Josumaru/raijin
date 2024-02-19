@@ -14,7 +14,6 @@ class AnimeRepositoryImpl implements AnimeRepository {
   Future<Either<Failure, List<AnimeEntity>>> getAnime({required String status, required int page}) async {
     try {
       final List<AnimeModel> animeModel = await animeRemoteDataSource.getAnime(status: status, page: page);
-      print(animeModel);
       final List<AnimeEntity> animeEntity = animeModel.map((e) => e.toEntity()).toList();
       return Right(animeEntity);
     } catch (e) {

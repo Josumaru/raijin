@@ -9,4 +9,4 @@ const Color kMainLightTextColor = Color.fromARGB(255, 0, 0, 0);
 const Color kMainAccentColor = Color.fromARGB(255, 11, 110, 224);
 // const Color kMainAccentColor = Color.fromARGB(255, 224, 54, 11);
 
-const String kRaijinEndpoint = 'http://192.168.80.123:3000';
+const String kRaijinEndpoint = 'https://raijinapi.vercel.app';

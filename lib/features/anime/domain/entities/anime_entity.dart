@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 
 class AnimeEntity extends Equatable {
-  final String title, thumbnail, endpoint, date;
-  final int episode;
+  final String? title, thumbnail, endpoint, date;
+  final int? episode;
 
   const AnimeEntity({
     required this.title,

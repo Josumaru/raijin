@@ -7,25 +7,7 @@ import 'package:raijin/features/anime/data/models/anime_model.dart';
 class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
   final Dio dio = Dio();
 
-  // @override
-  // Future<List<AnimeModel>> getCompleteAnime() async {
-  //   List<AnimeModel> animeModel = await getAnime('complete', 1);
-  //   return animeModel;
-  // }
-
-  // @override
-  // Future<List<AnimeModel>> getOngoingAnime() async {
-  //   List<AnimeModel> animeModel = await getAnime('ongoing', 1);
-  //   return animeModel;
-  // }
-
-  // @override
-  // Future<List<AnimeModel>> getDetailAnime() async {
-  //   List<AnimeModel> animeModel = await getAnime('f', 1);
-  //   return animeModel;
-  // }
-
-
+  @override
   Future<List<AnimeModel>> getAnime({required String status, required int page}) async {
     Response response = await dio.get('$kRaijinEndpoint/api/anime/$status/$page');
     if (response.statusCode == 200) {

@@ -44,7 +44,7 @@ class _SplashPageState extends State<SplashPage> {
         SizedBox(
           height: MediaQuery.of(context).size.height / 2,
         ),
-        const Icon(Iconsax.flash_14, size: 80, weight: 0.002,color: kMainAccentColor,),
+        Icon(Iconsax.flash_14, size: 80, weight: 0.002,color: Theme.of(context).primaryColor,),
         const Text(
           'Raijin',
           style: TextStyle(

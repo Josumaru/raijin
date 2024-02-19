@@ -1,4 +1,4 @@
-package com.example.raijin
+package com.josumaru.raijin
 
 import io.flutter.embedding.android.FlutterActivity
 
