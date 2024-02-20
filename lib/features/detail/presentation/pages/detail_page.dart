@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:raijin/core/constants/constants.dart';
 import 'package:raijin/features/detail/presentation/bloc/detail_bloc.dart';
 import 'package:raijin/features/detail/presentation/widgets/episode_card.dart';
 import 'package:raijin/features/video/presentation/bloc/video_bloc.dart';
@@ -142,37 +143,40 @@ class DetailPage extends StatelessWidget {
                                         )
                                       ],
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        _buildStats(
-                                          context: context,
-                                          stats: 'Status',
-                                          stat: state.detailEntity.status,
-                                        ),
-                                        _buildStats(
-                                          context: context,
-                                          stats: 'Duration',
-                                          stat: state.detailEntity.duration,
-                                        ),
-                                        _buildStats(
-                                          context: context,
-                                          stats: 'Studio',
-                                          stat: state.detailEntity.studio.split(',')[0].trim(),
-                                        ),
-                                        _buildStats(
-                                          context: context,
-                                          stats: 'Genre',
-                                          stat: state.detailEntity.genre
-                                              .split(',')[0],
-                                        ),
-                                        _buildStats(
-                                          context: context,
-                                          stats: 'Episodes',
-                                          stat: '${state.detailEntity.totalEpisode} EP',
-                                        ),
-                                      ],
+                                    SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          _buildStats(
+                                            context: context,
+                                            stats: 'Status',
+                                            stat: state.detailEntity.status,
+                                          ),
+                                          _buildStats(
+                                            context: context,
+                                            stats: 'Duration',
+                                            stat: state.detailEntity.duration,
+                                          ),
+                                          _buildStats(
+                                            context: context,
+                                            stats: 'Studio',
+                                            stat: state.detailEntity.studio.split(',')[0].trim(),
+                                          ),
+                                          _buildStats(
+                                            context: context,
+                                            stats: 'Genre',
+                                            stat: state.detailEntity.genre
+                                                .split(',')[0],
+                                          ),
+                                          _buildStats(
+                                            context: context,
+                                            stats: 'Episodes',
+                                            stat: state.detailEntity.totalEpisode == "Unknown" ? '${state.detailEntity.episodes[0].episode} +' : '${state.detailEntity.totalEpisode} EP',
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     Text(
                                       // (state.detailEntity.synopsis == "")
@@ -256,17 +260,28 @@ class DetailPage extends StatelessWidget {
     required String stats,
     required String stat,
   }) {
-    return Column(
-      children: [
-        Text(
-          stats,
-          style: Theme.of(context).textTheme.bodyMedium,
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 6,
+      // height: 200,
+      child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              stats,
+              style: Theme.of(context).textTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              stat,
+              style: Theme.of(context).textTheme.headlineSmall,
+              textAlign: TextAlign.center,
+            )
+          ],
         ),
-        Text(
-          stat,
-          style: Theme.of(context).textTheme.headlineMedium,
-        )
-      ],
+      ),
     );
   }
 }

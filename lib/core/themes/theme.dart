@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:raijin/core/constants/constants.dart';
+import 'package:raijin/core/themes/bottom_sheet_theme/bottom_sheet_theme.dart';
+import 'package:raijin/core/themes/checkbox_theme/checkbox_theme.dart';
+import 'package:raijin/core/themes/chip_theme/chip_theme.dart';
+import 'package:raijin/core/themes/elevated_button_theme/elevated_button_theme.dart';
+import 'package:raijin/core/themes/input_decoration_theme/input_decoration_theme.dart';
+import 'package:raijin/core/themes/outlined_button_theme/outlined_button_theme.dart';
+import 'package:raijin/core/themes/text_button_theme/text_button_theme.dart';
+import 'package:raijin/core/themes/text_theme/text_theme.dart';
 
 class TAppTheme {
   TAppTheme._();
@@ -7,76 +15,33 @@ class TAppTheme {
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     fontFamily: "Outfit",
-    brightness: Brightness.light,
     primaryColor: kMainAccentColor,
+    brightness: Brightness.light,
     scaffoldBackgroundColor: kMainLightBackgroundColor,
-    textTheme: const TextTheme(
-      bodyLarge: TextStyle(
-        color: kMainLightTextColor,
-        fontWeight: FontWeight.bold,
-      ),
-      headlineLarge: TextStyle(
-        color: kMainLightTextColor,
-      ),
-      bodyMedium: TextStyle(
-        color: kMainLightTextColor,
-        fontWeight: FontWeight.normal,
-      ),
-      bodySmall: TextStyle(
-        color: kMainLightTextColor,
-        fontWeight: FontWeight.w100,
-      ),
-      headlineSmall: TextStyle(
-        color: kMainDarkTextColor,
-        fontWeight: FontWeight.w100,
-        fontSize: 10,
-      ),
-      headlineMedium: TextStyle(
-        color: kMainAccentColor,
-        fontWeight: FontWeight.bold,
-        fontSize: 14,
-      ),
-    ),
-    iconTheme: const IconThemeData(
-      color: kMainLightTextColor,
-    ),
+    textTheme: TTextTheme.lightTextTheme,
+    elevatedButtonTheme: TElevatedButtonTheme.lightElevatedButtonTheme,
+    bottomSheetTheme: TBottomSheetTheme.lightBottomSheetTheme,
+    checkboxTheme: TCheckboxTheme.lightCheckboxTheme,
+    chipTheme: TChipTheme.lightChipTheme,
+    outlinedButtonTheme: TOutlinedButtonTheme.lightOutlinedTheme,
+    inputDecorationTheme: TInputDecorationTheme.lightInputDecorationTheme,
+    textButtonTheme: TTextButtonTheme.lightTextButtonTheme,
   );
 
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,
-    fontFamily: "OpenSans",
-    brightness: Brightness.light,
+    fontFamily: "Outfit",
     primaryColor: kMainAccentColor,
+    brightness: Brightness.dark,
     scaffoldBackgroundColor: kMainDarkBackgroundColor,
-    textTheme: const TextTheme(
-      bodyLarge: TextStyle(
-        color: kMainDarkTextColor,
-        fontWeight: FontWeight.bold,
-      ),
-      headlineLarge: TextStyle(
-        color: kMainDarkTextColor,
-      ),
-      bodyMedium: TextStyle(
-        color: kMainDarkTextColor,
-        fontWeight: FontWeight.normal,
-      ),
-      bodySmall: TextStyle(
-        color: kMainDarkTextColor,
-        fontWeight: FontWeight.w100,
-      ),
-      headlineSmall: TextStyle(
-        color: kMainLightTextColor,
-        fontWeight: FontWeight.w100,
-        fontSize: 10,
-      ),
-      headlineMedium: TextStyle(
-        color: kMainAccentColor,
-        fontWeight: FontWeight.bold,
-        fontSize: 14,
-      ),
-    ),
-    iconTheme: const IconThemeData(
-      color: kMainDarkTextColor,
-    ),
+    textTheme: TTextTheme.darkTextTheme,
+    elevatedButtonTheme: TElevatedButtonTheme.darkElevatedButtonTheme,
+    bottomSheetTheme: TBottomSheetTheme.darkBottomSheetTheme,
+    checkboxTheme: TCheckboxTheme.darkCheckboxTheme,
+    chipTheme: TChipTheme.darkChipTheme,
+    outlinedButtonTheme: TOutlinedButtonTheme.darkOutlinedTheme,
+    inputDecorationTheme: TInputDecorationTheme.darkInputDecorationTheme,
+    textButtonTheme: TTextButtonTheme.darkTextButtonTheme,
+
   );
 }

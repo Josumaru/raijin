@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:raijin/core/constants/constants.dart';
+import 'package:raijin/core/services/injection_container.dart';
 import 'package:raijin/features/anime/presentation/bloc/anime/anime_bloc.dart';
 import 'package:raijin/features/anime/presentation/bloc/complete_anime/complete_anime_bloc.dart';
 import 'package:raijin/features/detail/presentation/bloc/detail_bloc.dart';
@@ -82,7 +83,7 @@ class VideoPage extends StatelessWidget {
   }
 
   _buildVideoPlayer(VideoLoaded videoState) =>
-      CustomVideoPlayerWidget(videoEntity: videoState.videoEntity!);
+      CustomVideoPlayerWidget(videoEntity: videoState.videoEntity);
 
   _buildTab({
     required DetailState detailState,
@@ -106,8 +107,7 @@ class VideoPage extends StatelessWidget {
                 splashBorderRadius: BorderRadius.circular(3),
                 labelStyle: const TextStyle(color: kMainAccentColor),
                 indicatorPadding: const EdgeInsets.symmetric(horizontal: 20),
-                overlayColor: MaterialStateProperty.all(
-                    Theme.of(context).primaryColor.withOpacity(0.2)),
+                overlayColor: MaterialStateProperty.all(Theme.of(context).primaryColor.withOpacity(0.2)),
                 unselectedLabelColor: Theme.of(context).disabledColor,
                 indicatorSize: TabBarIndicatorSize.tab,
                 automaticIndicatorColorAdjustment: true,
@@ -179,8 +179,7 @@ class VideoPage extends StatelessWidget {
                                     ),
                                     child: Text(
                                       detailState.detailEntity.title,
-                                      style:
-                                          Theme.of(context).textTheme.bodyLarge,
+                                      style: Theme.of(context).textTheme.bodyLarge,
                                       maxLines: 5,
                                       textAlign: TextAlign.start,
                                     ),
@@ -228,8 +227,7 @@ class VideoPage extends StatelessWidget {
                                         ),
                                         DetailWidget(
                                           option: 'Total Episode',
-                                          detail:
-                                              detailState.detailEntity.totalEpisode,
+                                          detail: detailState.detailEntity.totalEpisode,
                                         ),
                                         DetailWidget(
                                           option: 'Type',
@@ -259,7 +257,7 @@ class VideoPage extends StatelessWidget {
                           child: Container(
                             height: 40,
                             decoration: BoxDecoration(
-                              color: Colors.amber[700]!.withOpacity(0.15),
+                              color: Theme.of(context).primaryColor.withOpacity(0.15),
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: Row(
@@ -270,14 +268,14 @@ class VideoPage extends StatelessWidget {
                                   ),
                                   child: Icon(
                                     Iconsax.flash_14,
-                                    color: Colors.amber[700],
+                                    color: Theme.of(context).primaryColor,
                                     size: 15,
                                   ),
                                 ),
                                 Text(
                                   'Try Premium!',
                                   style: TextStyle(
-                                    color: Colors.amber[700],
+                                    color: Theme.of(context).primaryColor,
                                   ),
                                 ),
                                 const Spacer(),
@@ -291,7 +289,7 @@ class VideoPage extends StatelessWidget {
                                   child: Icon(
                                     Iconsax.arrow_right_3,
                                     size: 15,
-                                    color: Colors.amber[700],
+                                    color: Theme.of(context).primaryColor,
                                   ),
                                 )
                               ],
@@ -313,7 +311,7 @@ class VideoPage extends StatelessWidget {
                               ),
                               Column(
                                 children: [
-                                  true
+                                  false
                                       ? Icon(Iconsax.archive_add4)
                                       : Icon(Iconsax.archive_add1),
                                   Text("Save"),
@@ -347,18 +345,24 @@ class VideoPage extends StatelessWidget {
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
                               const Spacer(),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Updated to ${detailState.detailEntity.episodes[0].title.replaceAll(detailState.detailEntity.title, '')}',
-                                    // style: Theme.of(context).textTheme.labelMedium,
-                                  ),
-                                  const Icon(
-                                    Iconsax.arrow_right_3,
-                                    size: 15,
-                                  )
-                                ],
+                              GestureDetector(
+                                onTap: () {
+                                  final lastEpisode = detailState.detailEntity.episodes[0];
+                                  context.read<VideoBloc>().add(GetVideoEvent(episodeEntity: lastEpisode));
+                                },
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Updated to Episode ${detailState.detailEntity.episodes[0].title.split('Episode')[1]}',
+                                      style: Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                    const Icon(
+                                      Iconsax.arrow_right_3,
+                                      size: 15,
+                                    )
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -372,12 +376,7 @@ class VideoPage extends StatelessWidget {
                                 padding: EdgeInsets.fromLTRB(
                                   (index == 0) ? 20 : 5,
                                   0,
-                                  (index ==
-                                          detailState.detailEntity.episodes
-                                                  .length -
-                                              1)
-                                      ? 20
-                                      : 0,
+                                  (index == detailState.detailEntity.episodes.length - 1) ? 20 : 0,
                                   0,
                                 ),
                                 child: EpisodeWidget(

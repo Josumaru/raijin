@@ -20,7 +20,7 @@ class AppRoutes {
       case '/video':
         return _materiaPagelRoute(const VideoPage());
       case '/auth':
-        return _materiaPagelRoute(const AuthPage());
+        return _materiaPagelRoute(AuthPage());
       default:
         return _materiaPagelRoute(MainPage());
     }

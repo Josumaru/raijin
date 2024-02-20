@@ -25,8 +25,7 @@ class CustomVideoPlayerWidget extends StatefulWidget {
   late double sliderPosition = 0;
 
   @override
-  State<CustomVideoPlayerWidget> createState() =>
-      _CustomVideoPlayerWidgetState();
+  State<CustomVideoPlayerWidget> createState() => _CustomVideoPlayerWidgetState();
 }
 
 class _CustomVideoPlayerWidgetState extends State<CustomVideoPlayerWidget> {
@@ -36,18 +35,7 @@ class _CustomVideoPlayerWidgetState extends State<CustomVideoPlayerWidget> {
   void initState() {
     super.initState();
     try {
-
-      _videoPlayerController = VideoPlayerController.contentUri(
-        Uri.parse(
-          widget.videoEntity[0].endpoint!,
-        ),
-      )
-        ..initialize()
-        ..play().then(
-          (value) {
-            setState(() {});
-          },
-        );
+      _videoPlayerController = VideoPlayerController.contentUri(Uri.parse(widget.videoEntity[0].endpoint!))..initialize()..play().then((value) => setState(() {}));
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Error while load the video, try reload the apps'),
@@ -89,14 +77,8 @@ class _CustomVideoPlayerWidgetState extends State<CustomVideoPlayerWidget> {
               });
             },
             child: Container(
-              width:
-                  (MediaQuery.of(context).orientation == Orientation.landscape)
-                      ? MediaQuery.of(context).size.width
-                      : null,
-              height:
-                  (MediaQuery.of(context).orientation == Orientation.landscape)
-                      ? MediaQuery.of(context).size.height
-                      : null,
+              width: (MediaQuery.of(context).orientation == Orientation.landscape) ? MediaQuery.of(context).size.width : null,
+              height: (MediaQuery.of(context).orientation == Orientation.landscape) ? MediaQuery.of(context).size.height : null,
               child: AspectRatio(
                 aspectRatio: 16 / 9,
                 child: Stack(
@@ -216,100 +198,99 @@ class _CustomVideoPlayerWidgetState extends State<CustomVideoPlayerWidget> {
                 ),
               ],
             ),
-            widget.showControl
-                ? Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).orientation ==
-                              Orientation.landscape
-                          ? 80
-                          : 5,
-                    ),
-                    child: Row(
-                      children: [
-                        Text(
-                          '${(widget.videoPosition ~/ 60)}:${(widget.videoPosition % 60).toInt().toString().padLeft(2, '0')}',
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            child: CupertinoSlider(
-                              activeColor: kMainAccentColor.withOpacity(0.3),
-                              thumbColor: kMainAccentColor.withOpacity(0.8),
-                              value: widget.sliderPosition,
-                              onChanged: (value) {
-                                setState(() {
-                                  widget.sliderPosition = value;
-                                });
-                              },
-                              onChangeEnd: (value) {
-                                _videoPlayerController.seekTo(
-                                  Duration(
-                                    seconds:
-                                        (value * widget.videoDuration).toInt(),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: GestureDetector(
-                            onTap: () {
-                              if (MediaQuery.of(context).orientation ==
-                                  Orientation.portrait) {
-                                SystemChrome.setEnabledSystemUIMode(
-                                  SystemUiMode.immersiveSticky,
-                                  overlays: [SystemUiOverlay.bottom],
-                                );
-                                SystemChrome.setPreferredOrientations([
-                                  DeviceOrientation.landscapeLeft,
-                                  DeviceOrientation.landscapeRight
-                                ]);
-                              } else {
-                                SystemChrome.setPreferredOrientations([
-                                  DeviceOrientation.portraitDown,
-                                  DeviceOrientation.portraitUp
-                                ]);
-                                SystemChrome.setEnabledSystemUIMode(
-                                  SystemUiMode.edgeToEdge,
-                                  overlays: [SystemUiOverlay.bottom],
-                                );
-                              }
-                            },
-                            child: const Icon(
-                              Iconsax.maximize_21,
-                              size: 15,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          '${widget.videoDuration ~/ 60}:${widget.videoDuration % 60}',
-                        ),
-                      ],
-                    ),
-                  )
-                : Positioned(
-                    left: 0,
-                    child: AnimatedContainer(
-                      duration: const Duration(seconds: 1),
-                      width: MediaQuery.of(context).size.width *
-                          widget.sliderPosition,
-                      height: 2,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ),
+            widget.showControl ? _sliderControl(context) : _sliderIndicator(context),
           ],
         ),
       ),
     );
   }
 
+  Positioned _sliderIndicator(BuildContext context) {
+    return Positioned(
+      left: 0,
+      child: AnimatedContainer(
+        duration: const Duration(seconds: 1),
+        width: MediaQuery.of(context).size.width * widget.sliderPosition,
+        height: 2,
+        decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+      ),
+    );
+  }
+
+  Padding _sliderControl(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).orientation == Orientation.landscape ? 80 : 5,
+      ),
+      child: Row(
+        children: [
+          Text('${(widget.videoPosition ~/ 60).toString().padLeft(2, '0')}:${(widget.videoPosition % 60).toInt().toString().padLeft(2, '0')}'),
+          Expanded(
+            child: SizedBox(
+              child: CupertinoSlider(
+                activeColor: kMainAccentColor.withOpacity(0.3),
+                thumbColor: kMainAccentColor.withOpacity(0.8),
+                value: widget.sliderPosition,
+                onChanged: (value) {
+                  setState(() {
+                    widget.sliderPosition = value;
+                  });
+                },
+                onChangeEnd: (value) {
+                  _videoPlayerController.seekTo(
+                    Duration(
+                      seconds: (value * widget.videoDuration).toInt(),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          Text(
+            '${widget.videoDuration ~/ 60}:${(widget.videoDuration % 60).toString().padLeft(2, '0')}',
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: GestureDetector(
+              onTap: () {
+                _setOrientation();
+              },
+              child: const Icon(
+                Iconsax.maximize_21,
+                size: 15,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   _buildVideoPlayer() {
     return Center(
-      child: AspectRatio(
-          aspectRatio: 16 / 9, child: VideoPlayer(_videoPlayerController)),
+      child: AspectRatio(aspectRatio: 16 / 9, child: VideoPlayer(_videoPlayerController)),
     );
+  }
+
+  void _setOrientation() {
+    if (MediaQuery.of(context).orientation == Orientation.portrait) {
+      SystemChrome.setEnabledSystemUIMode(
+        SystemUiMode.immersiveSticky,
+        overlays: [SystemUiOverlay.bottom],
+      );
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeRight,
+        DeviceOrientation.landscapeLeft,
+      ]);
+    } else {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitDown,
+        DeviceOrientation.portraitUp
+      ]);
+      SystemChrome.setEnabledSystemUIMode(
+        SystemUiMode.edgeToEdge,
+        overlays: [SystemUiOverlay.bottom],
+      );
+    }
   }
 }

@@ -102,14 +102,14 @@ class WelcomePage extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.all(20),
           child: Material(
             color: kMainAccentColor,
             borderRadius: BorderRadius.circular(12),
             child: InkWell(
               borderRadius: BorderRadius.circular(12),
               onTap: () {
-                Navigator.popAndPushNamed(context, '/main');
+                Navigator.popAndPushNamed(context, '/auth');
               },
               child: Container(
                 height: 48,

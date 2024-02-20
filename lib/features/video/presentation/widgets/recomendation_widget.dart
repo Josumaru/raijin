@@ -17,7 +17,6 @@ class RecommendationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // context.read<VideoBloc>().add(GetVideoEvent(endpoint: animeEntity.endpoint));
         context.read<DetailBloc>().add(GetDetailEvent(endpoint: animeEntity.endpoint!));
         Navigator.of(context).popAndPushNamed('/detail');
       },
@@ -32,12 +31,12 @@ class RecommendationWidget extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 3,
                   height: 75,
                   decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.circular(5)),
-                  // child: Text(animeState.animeEntity[index].toString()),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: BorderRadius.circular(5)
+                  ),
                 );
               },
             ),

@@ -15,9 +15,11 @@ class VideoRepositryImpl implements VideoRepositry {
   Future<Either<Failure, List<VideoEntity>>> getVideo({required String endpoint}) async {
     try {
       final List<VideoModel> videoModel = await videoRemoteDataSource.getVideo(endpoint: endpoint);
+      print(videoModel);
       final List<VideoEntity> videoEntity = videoModel.map((e) => e.toEntity()).toList();
       return Right(videoEntity);
     } catch (e) {
+      print(e);
       return Left(ServerFailure(message: e.toString()));
     }
   }

@@ -13,7 +13,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
   VideoBloc({required this.getVideoUseCase}) : super(VideoInitial(videoEntity: List.empty())) {
 
     on<GetVideoEvent>((event, emit) async {
-      if (state is! VideoLoading) {
+      if (state is !VideoLoading) {
         emit(
           VideoLoading(
             videoEntity: [
