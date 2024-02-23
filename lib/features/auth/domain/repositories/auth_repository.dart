@@ -1,8 +1,8 @@
-import 'package:equatable/equatable.dart';
+import 'package:dartz/dartz.dart';
+import 'package:raijin/core/errors/failure.dart';
+import 'package:raijin/features/auth/domain/entities/auth_entity.dart';
 
-class UserRepository extends Equatable{
-  
-  @override
-  List<Object?> get props => [];
-
+abstract class AuthRepository {
+  Future<Either<Failure, AuthEntity>> loginAuth(String email, String password);
+  Future<Either<Failure, AuthEntity>> registerAuth(String username, String email, String password);
 }

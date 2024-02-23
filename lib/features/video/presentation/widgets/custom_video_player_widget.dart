@@ -35,7 +35,7 @@ class _CustomVideoPlayerWidgetState extends State<CustomVideoPlayerWidget> {
   void initState() {
     super.initState();
     try {
-      _videoPlayerController = VideoPlayerController.contentUri(Uri.parse(widget.videoEntity[0].endpoint!))..initialize()..play().then((value) => setState(() {}));
+      _videoPlayerController = VideoPlayerController.contentUri(Uri.parse(widget.videoEntity[2].endpoint!))..initialize()..play().then((value) => setState(() {}));
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Error while load the video, try reload the apps'),

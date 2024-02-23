@@ -28,9 +28,9 @@ class TTextTheme {
   static TextTheme darkTextTheme = TextTheme(
 
     // Headline
-    headlineLarge: const TextStyle().copyWith(fontSize: 32.0, fontWeight: FontWeight.bold, color: kMainDarkTextColor),
-    headlineMedium: const TextStyle().copyWith(fontSize: 24.0, fontWeight: FontWeight.w600, color: kMainDarkTextColor),
-    headlineSmall: const TextStyle().copyWith(fontSize: 18.0, fontWeight: FontWeight.w300, color: kMainDarkTextColor),
+    headlineLarge: const TextStyle().copyWith(fontSize: 18.0, fontWeight: FontWeight.bold, color: kPrimaryColor),
+    headlineMedium: const TextStyle().copyWith(fontSize: 14.0, fontWeight: FontWeight.w600, color: kPrimaryColor),
+    headlineSmall: const TextStyle().copyWith(fontSize: 12.0, fontWeight: FontWeight.w300, color: kPrimaryColor),
     
     //Body
     bodyLarge: const TextStyle().copyWith(fontSize: 14.0, fontWeight: FontWeight.w600, color: kMainDarkTextColor),

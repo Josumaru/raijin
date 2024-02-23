@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,10 +8,14 @@ import 'package:raijin/core/themes/theme.dart';
 import 'package:raijin/features/anime/presentation/bloc/anime/anime_bloc.dart';
 import 'package:raijin/features/anime/presentation/bloc/complete_anime/complete_anime_bloc.dart';
 import 'package:raijin/features/anime/presentation/bloc/page/page_bloc.dart';
+import 'package:raijin/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:raijin/features/detail/presentation/bloc/detail_bloc.dart';
 import 'package:raijin/features/video/presentation/bloc/video_bloc.dart';
+import 'package:raijin/firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   init();
   runApp(const MyApp());
 }
@@ -46,10 +51,10 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) => sl<PageBloc>(),
         ),
         BlocProvider<AnimeBloc>(
-          create: (BuildContext context) => sl<AnimeBloc>()
-            ..add(
-              const GetOngoingAnimeEvent(page: 1, status: 'ongoing'),
-            ),
+          create: (BuildContext context) => sl<AnimeBloc>()..add(const GetOngoingAnimeEvent(page: 1, status: 'ongoing'))
+        ),
+        BlocProvider(
+          create: (BuildContext context) => sl<AuthBloc>(),
         ),
         BlocProvider(
           create: (BuildContext context) => sl<DetailBloc>(),
@@ -58,10 +63,7 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) => sl<VideoBloc>(),
         ),
         BlocProvider(
-          create: (BuildContext context) => sl<CompleteAnimeBloc>()
-            ..add(
-              const GetCompleteAnimeEvent(page: 1, status: 'complete'),
-            ),
+          create: (BuildContext context) => sl<CompleteAnimeBloc>()..add(const GetCompleteAnimeEvent(page: 1, status: 'complete')),
         ),
       ],
       child: MaterialApp(
