@@ -5,7 +5,8 @@ import 'package:raijin/features/anime/data/datasources/remote/anime_remote_data_
 import 'package:raijin/features/anime/data/models/anime_model.dart';
 
 class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
-  final Dio dio = Dio();
+  final Dio dio;
+  AnimeRemoteDataSourceImpl({required this.dio});
 
   @override
   Future<List<AnimeModel>> getAnime({required String status, required int page}) async {

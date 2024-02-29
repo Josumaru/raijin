@@ -3,8 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'package:raijin/features/anime/domain/entities/anime_entity.dart';
 import 'package:raijin/features/anime/domain/usecases/get_anime_use_case.dart';
 
-part 'anime_event.dart';
-part 'anime_state.dart';
+part 'ongoing_anime_event.dart';
+part 'ongoing_anime_state.dart';
 
 class AnimeBloc extends Bloc<AnimeEvent, AnimeState> {
   final GetAnimeUseCase _getAnimeUseCase;

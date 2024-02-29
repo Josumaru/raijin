@@ -5,9 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raijin/core/routes/routes.dart';
 import 'package:raijin/core/services/injection_container.dart';
 import 'package:raijin/core/themes/theme.dart';
-import 'package:raijin/features/anime/presentation/bloc/anime/anime_bloc.dart';
-import 'package:raijin/features/anime/presentation/bloc/complete_anime/complete_anime_bloc.dart';
-import 'package:raijin/features/anime/presentation/bloc/page/page_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/complete_anime_bloc/complete_anime_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/history_bloc/history_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/ongoing_anime_bloc/ongoing_anime_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/page_bloc/page_bloc.dart';
 import 'package:raijin/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:raijin/features/detail/presentation/bloc/detail_bloc.dart';
 import 'package:raijin/features/video/presentation/bloc/video_bloc.dart';
@@ -16,7 +17,7 @@ import 'package:raijin/firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  init();
+  await init();
   runApp(const MyApp());
 }
 
@@ -64,6 +65,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (BuildContext context) => sl<CompleteAnimeBloc>()..add(const GetCompleteAnimeEvent(page: 1, status: 'complete')),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => sl<HistoryBloc>()..add(const GetHistoryEvent()),
         ),
       ],
       child: MaterialApp(

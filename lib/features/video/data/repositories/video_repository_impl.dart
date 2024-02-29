@@ -23,5 +23,17 @@ class VideoRepositryImpl implements VideoRepositry {
       return Left(ServerFailure(message: e.toString()));
     }
   }
+  
+  @override
+  Future<Either<Failure, List<VideoEntity>>> addHistoryVideo({required VideoModel videoModel}) {
+    // TODO: implement addHistoryVideo
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<Either<Failure, List<VideoEntity>>> getHistoryVideo({required VideoModel videoModel}) {
+    // TODO: implement getHistoryVideo
+    throw UnimplementedError();
+  }
 
 }

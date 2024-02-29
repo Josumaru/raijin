@@ -27,7 +27,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   
   @override
   Future<AuthEntity> authLogin(String email, String password) async {
-  await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+    await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
     AuthEntity authEntity = AuthEntity(
       email: firebaseAuth.currentUser!.email.toString(),
       username: firebaseAuth.currentUser!.displayName.toString(),
@@ -36,5 +36,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       id: firebaseAuth.currentUser!.uid,
     );
     return authEntity;
+  }
+  
+  @override
+  Future<void> authLogOut() async {
+    await FirebaseAuth.instance.signOut();
   }
 }

@@ -1,4 +1,4 @@
-part of 'anime_bloc.dart';
+part of 'ongoing_anime_bloc.dart';
 
 sealed class AnimeState extends Equatable {
   const AnimeState();

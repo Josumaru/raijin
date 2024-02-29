@@ -1,6 +1,6 @@
 class VideoEntity {
   final String? poster, endpoint, codename;
-  final int? episode, season, part;
+  final int? episode, season, part, duration, position;
 
   const VideoEntity({
     this.poster,
@@ -9,5 +9,7 @@ class VideoEntity {
     this.episode,
     this.part,
     this.season,
+    this.duration,
+    this.position
   });
 }

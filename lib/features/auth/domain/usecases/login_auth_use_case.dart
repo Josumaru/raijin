@@ -7,7 +7,7 @@ class LoginAuthUseCase {
   const LoginAuthUseCase({required this.authRepository});
   final AuthRepository authRepository;
 
-  Future<Either<Failure, AuthEntity>> call({required String email, required String password}) async {
-    return await authRepository.loginAuth(email, password);
+  Future<Either<Failure, AuthEntity>> call({required String email, required String password, required bool save}) async {
+    return await authRepository.loginAuth(email, password, save);
   }
 }

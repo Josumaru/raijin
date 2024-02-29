@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:raijin/core/constants/constants.dart';
-import 'package:raijin/features/anime/presentation/bloc/page/page_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/page_bloc/page_bloc.dart';
 import 'package:raijin/features/anime/presentation/pages/bookmark/bookmark_page.dart';
 import 'package:raijin/features/anime/presentation/pages/download/download_page.dart';
 import 'package:raijin/features/anime/presentation/pages/home/home_page.dart';

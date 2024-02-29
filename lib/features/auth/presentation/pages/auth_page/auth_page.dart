@@ -406,7 +406,7 @@ class AuthPage extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: () {
                                 if (_loginFormState.currentState!.validate()) {
-                                  context.read<AuthBloc>().add(UserAuthEvent(email: _emailLoginTextEditiongController.text, password: _passwordLoginTextEditiongController.text, username: '', auth: 'login'));
+                                  context.read<AuthBloc>().add(UserAuthEvent(email: _emailLoginTextEditiongController.text, password: _passwordLoginTextEditiongController.text, save: true, auth: 'login'));
                                   if (state is AuthFailed) {
                                     showDialog(context: context, builder: (context) =>
                                       AlertDialog(

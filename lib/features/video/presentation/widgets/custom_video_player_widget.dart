@@ -5,8 +5,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:raijin/core/constants/constants.dart';
+import 'package:raijin/core/services/injection_container.dart';
+import 'package:raijin/features/anime/presentation/blocs/history_bloc/history_bloc.dart';
+import 'package:raijin/features/video/data/models/video_model.dart';
 import 'package:raijin/features/video/domain/entities/video_entity.dart';
 import 'package:video_player/video_player.dart';
 
@@ -58,6 +63,17 @@ class _CustomVideoPlayerWidgetState extends State<CustomVideoPlayerWidget> {
       //     });
       //   });
       // }
+      if(widget.videoPosition == 4) {
+        print('================${widget.videoEntity[0].poster}=================');
+        VideoModel videoModel = VideoModel(
+          codename: widget.videoEntity[0].codename,
+          poster: widget.videoEntity[0].poster,
+          position: widget.videoPosition,
+          duration: widget.videoDuration,
+          episode: widget.videoEntity[0].episode,
+        );
+        context.read<HistoryBloc>().add(SetHistoryEvent(videoModel: videoModel));
+      }
     });
   }
 

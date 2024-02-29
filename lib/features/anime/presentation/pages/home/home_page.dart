@@ -1,12 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:raijin/core/constants/constants.dart';
-import 'package:raijin/features/anime/presentation/bloc/anime/anime_bloc.dart';
-import 'package:raijin/features/anime/presentation/bloc/complete_anime/complete_anime_bloc.dart';
+import 'package:raijin/core/services/injection_container.dart';
+import 'package:raijin/features/anime/data/datasources/local/history/history_local_data_source.dart';
+import 'package:raijin/features/anime/presentation/blocs/complete_anime_bloc/complete_anime_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/history_bloc/history_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/ongoing_anime_bloc/ongoing_anime_bloc.dart';
 import 'package:raijin/features/anime/presentation/widgets/anime_card.dart';
+import 'package:raijin/features/auth/data/datasources/local/auth_local_data_source.dart';
+import 'package:raijin/features/auth/data/models/auth_model.dart';
+import 'package:raijin/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:raijin/features/detail/presentation/bloc/detail_bloc.dart';
+import 'package:raijin/features/video/data/models/video_model.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -214,6 +222,28 @@ class HomePage extends StatelessWidget {
                 },
               ),
             ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: ()async {
+                  // final user = sl<Box<VideoModel>>().getAt(0);
+                  // sl<Box<VideoModel>>().put('key', VideoModel(codename: 'asd'));
+                  // final getuser = sl<Box<AuthModel>>().get('user');
+                  // final getHistory = await sl<HistoryLocalDataSource>().getHistory();
+                  // final setHistory = await sl<HistoryLocalDataSource>().setHistory(videoModel: VideoModel(endpoint: 'asda',codename: '',duration: 12,episode: 2,part: 2 ));
+                  // await sl<AuthLocalDataSource>().saveUser(authModel: AuthModel(email: 'asd'));
+                context.read<HistoryBloc>().add(SetHistoryEvent(videoModel: VideoModel(codename: '', duration: 13, endpoint: '', episode: 2, part: 2, position: 23, poster: '', season: 2)));
+                final history = context.read<HistoryBloc>().add(GetHistoryEvent());
+                  // print(history.);
+                  // print(getHistory[0].codename);
+              
+                },
+                child: Text('Test')
+              ),
+            ),
           )
         ],
       ),

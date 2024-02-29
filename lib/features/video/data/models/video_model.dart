@@ -1,13 +1,26 @@
+import 'package:hive/hive.dart';
 import 'package:raijin/features/video/domain/entities/video_entity.dart';
+part 'video_model.g.dart';
 
+@HiveType(typeId: 1)
 class VideoModel extends VideoEntity {
   VideoModel({
-    required super.poster,
-    required super.endpoint,
-    required super.codename,
-    required super.episode,
-    required super.part,
-    required super.season,
+    @HiveField(0)
+    super.poster,
+    @HiveField(1)
+    super.endpoint,
+    @HiveField(2)
+    super.codename,
+    @HiveField(3)
+    super.episode,
+    @HiveField(4)
+    super.part,
+    @HiveField(5)
+    super.season,
+    @HiveField(6)
+    super.duration,
+    @HiveField(7)
+    super.position,
   });
 
   factory VideoModel.fromJson(Map<String, dynamic> json) {
@@ -29,6 +42,8 @@ class VideoModel extends VideoEntity {
       episode: episode,
       part: part,
       season: season,
+      duration: duration,
+      position: position,
     );
   }
 }
