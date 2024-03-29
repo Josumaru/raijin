@@ -1,65 +1,14 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class AuthEntity extends Equatable {
-  const AuthEntity({
-    required this.email,
-    required this.username,
-    required this.password,
-    required this.image,
-    required this.id,
-  });
+part 'auth_entity.freezed.dart';
 
-  final String email, password, username, image, id;
-
-  @override
-  List<Object?> get props => [
-    email,
-    password,
-    username,
-    username,
-    id,
-  ];
+@freezed
+abstract class AuthEntity with _$AuthEntity{
+  const factory AuthEntity({
+    required String name,
+    required String email,
+    required String password,
+    required String image,
+    required String id,
+  }) = _AuthEntity;
 }
-
-// class AuthEntity extends Equatable {
-//   final String email;
-//   final String password;
-//   final String id;
-
-//   const AuthEntity({
-//     required this.email,
-//     required this.password,
-//     required this.id,
-//   });
-
-//   static const empty = AuthEntity(
-//     email: '',
-//     password: '',
-//     id: '',
-//   );
-
-//   AuthEntity copyWith({
-//     String? email,
-//     String? password,
-//     String? id,
-//   }) {
-//     return AuthEntity(
-//       email: email ?? this.email,
-//       password: password ?? this.password,
-//       id: id ?? this.id,
-//     );
-//   }
-
-//   AuthEntity toEntity() {
-//     return AuthEntity(
-//       email: email,
-//       password: password,
-//       id: id,
-//     );
-//   }
-
-//   @override
-//   List<Object?> get props => [id, email, password];
-// }
-
-

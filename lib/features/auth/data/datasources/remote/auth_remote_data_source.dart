@@ -1,7 +1,7 @@
-import 'package:raijin/features/auth/domain/entities/auth_entity.dart';
+import 'package:raijin/features/auth/data/models/auth_model.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<AuthEntity> authRegister(String username, String email, String password);
-  Future<AuthEntity> authLogin(String email, String password);
-  Future<void > authLogOut();
+  Future<AuthModel> authRegister({required AuthModel authModel});
+  Future<AuthModel> authLogin({required AuthModel authModel});
+  Future<void> authLogout();
 }

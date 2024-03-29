@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyANZwBW23cwav-CVKN4KxwkwLgjeuJDjIU</string>
+	<string>AIzaSyC-U5QCNOZMtn9p3Z9liYOTRi5ed-E5L08</string>
 	<key>GCM_SENDER_ID</key>
-	<string>200924479038</string>
+	<string>1003322038018</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.example.raijin</string>
 	<key>PROJECT_ID</key>
-	<string>raijin-anime</string>
+	<string>raijinime</string>
 	<key>STORAGE_BUCKET</key>
-	<string>raijin-anime.appspot.com</string>
+	<string>raijinime.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:200924479038:ios:352fb5fd1cfb8baf645b6f</string>
+	<string>1:1003322038018:ios:e758c09cd001727643d41b</string>
 </dict>
 </plist>

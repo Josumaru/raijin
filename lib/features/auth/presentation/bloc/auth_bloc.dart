@@ -1,41 +1,76 @@
+// ignore_for_file: invalid_use_of_visible_for_testing_member
+
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:raijin/features/auth/domain/entities/auth_entity.dart';
-import 'package:raijin/features/auth/domain/usecases/login_auth_use_case.dart';
-import 'package:raijin/features/auth/domain/usecases/logout_auth_use_case.dart';
-import 'package:raijin/features/auth/domain/usecases/register_auth_use_case.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:raijin/core/usecases/toast_usecase/toas_use_case.dart';
+import 'package:raijin/features/auth/data/models/auth_model.dart';
+import 'package:raijin/features/auth/domain/usecases/auth_login_use_case.dart';
+import 'package:raijin/features/auth/domain/usecases/auth_logout_use_case.dart';
+import 'package:raijin/features/auth/domain/usecases/auth_register_use_case.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
+part 'auth_bloc.freezed.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final RegisterAuthUseCase registerAuthUseCase;
-  final LoginAuthUseCase loginAuthUseCase;
-  final LogoutAuthUseCase logoutAuthUseCase;
-
-  AuthBloc({required this.registerAuthUseCase, required this.loginAuthUseCase, required this.logoutAuthUseCase}) : super(AuthInitial()) {
-    on<UserAuthEvent>(onUserAuthEvent);
+  final AuthLoginUseCase authLoginUseCase;
+  final AuthLogoutUseCase authLogoutUseCase;
+  final AuthRegisterUseCase authRegisterUseCase;
+  final ToastUseCase toastUseCase;
+  AuthBloc({
+    required this.authLoginUseCase,
+    required this.authLogoutUseCase,
+    required this.authRegisterUseCase,
+    required this.toastUseCase,
+  }) : super(const AuthState.initial()) {
+    on<AuthEvent>(
+      (event, emit) async {
+        await event.when(
+          authLogin: (value) async => await _authLogin(
+            authModel: value,
+          ),
+          authLogout: () async => await _authLogout(),
+          authregister: (value) async => await _authRegister(
+            authModel: value,
+          ),
+        );
+      },
+    );
   }
-  onUserAuthEvent(UserAuthEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
-    print('======================${event.save}====================');
-    if (event.auth == 'login') {
-      final data = await loginAuthUseCase(email: event.email!, password: event.password!, save: event.save!);
-      data.fold(
-        (l) => emit(AuthFailed()),
-        (r) => emit(AuthLoaded(authEntity: r)),
-      );
-      return;
-    } else if (event.auth == 'register') {
-      emit(AuthLoading());
-      final data = await registerAuthUseCase(username: event.username!, email: event.email!, password: event.password!);
-      data.fold(
-        (l) => emit(AuthFailed()),
-        (r) => emit(AuthLoaded(authEntity: r)),
-      );
-    } else if (event.auth == 'logout') {
-      await logoutAuthUseCase();      
-      emit(AuthFailed());
-    }
+  Future _authLogin({required AuthModel authModel}) async {
+    emit(const AuthState.loading());
+    final data = await authLoginUseCase(params: authModel);
+    data.fold((l) {
+      toastUseCase(params: l.messages);
+      emit(AuthState.error(message: l.messages));
+    }, (r) {
+      toastUseCase(params: 'Welcome back, ${r.name}!');
+      emit(AuthState.loaded(authModel: r));
+    });
+  }
+
+  _authLogout() async {
+    emit(const AuthState.loading());
+    final data = await authLogoutUseCase(params: null);
+    data.fold(
+      (l) {
+        toastUseCase(params: l.messages);
+        emit(AuthState.error(message: l.messages));
+      },
+      (r) => emit(const AuthState.loaded(authModel: null)),
+    );
+  }
+
+  _authRegister({required AuthModel authModel}) async {
+    emit(const AuthState.loading());
+    final data = await authRegisterUseCase(params: authModel);
+    data.fold((l) {
+      toastUseCase(params: l.messages);
+      emit(AuthState.error(message: l.messages));
+    }, (r) {
+      toastUseCase(params: 'Welcome, ${r.name}!');
+      emit(AuthState.loaded(authModel: r));
+    });
   }
 }

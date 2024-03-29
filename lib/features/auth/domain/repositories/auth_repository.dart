@@ -1,9 +1,15 @@
 import 'package:dartz/dartz.dart';
 import 'package:raijin/core/errors/failure.dart';
-import 'package:raijin/features/auth/domain/entities/auth_entity.dart';
+import 'package:raijin/features/auth/data/models/auth_model.dart';
 
 abstract class AuthRepository {
-  Future<Either<Failure, AuthEntity>> loginAuth(String email, String password, bool save);
-  Future<Either<Failure, AuthEntity>> registerAuth(String username, String email, String password);
-  Future<Either<Failure, void>> logOutAuth();
+  Future<Either<Failure<String>, AuthModel>> authLogin({
+    required AuthModel authModel,
+  });
+
+  Future<Either<Failure<String>, void>> authLogout();
+
+  Future<Either<Failure<String>, AuthModel>> authRegister({
+    required AuthModel authModel,
+  });
 }

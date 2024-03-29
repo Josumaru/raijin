@@ -13,4 +13,4 @@ const Color kMainBorderColor = Color.fromARGB(255, 160, 160, 160);
 const Color kMainDangerColor = Color.fromARGB(255, 235, 71, 59);
 const Color kMainWarningColor = Colors.amber;
 
-const String kRaijinEndpoint = 'https://raijinapi.vercel.app';
+const String kRaijinEndpoint = 'http://192.168.0.101';

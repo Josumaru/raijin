@@ -1,7 +1,7 @@
 {
   "file_generated_by": "FlutterFire CLI",
   "purpose": "FirebaseAppID & ProjectID for this Firebase app in this directory",
-  "GOOGLE_APP_ID": "1:200924479038:ios:2211b3fcbdb45586645b6f",
-  "FIREBASE_PROJECT_ID": "raijin-anime",
-  "GCM_SENDER_ID": "200924479038"
+  "GOOGLE_APP_ID": "1:1003322038018:ios:04a79d0d3302a4f343d41b",
+  "FIREBASE_PROJECT_ID": "raijinime",
+  "GCM_SENDER_ID": "1003322038018"
 }

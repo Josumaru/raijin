@@ -44,38 +44,37 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyChADffrQlCxtjfrRUFKR8REKBfXqeoTVI',
-    appId: '1:200924479038:web:e752711d375663a9645b6f',
-    messagingSenderId: '200924479038',
-    projectId: 'raijin-anime',
-    authDomain: 'raijin-anime.firebaseapp.com',
-    storageBucket: 'raijin-anime.appspot.com',
-    measurementId: 'G-Q5RD62VGR9',
+    apiKey: 'AIzaSyDwkJJG28mDv6DTr3MVUVUTcn6SdUixtR4',
+    appId: '1:1003322038018:web:8607b7037fc63e0343d41b',
+    messagingSenderId: '1003322038018',
+    projectId: 'raijinime',
+    authDomain: 'raijinime.firebaseapp.com',
+    storageBucket: 'raijinime.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC5aTnJiEgqUSZeJkWCMU27IZK8QXk4_d0',
-    appId: '1:200924479038:android:2ae95da84ea29591645b6f',
-    messagingSenderId: '200924479038',
-    projectId: 'raijin-anime',
-    storageBucket: 'raijin-anime.appspot.com',
+    apiKey: 'AIzaSyDrr2F53fPwQjT3IjOenY6lWY7jAL4kFEY',
+    appId: '1:1003322038018:android:3a45665d6d6f2f9d43d41b',
+    messagingSenderId: '1003322038018',
+    projectId: 'raijinime',
+    storageBucket: 'raijinime.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyANZwBW23cwav-CVKN4KxwkwLgjeuJDjIU',
-    appId: '1:200924479038:ios:352fb5fd1cfb8baf645b6f',
-    messagingSenderId: '200924479038',
-    projectId: 'raijin-anime',
-    storageBucket: 'raijin-anime.appspot.com',
+    apiKey: 'AIzaSyC-U5QCNOZMtn9p3Z9liYOTRi5ed-E5L08',
+    appId: '1:1003322038018:ios:e758c09cd001727643d41b',
+    messagingSenderId: '1003322038018',
+    projectId: 'raijinime',
+    storageBucket: 'raijinime.appspot.com',
     iosBundleId: 'com.example.raijin',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyANZwBW23cwav-CVKN4KxwkwLgjeuJDjIU',
-    appId: '1:200924479038:ios:2211b3fcbdb45586645b6f',
-    messagingSenderId: '200924479038',
-    projectId: 'raijin-anime',
-    storageBucket: 'raijin-anime.appspot.com',
+    apiKey: 'AIzaSyC-U5QCNOZMtn9p3Z9liYOTRi5ed-E5L08',
+    appId: '1:1003322038018:ios:04a79d0d3302a4f343d41b',
+    messagingSenderId: '1003322038018',
+    projectId: 'raijinime',
+    storageBucket: 'raijinime.appspot.com',
     iosBundleId: 'com.example.raijin.RunnerTests',
   );
 }
