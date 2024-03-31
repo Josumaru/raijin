@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:raijin/core/constants/constants.dart';
+import 'package:raijin/core/constants/colors.dart';
 
 class TTextButtonTheme {
   // Light

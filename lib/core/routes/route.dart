@@ -20,12 +20,4 @@ class AppRoute {
   static _materialPageRoute(Widget widget) {
     return MaterialPageRoute(builder: (context) => widget);
   }
-
-  static void pushNamed({required String routeName}) {
-    navigatorKey.currentState?.pushNamed(routeName);
-  }
-
-  static void pushNamedAndRemoveUntil({required String routeName}) {
-    navigatorKey.currentState?.pushNamedAndRemoveUntil(routeName, (route) => false);
-  }
 }

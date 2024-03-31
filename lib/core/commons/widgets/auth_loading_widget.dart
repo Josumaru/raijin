@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:raijin/core/constants/constants.dart';
+import 'package:raijin/core/constants/colors.dart';
 
 class AuthLoadingWidget extends StatelessWidget {
   const AuthLoadingWidget({super.key});

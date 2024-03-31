@@ -45,8 +45,8 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoute.onGenerateRoute,
         initialRoute: FirebaseAuth.instance.currentUser != null
-            ? RouteName.homePage
-            : RouteName.authPage,
+        ? RouteName.homePage
+        : RouteName.authPage,
         scrollBehavior: const ScrollBehavior().copyWith(
           overscroll: false,
           physics: const ClampingScrollPhysics(),

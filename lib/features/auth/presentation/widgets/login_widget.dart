@@ -1,11 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:raijin/core/commons/widgets/auth_loading_widget.dart';
-import 'package:raijin/core/constants/constants.dart';
+import 'package:raijin/core/constants/colors.dart';
 import 'package:raijin/core/constants/navigators.dart';
-import 'package:raijin/core/routes/route.dart';
 import 'package:raijin/core/routes/route_name.dart';
 import 'package:raijin/features/auth/data/models/auth_model.dart';
 import 'package:raijin/features/auth/presentation/bloc/auth_bloc.dart';

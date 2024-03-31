@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:raijin/core/constants/constants.dart';
+import 'package:raijin/core/constants/colors.dart';
 // import 'package:raijin/core/themes/bottom_sheet_theme/bottom_sheet_theme.dart';
 import 'package:raijin/core/themes/checkbox_theme/checkbox_theme.dart';
 // import 'package:raijin/core/themes/chip_theme/chip_theme.dart';
@@ -14,7 +14,16 @@ class TAppTheme {
 
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
-    colorScheme: ColorScheme.fromSeed(seedColor: kMainAccentColor),
+    colorScheme: ColorScheme.fromSeed(seedColor: kMainAccentColor).copyWith(
+      background: kMainLightBackgroundColor,
+      onBackground: kMainLightOnBackgroundColor,
+      error: kMainLightError,
+      onError: kMainLightOnError,
+      surface: kMainLightSurfaceColor,
+      onSurface: kMainLightOnSurfaceColor,
+      primary: kMainAccentColor,
+      onPrimary: kMainLightTextColor,
+    ),
     fontFamily: "Outfit",
     primaryColor: kMainAccentColor,
     scaffoldBackgroundColor: kMainLightBackgroundColor,
@@ -29,7 +38,16 @@ class TAppTheme {
   );
 
   static ThemeData darkTheme = ThemeData(
-    colorScheme: ColorScheme.fromSeed(seedColor: kMainAccentColor),
+    colorScheme: ColorScheme.fromSeed(seedColor: kMainAccentColor).copyWith(
+      background: kMainDarkBackgroundColor,
+      onBackground: kMainDarkOnBackgroundColor,
+      error: kMainDarkError,
+      onError: kMainDarkOnError,
+      surface: kMainDarkSurfaceColor,
+      onSurface: kMainDarkOnSurfaceColor,
+      primary: kMainAccentColor,
+      onPrimary: kMainDarkTextColor,
+    ),
     useMaterial3: true,
     fontFamily: "Outfit",
     primaryColor: kMainAccentColor,

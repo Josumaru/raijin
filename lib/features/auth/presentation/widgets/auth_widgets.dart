@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:raijin/core/constants/navigators.dart';
-import 'package:raijin/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:flutter/services.dart';
+import 'package:raijin/core/commons/widgets/exit_widget.dart';
 import 'package:raijin/features/auth/presentation/widgets/login_widget.dart';
 import 'package:raijin/features/auth/presentation/widgets/register_widget.dart';
 
@@ -16,23 +15,36 @@ class AuthWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: _controller,
-        child: Column(
-          children: [            
-            LoginWidget(
-              setPage: () => _setPage(
-                context: context,
-                page: 1,
+      body: PopScope(
+        canPop: false,
+        onPopInvoked: (didPop) {
+          showExitDialog(
+            context: context,
+            content: 'Are you sure to close the Application ?',
+            title: 'Exit the Application',
+            onPressed: () {
+              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+            },
+          );
+        },
+        child: SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: _controller,
+          child: Column(
+            children: [
+              LoginWidget(
+                setPage: () => _setPage(
+                  context: context,
+                  page: 1,
+                ),
+                formState: _loginFormState,
               ),
-              formState: _loginFormState,
-            ),
-            RegisterWidget(
-              setPage: () => _setPage(context: context, page: 0),
-              formState: _registerFormState,
-            ),
-          ],
+              RegisterWidget(
+                setPage: () => _setPage(context: context, page: 0),
+                formState: _registerFormState,
+              ),
+            ],
+          ),
         ),
       ),
     );
