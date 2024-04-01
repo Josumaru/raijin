@@ -13,4 +13,4 @@
 // const Color kMainDangerColor = Color.fromARGB(255, 235, 71, 59);
 // const Color kMainWarningColor = Colors.amber;
 
-const String kRaijinEndpoint = 'http://192.168.0.101';
+const String kAnimeEndpoint = 'https://samehadaku.email/';
