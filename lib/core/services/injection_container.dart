@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
@@ -6,8 +7,10 @@ import 'package:raijin/features/anime/data/datasources/remote/anime_data_source.
 import 'package:raijin/features/anime/data/datasources/remote/anime_data_source_impl.dart';
 import 'package:raijin/features/anime/data/repositories/anime_repository_impl.dart';
 import 'package:raijin/features/anime/domain/repositories/anime_repository.dart';
-import 'package:raijin/features/anime/domain/usecases/anime_get_new_anime.dart';
-import 'package:raijin/features/anime/presentation/bloc/anime_bloc.dart';
+import 'package:raijin/features/anime/domain/usecases/anime_get_new_use_case.dart';
+import 'package:raijin/features/anime/domain/usecases/anime_get_popular_use_case.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_new/anime_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_popular/anime_popular_bloc.dart';
 import 'package:raijin/features/auth/data/datasources/remote/auth_remote_data_source.dart';
 import 'package:raijin/features/auth/data/datasources/remote/auth_reomote_data_source_impl.dart';
 import 'package:raijin/features/auth/data/repositories/auth_repository_impl.dart';
@@ -24,7 +27,9 @@ Future<void> init() async {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   sl.registerSingleton(firebaseAuth);
 
-  
+  // Dio
+  final Dio dio = Dio();
+  sl.registerSingleton(dio);
 
   // FToast
   FToast fToast = FToast();
@@ -40,7 +45,13 @@ Future<void> init() async {
     ),
   );
 
-  sl.registerFactory<AnimeBloc>(() => AnimeBloc(animeGetNewUseCase: sl()));
+  sl.registerFactory<AnimeBloc>(
+    () => AnimeBloc(
+      animeGetNewUseCase: sl(),
+    ),
+  );
+  sl.registerFactory<AnimePopularBloc>(
+      () => AnimePopularBloc(animeGetPopularUseCase: sl()));
 
   // Datasource
   sl.registerSingleton<AuthRemoteDataSource>(
@@ -68,5 +79,9 @@ Future<void> init() async {
   );
   sl.registerSingleton<ToastUseCase>(ToastUseCase(fToast: sl()));
   sl.registerSingleton<AnimeGetNewUseCase>(
-      AnimeGetNewUseCase(animeRepository: sl()));
+    AnimeGetNewUseCase(animeRepository: sl()),
+  );
+  sl.registerSingleton<AnimeGetPopularUseCase>(
+    AnimeGetPopularUseCase(animeRepository: sl()),
+  );
 }

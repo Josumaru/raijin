@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-double kPadding = 20;
-double kSecondaryPadding = 10;
+double kPadding = 10;
+double kSecondaryPadding = 5;
 
 EdgeInsetsGeometry toastPadding = const EdgeInsets.symmetric(
   vertical: 5,

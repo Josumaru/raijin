@@ -10,7 +10,7 @@ class AuthLoginUseCase
 
   AuthLoginUseCase({required this.authRepository});
   @override
-  Future<Either<Failure<String>, AuthModel>> call({required AuthModel params}) async {
-    return await authRepository.authLogin(authModel: params);
+  Future<Either<Failure<String>, AuthModel>> call({required AuthModel? params}) async {
+    return await authRepository.authLogin(authModel: params!);
   }
 }

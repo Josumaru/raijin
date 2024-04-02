@@ -6,6 +6,8 @@ import 'package:raijin/core/routes/route.dart';
 import 'package:raijin/core/routes/route_name.dart';
 import 'package:raijin/core/services/injection_container.dart';
 import 'package:raijin/core/themes/theme.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_new/anime_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_popular/anime_popular_bloc.dart';
 import 'package:raijin/features/auth/presentation/bloc/auth_bloc.dart';
 
 class MyApp extends StatefulWidget {
@@ -40,13 +42,21 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => sl<AuthBloc>(),
         ),
+        BlocProvider(
+          create: (context) =>
+              sl<AnimeBloc>()..add(const AnimeEvent.animeGetNew(page: 1)),
+        ),
+        BlocProvider(
+          create: (context) => sl<AnimePopularBloc>()
+            ..add(const AnimePopularEvent.animeGetPopular()),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoute.onGenerateRoute,
         initialRoute: FirebaseAuth.instance.currentUser != null
-        ? RouteName.homePage
-        : RouteName.authPage,
+            ? RouteName.homePage
+            : RouteName.authPage,
         scrollBehavior: const ScrollBehavior().copyWith(
           overscroll: false,
           physics: const ClampingScrollPhysics(),

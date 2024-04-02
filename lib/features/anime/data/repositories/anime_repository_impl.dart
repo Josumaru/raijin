@@ -8,9 +8,22 @@ class AnimeRepositoryImpl implements AnimeRepository {
   final AnimeRemoteDataSource animeRemoteDataSource;
   const AnimeRepositoryImpl({required this.animeRemoteDataSource});
   @override
-  Future<Either<Failure<String>, List<AnimeModel>>> getNewAnime({required String page}) async{
+  Future<Either<Failure<String>, List<AnimeModel>>> getNewAnime(
+      {required int page}) async {
     try {
-      final List<AnimeModel> r = await animeRemoteDataSource.animeGetNew(page: page);
+      final List<AnimeModel> r =
+          await animeRemoteDataSource.animeGetNew(page: page);
+      return Right(r);
+    } catch (e) {
+      final String message = e.toString();
+      return Left(Failure.serverError(message: message));
+    }
+  }
+
+  @override
+  Future<Either<Failure<String>, List<AnimeModel>>> animeGetPopular() async {
+    try {
+      final List<AnimeModel> r = await animeRemoteDataSource.animeGetPopular();
       return Right(r);
     } catch (e) {
       final String message = e.toString();

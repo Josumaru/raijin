@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 // Dark
 const Color kMainDarkBackgroundColor = Color.fromARGB(255, 19, 27, 29);
@@ -55,6 +54,6 @@ Color onSurface({required BuildContext context}) =>
     Theme.of(context).colorScheme.onSurface;
 
 List<Color> gradientListColor({required BuildContext context}) => [
-      Theme.of(context).colorScheme.background.withOpacity(0.2),
+      Colors.transparent,
       Theme.of(context).colorScheme.onBackground,
     ];

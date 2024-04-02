@@ -7,18 +7,21 @@ abstract class AnimeModel with _$AnimeModel {
   const factory AnimeModel({
     required String title,
     required String endpoint,
-    required String episode,
     required String poster,
-    required String released,
+    List<String>? genre,
+    String? episode,
+    String? type,
+    String? description,
+    double? score,
+    String? released,
+    String? status,
   }) = _AnimeModel;
 
   factory AnimeModel.fromEntity({required AnimeEntity animeEntity}) {
     return AnimeModel(
       title: animeEntity.title,
       endpoint: animeEntity.endpoint,
-      episode: animeEntity.episode,
       poster: animeEntity.poster,
-      released: animeEntity.released,
     );
   }
 }

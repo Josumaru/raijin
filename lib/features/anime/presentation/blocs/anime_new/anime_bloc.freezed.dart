@@ -16,20 +16,20 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AnimeEvent {
-  String get page => throw _privateConstructorUsedError;
+  int get page => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String page) animeGetNew,
+    required TResult Function(int page) animeGetNew,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String page)? animeGetNew,
+    TResult? Function(int page)? animeGetNew,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String page)? animeGetNew,
+    TResult Function(int page)? animeGetNew,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -61,7 +61,7 @@ abstract class $AnimeEventCopyWith<$Res> {
           AnimeEvent value, $Res Function(AnimeEvent) then) =
       _$AnimeEventCopyWithImpl<$Res, AnimeEvent>;
   @useResult
-  $Res call({String page});
+  $Res call({int page});
 }
 
 /// @nodoc
@@ -83,7 +83,7 @@ class _$AnimeEventCopyWithImpl<$Res, $Val extends AnimeEvent>
       page: null == page
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
     ) as $Val);
   }
 }
@@ -96,7 +96,7 @@ abstract class _$$AnimeGetNewImplCopyWith<$Res>
       __$$AnimeGetNewImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String page});
+  $Res call({int page});
 }
 
 /// @nodoc
@@ -116,7 +116,7 @@ class __$$AnimeGetNewImplCopyWithImpl<$Res>
       page: null == page
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
     ));
   }
 }
@@ -127,7 +127,7 @@ class _$AnimeGetNewImpl implements _AnimeGetNew {
   const _$AnimeGetNewImpl({required this.page});
 
   @override
-  final String page;
+  final int page;
 
   @override
   String toString() {
@@ -154,7 +154,7 @@ class _$AnimeGetNewImpl implements _AnimeGetNew {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String page) animeGetNew,
+    required TResult Function(int page) animeGetNew,
   }) {
     return animeGetNew(page);
   }
@@ -162,7 +162,7 @@ class _$AnimeGetNewImpl implements _AnimeGetNew {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String page)? animeGetNew,
+    TResult? Function(int page)? animeGetNew,
   }) {
     return animeGetNew?.call(page);
   }
@@ -170,7 +170,7 @@ class _$AnimeGetNewImpl implements _AnimeGetNew {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String page)? animeGetNew,
+    TResult Function(int page)? animeGetNew,
     required TResult orElse(),
   }) {
     if (animeGetNew != null) {
@@ -209,10 +209,10 @@ class _$AnimeGetNewImpl implements _AnimeGetNew {
 }
 
 abstract class _AnimeGetNew implements AnimeEvent {
-  const factory _AnimeGetNew({required final String page}) = _$AnimeGetNewImpl;
+  const factory _AnimeGetNew({required final int page}) = _$AnimeGetNewImpl;
 
   @override
-  String get page;
+  int get page;
   @override
   @JsonKey(ignore: true)
   _$$AnimeGetNewImplCopyWith<_$AnimeGetNewImpl> get copyWith =>

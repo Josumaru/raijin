@@ -9,7 +9,7 @@ class AuthRegisterUseCase extends UseCase<Either<Failure<String>, AuthModel>, Au
 
   AuthRegisterUseCase({required this.authRepository});
   @override
-  Future<Either<Failure<String>, AuthModel>> call({required AuthModel params}) async {
-    return await authRepository.authRegister(authModel: params);
+  Future<Either<Failure<String>, AuthModel>> call({required AuthModel? params}) async {
+    return await authRepository.authRegister(authModel: params!);
   }
 }

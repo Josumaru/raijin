@@ -10,10 +10,10 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
 
   AnimeRemoteDataSourceImpl({required this.dio});
   @override
-  Future<List<AnimeModel>> animeGetNew({required String page}) async {
+  Future<List<AnimeModel>> animeGetNew({required int page}) async {
     final List<AnimeModel> listAnimeModel = [];
     final endpoint =
-        page == '1' ? '$kAnimeEndpoint/' : '$kAnimeEndpoint/page/$page/';
+        page == 1 ? '$kAnimeEndpoint/' : '$kAnimeEndpoint/page/$page/';
     final response = await dio.get(endpoint);
     final responseBody = parse(response.data).body;
     final elements = responseBody!.getElementsByClassName('post-show')[0];
@@ -37,5 +37,59 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
       ));
     }
     return listAnimeModel;
+  }
+
+  @override
+  Future<List<AnimeModel>> animeGetPopular() async {
+    final List<AnimeModel> animeModel = [];
+
+    String getTextByClass(
+        {required Element element, required String className, String? attr}) {
+      if (attr != null) {
+        final data =
+            element.getElementsByClassName(className).first.attributes[attr];
+        return data!;
+      }
+      final data = element.getElementsByClassName(className).first.text;
+      return data;
+    }
+
+    const endpoint =
+        '$kAnimeEndpoint/daftar-anime-2/?order=popular&status=&type=';
+    final response = await dio.get(endpoint);
+    final responseBody = parse(response.data).body;
+    final elements = responseBody!.getElementsByClassName('animepost');
+    for (var element in elements) {
+      final title = getTextByClass(element: element, className: 'title');
+      final type = getTextByClass(element: element, className: 'type');
+      final description = getTextByClass(element: element, className: 'ttls');
+      final score =
+          double.parse(getTextByClass(element: element, className: 'score'));
+      final endpoint =
+          element.getElementsByTagName('a').first.attributes['href'];
+      final poster =
+          element.getElementsByTagName('img').first.attributes['src'];
+      final genre =
+          element.getElementsByClassName('mta').first.getElementsByTagName('a');
+      final status = element
+          .getElementsByClassName('data')
+          .first
+          .getElementsByClassName('type')
+          .first
+          .text;
+      animeModel.add(
+        AnimeModel(
+          title: title,
+          endpoint: endpoint!,
+          poster: poster!,
+          score: score,
+          genre: genre.map((e) => e.text).toList(),
+          type: type,
+          description: description,
+          status: status,
+        ),
+      );
+    }
+    return animeModel;
   }
 }

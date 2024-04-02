@@ -4,15 +4,14 @@ import 'package:raijin/core/usecases/use_case.dart';
 import 'package:raijin/features/anime/data/models/anime_model.dart';
 import 'package:raijin/features/anime/domain/repositories/anime_repository.dart';
 
-class AnimeGetNewUseCase
-    extends UseCase<Either<Failure<String>, List<AnimeModel>>, String> {
+class AnimeGetPopularUseCase
+    extends UseCase<Either<Failure<String>, List<AnimeModel>>, int> {
   final AnimeRepository animeRepository;
 
-  AnimeGetNewUseCase({required this.animeRepository});
+  AnimeGetPopularUseCase({required this.animeRepository});
 
   @override
-  Future<Either<Failure<String>, List<AnimeModel>>> call(
-      {required String params}) async {
-    return await animeRepository.getNewAnime(page: params);
+  Future<Either<Failure<String>, List<AnimeModel>>> call({int? params}) async {
+    return await animeRepository.animeGetPopular();
   }
 }

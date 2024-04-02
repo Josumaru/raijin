@@ -6,8 +6,13 @@ abstract class AnimeEntity with _$AnimeEntity {
   const factory AnimeEntity({
     required String title,
     required String endpoint,
-    required String episode,
     required String poster,
-    required String released,
+    List<String>? genre,
+    String? episode,
+    String? type,
+    String? description,
+    double? score,
+    String? released,
+    String? status,
   }) = _AnimeEntity;
 }

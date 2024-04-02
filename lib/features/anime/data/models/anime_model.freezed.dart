@@ -18,9 +18,14 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AnimeModel {
   String get title => throw _privateConstructorUsedError;
   String get endpoint => throw _privateConstructorUsedError;
-  String get episode => throw _privateConstructorUsedError;
   String get poster => throw _privateConstructorUsedError;
-  String get released => throw _privateConstructorUsedError;
+  List<String>? get genre => throw _privateConstructorUsedError;
+  String? get episode => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  double? get score => throw _privateConstructorUsedError;
+  String? get released => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AnimeModelCopyWith<AnimeModel> get copyWith =>
@@ -36,9 +41,14 @@ abstract class $AnimeModelCopyWith<$Res> {
   $Res call(
       {String title,
       String endpoint,
-      String episode,
       String poster,
-      String released});
+      List<String>? genre,
+      String? episode,
+      String? type,
+      String? description,
+      double? score,
+      String? released,
+      String? status});
 }
 
 /// @nodoc
@@ -56,9 +66,14 @@ class _$AnimeModelCopyWithImpl<$Res, $Val extends AnimeModel>
   $Res call({
     Object? title = null,
     Object? endpoint = null,
-    Object? episode = null,
     Object? poster = null,
-    Object? released = null,
+    Object? genre = freezed,
+    Object? episode = freezed,
+    Object? type = freezed,
+    Object? description = freezed,
+    Object? score = freezed,
+    Object? released = freezed,
+    Object? status = freezed,
   }) {
     return _then(_value.copyWith(
       title: null == title
@@ -69,18 +84,38 @@ class _$AnimeModelCopyWithImpl<$Res, $Val extends AnimeModel>
           ? _value.endpoint
           : endpoint // ignore: cast_nullable_to_non_nullable
               as String,
-      episode: null == episode
-          ? _value.episode
-          : episode // ignore: cast_nullable_to_non_nullable
-              as String,
       poster: null == poster
           ? _value.poster
           : poster // ignore: cast_nullable_to_non_nullable
               as String,
-      released: null == released
+      genre: freezed == genre
+          ? _value.genre
+          : genre // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      episode: freezed == episode
+          ? _value.episode
+          : episode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      score: freezed == score
+          ? _value.score
+          : score // ignore: cast_nullable_to_non_nullable
+              as double?,
+      released: freezed == released
           ? _value.released
           : released // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -96,9 +131,14 @@ abstract class _$$AnimeModelImplCopyWith<$Res>
   $Res call(
       {String title,
       String endpoint,
-      String episode,
       String poster,
-      String released});
+      List<String>? genre,
+      String? episode,
+      String? type,
+      String? description,
+      double? score,
+      String? released,
+      String? status});
 }
 
 /// @nodoc
@@ -114,9 +154,14 @@ class __$$AnimeModelImplCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
     Object? endpoint = null,
-    Object? episode = null,
     Object? poster = null,
-    Object? released = null,
+    Object? genre = freezed,
+    Object? episode = freezed,
+    Object? type = freezed,
+    Object? description = freezed,
+    Object? score = freezed,
+    Object? released = freezed,
+    Object? status = freezed,
   }) {
     return _then(_$AnimeModelImpl(
       title: null == title
@@ -127,18 +172,38 @@ class __$$AnimeModelImplCopyWithImpl<$Res>
           ? _value.endpoint
           : endpoint // ignore: cast_nullable_to_non_nullable
               as String,
-      episode: null == episode
-          ? _value.episode
-          : episode // ignore: cast_nullable_to_non_nullable
-              as String,
       poster: null == poster
           ? _value.poster
           : poster // ignore: cast_nullable_to_non_nullable
               as String,
-      released: null == released
+      genre: freezed == genre
+          ? _value._genre
+          : genre // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      episode: freezed == episode
+          ? _value.episode
+          : episode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      score: freezed == score
+          ? _value.score
+          : score // ignore: cast_nullable_to_non_nullable
+              as double?,
+      released: freezed == released
           ? _value.released
           : released // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -149,24 +214,48 @@ class _$AnimeModelImpl implements _AnimeModel {
   const _$AnimeModelImpl(
       {required this.title,
       required this.endpoint,
-      required this.episode,
       required this.poster,
-      required this.released});
+      final List<String>? genre,
+      this.episode,
+      this.type,
+      this.description,
+      this.score,
+      this.released,
+      this.status})
+      : _genre = genre;
 
   @override
   final String title;
   @override
   final String endpoint;
   @override
-  final String episode;
-  @override
   final String poster;
+  final List<String>? _genre;
   @override
-  final String released;
+  List<String>? get genre {
+    final value = _genre;
+    if (value == null) return null;
+    if (_genre is EqualUnmodifiableListView) return _genre;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  final String? episode;
+  @override
+  final String? type;
+  @override
+  final String? description;
+  @override
+  final double? score;
+  @override
+  final String? released;
+  @override
+  final String? status;
 
   @override
   String toString() {
-    return 'AnimeModel(title: $title, endpoint: $endpoint, episode: $episode, poster: $poster, released: $released)';
+    return 'AnimeModel(title: $title, endpoint: $endpoint, poster: $poster, genre: $genre, episode: $episode, type: $type, description: $description, score: $score, released: $released, status: $status)';
   }
 
   @override
@@ -177,15 +266,31 @@ class _$AnimeModelImpl implements _AnimeModel {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.endpoint, endpoint) ||
                 other.endpoint == endpoint) &&
-            (identical(other.episode, episode) || other.episode == episode) &&
             (identical(other.poster, poster) || other.poster == poster) &&
+            const DeepCollectionEquality().equals(other._genre, _genre) &&
+            (identical(other.episode, episode) || other.episode == episode) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.score, score) || other.score == score) &&
             (identical(other.released, released) ||
-                other.released == released));
+                other.released == released) &&
+            (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, title, endpoint, episode, poster, released);
+  int get hashCode => Object.hash(
+      runtimeType,
+      title,
+      endpoint,
+      poster,
+      const DeepCollectionEquality().hash(_genre),
+      episode,
+      type,
+      description,
+      score,
+      released,
+      status);
 
   @JsonKey(ignore: true)
   @override
@@ -198,20 +303,35 @@ abstract class _AnimeModel implements AnimeModel {
   const factory _AnimeModel(
       {required final String title,
       required final String endpoint,
-      required final String episode,
       required final String poster,
-      required final String released}) = _$AnimeModelImpl;
+      final List<String>? genre,
+      final String? episode,
+      final String? type,
+      final String? description,
+      final double? score,
+      final String? released,
+      final String? status}) = _$AnimeModelImpl;
 
   @override
   String get title;
   @override
   String get endpoint;
   @override
-  String get episode;
-  @override
   String get poster;
   @override
-  String get released;
+  List<String>? get genre;
+  @override
+  String? get episode;
+  @override
+  String? get type;
+  @override
+  String? get description;
+  @override
+  double? get score;
+  @override
+  String? get released;
+  @override
+  String? get status;
   @override
   @JsonKey(ignore: true)
   _$$AnimeModelImplCopyWith<_$AnimeModelImpl> get copyWith =>
