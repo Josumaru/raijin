@@ -2,5 +2,9 @@ import 'package:raijin/features/anime/data/models/anime_model.dart';
 
 abstract class AnimeRemoteDataSource {
   Future<List<AnimeModel>> animeGetNew({required int page});
-  Future<List<AnimeModel>> animeGetPopular();
+  Future<List<AnimeModel>> animeGet({
+    required String status,
+    required String order,
+    required String type,
+  });
 }

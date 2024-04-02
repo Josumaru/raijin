@@ -68,14 +68,12 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                       ),
                     ),
                   )),
-                  Positioned(
+                  const Positioned(
                     child: Center(
-                      child: Container(
-                        child: Icon(
-                          Iconsax.play,
-                          color: backgroundColor(context: context),
-                          size: 40,
-                        ),
+                      child: Icon(
+                        Iconsax.play,
+                        color: kMainDarkTextColor,
+                        size: 40,
                       ),
                     ),
                   ),
@@ -92,9 +90,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                               style: headlineLarge(context: context).copyWith(
-                                color: backgroundColor(
-                                  context: context,
-                                ),
+                                color: kMainDarkTextColor,
                               ),
                             ),
                           ),

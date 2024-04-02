@@ -21,9 +21,17 @@ class AnimeRepositoryImpl implements AnimeRepository {
   }
 
   @override
-  Future<Either<Failure<String>, List<AnimeModel>>> animeGetPopular() async {
+  Future<Either<Failure<String>, List<AnimeModel>>> animeGet({
+    required String status,
+    required String order,
+    required String type,
+  }) async {
     try {
-      final List<AnimeModel> r = await animeRemoteDataSource.animeGetPopular();
+      final List<AnimeModel> r = await animeRemoteDataSource.animeGet(
+        order: order,
+        status: status,
+        type: type,
+      );
       return Right(r);
     } catch (e) {
       final String message = e.toString();

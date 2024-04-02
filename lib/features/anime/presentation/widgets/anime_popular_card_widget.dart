@@ -12,9 +12,9 @@ class AnimePopularCardWidget extends StatelessWidget {
   const AnimePopularCardWidget({
     super.key,
     required this.animeModel,
-    required this.index,
+    this.index,
   });
-  final int index;
+  final int? index;
   final AnimeModel animeModel;
   @override
   Widget build(BuildContext context) {
@@ -28,34 +28,14 @@ class AnimePopularCardWidget extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  width: widthMediaQuery(context: context) / 2.3,
-                  height: heightMediaQuery(context: context) / 3,
+                  width: (widthMediaQuery(context: context) / 3) - (40 / 3),
+                  height: heightMediaQuery(context: context) / 4.5,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: imageProvider,
                       fit: BoxFit.cover,
                     ),
                     borderRadius: kMainBorderRadius,
-                  ),
-                ),
-                Positioned(
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      borderRadius: kTopLeftBorderRadius,
-                      color: primaryColor(
-                        context: context,
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        '$index',
-                        style: bodyLarge(context: context).copyWith(
-                          color: backgroundColor(context: context),
-                        ),
-                      ),
-                    ),
                   ),
                 ),
                 Positioned.fill(
@@ -70,9 +50,74 @@ class AnimePopularCardWidget extends StatelessWidget {
                     ),
                   ),
                 ),
+                // Positioned(
+                //   child: Container(
+                //     width: 35,
+                //     height: 35,
+                //     decoration: BoxDecoration(
+                //       borderRadius: kTopLeftBottomRightBorderRadius,
+                //       color: primaryColor(
+                //         context: context,
+                //       ),
+                //     ),
+                //     child: Center(
+                //       child: Text(
+                //         index == null ? animeModel.type! : '$index',
+                //         style: bodyLarge(context: context).copyWith(
+                //           color: kMainDarkTextColor,
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                index == null
+                    ? Positioned(
+                        left: 5,
+                        bottom: 5,
+                        child: Container(
+                          width: 50,
+                          height: 20,
+                          decoration: BoxDecoration(
+                            borderRadius: kTopLeftBottomRightBorderRadius,
+                            color: primaryColor(
+                              context: context,
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              animeModel.type!,
+                              style: bodyLarge(context: context).copyWith(
+                                color: kMainDarkTextColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : Positioned(
+                        child: Container(
+                          width: 35,
+                          height: 35,
+                          decoration: BoxDecoration(
+                            borderRadius: kTopLeftBottomRightBorderRadius,
+                            color: primaryColor(
+                              context: context,
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '$index',
+                              style: bodyLarge(context: context).copyWith(
+                                color: kMainDarkTextColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
                 Positioned(
                   bottom: 5,
-                  left: 5,
+                  left: index == null ? null : 5,
+                  right: index == null ? 5 : null,
                   child: Row(
                     mainAxisAlignment: kMainAxisAligmentCenter(),
                     crossAxisAlignment: kCrossAxisAlignmentCenter(),
@@ -83,9 +128,9 @@ class AnimePopularCardWidget extends StatelessWidget {
                         size: 14,
                       ),
                       Text(
-                        '${animeModel.score}/10',
+                        '${animeModel.score}',
                         style: bodyMedium(context: context).copyWith(
-                          color: backgroundColor(context: context),
+                          color: kMainDarkTextColor,
                         ),
                       )
                     ],
@@ -94,8 +139,8 @@ class AnimePopularCardWidget extends StatelessWidget {
               ],
             ),
             SizedBox(
-              width: widthMediaQuery(context: context) / 2.3,
-              height: heightMediaQuery(context: context) / 3,
+              width: (widthMediaQuery(context: context) / 3) - (40 / 3),
+              height: 40,
               child: Text(
                 animeModel.title,
                 style: bodyLarge(context: context),

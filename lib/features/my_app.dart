@@ -6,8 +6,9 @@ import 'package:raijin/core/routes/route.dart';
 import 'package:raijin/core/routes/route_name.dart';
 import 'package:raijin/core/services/injection_container.dart';
 import 'package:raijin/core/themes/theme.dart';
-import 'package:raijin/features/anime/presentation/blocs/anime_new/anime_bloc.dart';
-import 'package:raijin/features/anime/presentation/blocs/anime_popular/anime_popular_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_new_bloc/anime_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_ongoing_bloc/anime_ongoing_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_popular_bloc/anime_popular_bloc.dart';
 import 'package:raijin/features/auth/presentation/bloc/auth_bloc.dart';
 
 class MyApp extends StatefulWidget {
@@ -48,7 +49,23 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => sl<AnimePopularBloc>()
-            ..add(const AnimePopularEvent.animeGetPopular()),
+            ..add(
+              const AnimePopularEvent.animeGetPopular(
+                status: '',
+                order: 'popular',
+                type: '',
+              ),
+            ),
+        ),
+        BlocProvider(
+          create: (context) => sl<AnimeOngoingBloc>()
+            ..add(
+              const AnimeOngoingEvent.animeGetOngoing(
+                status: '',
+                order: '',
+                type: '',
+              ),
+            ),
         ),
       ],
       child: MaterialApp(

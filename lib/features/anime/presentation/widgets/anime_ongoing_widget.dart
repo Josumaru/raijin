@@ -4,15 +4,15 @@ import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/core/constants/colors.dart';
 import 'package:raijin/core/constants/font.dart';
 import 'package:raijin/core/constants/padding.dart';
-import 'package:raijin/features/anime/presentation/blocs/anime_popular_bloc/anime_popular_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_ongoing_bloc/anime_ongoing_bloc.dart';
 import 'package:raijin/features/anime/presentation/widgets/anime_popular_card_widget.dart';
 
-class AnimePopularWidget extends StatelessWidget {
-  const AnimePopularWidget({super.key});
+class AnimeOngoingWidget extends StatelessWidget {
+  const AnimeOngoingWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AnimePopularBloc, AnimePopularState>(
+    return BlocBuilder<AnimeOngoingBloc, AnimeOngoingState>(
       builder: (context, state) {
         return state.when(
           initial: () => Container(),
@@ -26,7 +26,7 @@ class AnimePopularWidget extends StatelessWidget {
                 Padding(
                   padding: kLeftPadding,
                   child: Text(
-                    '10 Top Anime',
+                    'Airing Anime',
                     style: headlineLarge(context: context).copyWith(
                       color: onBackgroundColor(context: context),
                     ),
@@ -37,13 +37,12 @@ class AnimePopularWidget extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: List.generate(
-                      10,
+                      animeModel!.length,
                       (index) => Padding(
                         padding:
                             index == 0 ? kHorizontalPadding : kRightPadding,
                         child: AnimePopularCardWidget(
-                          index: index + 1,
-                          animeModel: animeModel![index],
+                          animeModel: animeModel[index],
                         ),
                       ),
                     ),

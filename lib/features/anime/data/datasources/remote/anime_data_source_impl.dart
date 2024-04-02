@@ -40,7 +40,11 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
   }
 
   @override
-  Future<List<AnimeModel>> animeGetPopular() async {
+  Future<List<AnimeModel>> animeGet({
+    required String status,
+    required String order,
+    required String type,
+  }) async {
     final List<AnimeModel> animeModel = [];
 
     String getTextByClass(
@@ -54,8 +58,8 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
       return data;
     }
 
-    const endpoint =
-        '$kAnimeEndpoint/daftar-anime-2/?order=popular&status=&type=';
+    String endpoint =
+        '$kAnimeEndpoint/daftar-anime-2/?order=$order&status=$status&type=$type';
     final response = await dio.get(endpoint);
     final responseBody = parse(response.data).body;
     final elements = responseBody!.getElementsByClassName('animepost');
@@ -63,8 +67,9 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
       final title = getTextByClass(element: element, className: 'title');
       final type = getTextByClass(element: element, className: 'type');
       final description = getTextByClass(element: element, className: 'ttls');
-      final score =
-          double.parse(getTextByClass(element: element, className: 'score'));
+      String score = getTextByClass(element: element, className: 'score');
+      double doubleScore = score == ' ' ? 0.0 : double.parse(score);
+
       final endpoint =
           element.getElementsByTagName('a').first.attributes['href'];
       final poster =
@@ -82,7 +87,7 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
           title: title,
           endpoint: endpoint!,
           poster: poster!,
-          score: score,
+          score: doubleScore,
           genre: genre.map((e) => e.text).toList(),
           type: type,
           description: description,

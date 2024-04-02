@@ -55,5 +55,5 @@ Color onSurface({required BuildContext context}) =>
 
 List<Color> gradientListColor({required BuildContext context}) => [
       Colors.transparent,
-      Theme.of(context).colorScheme.onBackground,
+      kMainDarkBackgroundColor,
     ];
