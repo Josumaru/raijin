@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/core/constants/colors.dart';
 import 'package:raijin/core/constants/font.dart';
@@ -24,12 +25,16 @@ class AnimeOngoingWidget extends StatelessWidget {
               children: [
                 const SizedBox(height: 10),
                 Padding(
-                  padding: kLeftPadding,
-                  child: Text(
-                    'Airing Anime',
-                    style: headlineLarge(context: context).copyWith(
-                      color: onBackgroundColor(context: context),
-                    ),
+                  padding: kHorizontalPadding,
+                  child: Row(
+                    children: [
+                      Text(
+                        'Airing Anime',
+                        style: headlineLarge(context: context).copyWith(
+                          color: onBackgroundColor(context: context),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 10),

@@ -79,9 +79,22 @@ class AnimePopularCardWidget extends StatelessWidget {
                           height: 20,
                           decoration: BoxDecoration(
                             borderRadius: kTopLeftBottomRightBorderRadius,
-                            color: primaryColor(
-                              context: context,
-                            ),
+                            color: () {
+                              switch (animeModel.type!) {
+                                case 'TV':
+                                  return Colors.redAccent;
+                                case 'OVA':
+                                  return Colors.amberAccent;
+                                case 'ONA':
+                                  return Colors.greenAccent;
+                                case 'SPECIAL':
+                                  return Colors.blueAccent;
+                                case 'MOVIE':
+                                  return Colors.limeAccent;
+                                default:
+                                  return primaryColor(context: context);
+                              }
+                            }(),
                           ),
                           child: Center(
                             child: Text(

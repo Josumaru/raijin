@@ -26,7 +26,7 @@ class AnimePopularWidget extends StatelessWidget {
                 Padding(
                   padding: kLeftPadding,
                   child: Text(
-                    '10 Top Anime',
+                    'Top 10 Anime',
                     style: headlineLarge(context: context).copyWith(
                       color: onBackgroundColor(context: context),
                     ),
