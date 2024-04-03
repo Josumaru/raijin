@@ -5,6 +5,7 @@ import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/core/constants/border_radius.dart';
 import 'package:raijin/core/constants/colors.dart';
 import 'package:raijin/core/constants/font.dart';
+import 'package:raijin/core/constants/padding.dart';
 import 'package:raijin/core/constants/sizes.dart';
 import 'package:raijin/features/anime/data/models/anime_model.dart';
 
@@ -38,6 +39,20 @@ class AnimePopularCardWidget extends StatelessWidget {
                     borderRadius: kMainBorderRadius,
                   ),
                 ),
+                animeModel.status! == 'Completed'
+                    ? Positioned(
+                        right: 5,
+                        top: 5,
+                        child: Container(
+                          padding: kHorizontalPadding,
+                          decoration: BoxDecoration(
+                            color: primaryColor(context: context),
+                            borderRadius: kMainBorderRadius / 4,
+                          ),
+                          child: const Text('END'),
+                        ),
+                      )
+                    : Container(),
                 Positioned.fill(
                   child: Container(
                     decoration: BoxDecoration(

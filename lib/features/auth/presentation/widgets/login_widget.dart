@@ -259,7 +259,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               loaded: (authModel) {
                 pushReplacementNamed(
                   context: context,
-                  routeName: RouteName.homePage,
+                  routeName: RouteName.mainPage,
                 );
                 return Container();
               },

@@ -6,6 +6,7 @@ import 'package:raijin/core/routes/route.dart';
 import 'package:raijin/core/routes/route_name.dart';
 import 'package:raijin/core/services/injection_container.dart';
 import 'package:raijin/core/themes/theme.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_complete_bloc/anime_complete_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_new_bloc/anime_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_ongoing_bloc/anime_ongoing_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_popular_bloc/anime_popular_bloc.dart';
@@ -61,8 +62,18 @@ class _MyAppState extends State<MyApp> {
           create: (context) => sl<AnimeOngoingBloc>()
             ..add(
               const AnimeOngoingEvent.animeGetOngoing(
-                status: '',
-                order: '',
+                status: 'Currently+Airing',
+                order: 'latest',
+                type: '',
+              ),
+            ),
+        ),
+        BlocProvider(
+          create: (context) => sl<AnimeCompleteBloc>()
+            ..add(
+              const AnimeCompleteEvent.animeGetComplete(
+                status: 'Finished+Airing',
+                order: 'latest',
                 type: '',
               ),
             ),
@@ -72,7 +83,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoute.onGenerateRoute,
         initialRoute: FirebaseAuth.instance.currentUser != null
-            ? RouteName.homePage
+            ? RouteName.mainPage
             : RouteName.authPage,
         scrollBehavior: const ScrollBehavior().copyWith(
           overscroll: false,

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:raijin/core/commons/widgets/exit_widget.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_new_bloc/anime_bloc.dart';
+import 'package:raijin/features/anime/presentation/widgets/anime_complete_widget.dart';
 import 'package:raijin/features/anime/presentation/widgets/anime_ongoing_widget.dart';
 import 'package:raijin/features/anime/presentation/widgets/anime_popular_widget.dart';
 import 'package:raijin/features/anime/presentation/widgets/carousel_shimmer_widget.dart';
@@ -54,6 +55,7 @@ class HomeWidget extends StatelessWidget {
                   ),
                   const AnimePopularWidget(),
                   const AnimeOngoingWidget(),
+                  const AnimeCompleteWidget(),
                 ],
               ),
             ),

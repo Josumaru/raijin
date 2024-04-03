@@ -74,5 +74,5 @@ void main() async {
   //     released: released,
   //   ));
   // }
-  print(animeModel[0]);
+  // print(animeModel[0]);
 }

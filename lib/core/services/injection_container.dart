@@ -9,6 +9,7 @@ import 'package:raijin/features/anime/data/repositories/anime_repository_impl.da
 import 'package:raijin/features/anime/domain/repositories/anime_repository.dart';
 import 'package:raijin/features/anime/domain/usecases/anime_get_new_use_case.dart';
 import 'package:raijin/features/anime/domain/usecases/anime_get_use_case.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_complete_bloc/anime_complete_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_new_bloc/anime_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_ongoing_bloc/anime_ongoing_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_popular_bloc/anime_popular_bloc.dart';
@@ -58,6 +59,9 @@ Future<void> init() async {
 
   sl.registerFactory<AnimeOngoingBloc>(
     () => AnimeOngoingBloc(animeGetUseCase: sl()),
+  );
+  sl.registerFactory<AnimeCompleteBloc>(
+    () => AnimeCompleteBloc(animeGetUseCase: sl()),
   );
 
   // Datasource

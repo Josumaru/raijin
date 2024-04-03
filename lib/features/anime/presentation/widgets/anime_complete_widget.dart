@@ -4,15 +4,15 @@ import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/core/constants/colors.dart';
 import 'package:raijin/core/constants/font.dart';
 import 'package:raijin/core/constants/padding.dart';
-import 'package:raijin/features/anime/presentation/blocs/anime_ongoing_bloc/anime_ongoing_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_complete_bloc/anime_complete_bloc.dart';
 import 'package:raijin/features/anime/presentation/widgets/anime_popular_card_widget.dart';
 
-class AnimeOngoingWidget extends StatelessWidget {
-  const AnimeOngoingWidget({super.key});
+class AnimeCompleteWidget extends StatelessWidget {
+  const AnimeCompleteWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AnimeOngoingBloc, AnimeOngoingState>(
+    return BlocBuilder<AnimeCompleteBloc, AnimeCompleteState>(
       builder: (context, state) {
         return state.when(
           initial: () => Container(),
@@ -24,16 +24,12 @@ class AnimeOngoingWidget extends StatelessWidget {
               children: [
                 const SizedBox(height: 10),
                 Padding(
-                  padding: kHorizontalPadding,
-                  child: Row(
-                    children: [
-                      Text(
-                        'Airing Anime',
-                        style: headlineLarge(context: context).copyWith(
-                          color: onBackgroundColor(context: context),
-                        ),
-                      ),
-                    ],
+                  padding: kLeftPadding,
+                  child: Text(
+                    'Finished Airing Anime',
+                    style: headlineLarge(context: context).copyWith(
+                      color: onBackgroundColor(context: context),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 10),

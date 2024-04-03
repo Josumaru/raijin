@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:raijin/core/commons/pages/main_page.dart';
 import 'package:raijin/core/routes/route_name.dart';
 import 'package:raijin/features/auth/presentation/pages/auth_page.dart';
 import 'package:raijin/features/anime/presentation/pages/home_page.dart';
@@ -10,10 +11,10 @@ class AppRoute {
     switch (routeSettings.name) {
       case RouteName.authPage:
         return _materialPageRoute(const AuthPage());
-      case RouteName.homePage:
-        return _materialPageRoute(const HomePage());
+      case RouteName.mainPage:
+        return _materialPageRoute(MainPage());
       default:
-        return _materialPageRoute(const HomePage());
+        return _materialPageRoute(MainPage());
     }
   }
 

@@ -98,9 +98,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                           Text(
                             animeModel[index].episode!,
                             style: bodySmall(context: context).copyWith(
-                              color: backgroundColor(
-                                context: context,
-                              ),
+                              color: kMainDarkTextColor,
                             ),
                           ),
                         ],
