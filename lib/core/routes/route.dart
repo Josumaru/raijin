@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:raijin/core/commons/pages/main_page.dart';
 import 'package:raijin/core/routes/route_name.dart';
 import 'package:raijin/features/auth/presentation/pages/auth_page.dart';
-import 'package:raijin/features/anime/presentation/pages/home_page.dart';
 
 class AppRoute {
   static final GlobalKey<NavigatorState> navigatorKey =

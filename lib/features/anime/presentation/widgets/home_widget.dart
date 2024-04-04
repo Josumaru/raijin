@@ -9,7 +9,6 @@ import 'package:raijin/features/anime/presentation/widgets/anime_ongoing_widget.
 import 'package:raijin/features/anime/presentation/widgets/anime_popular_widget.dart';
 import 'package:raijin/features/anime/presentation/widgets/carousel_shimmer_widget.dart';
 import 'package:raijin/features/anime/presentation/widgets/carousel_widget.dart';
-import 'package:raijin/features/anime/presentation/widgets/home_profile_widget.dart';
 
 class HomeWidget extends StatelessWidget {
   HomeWidget({super.key});
@@ -39,7 +38,7 @@ class HomeWidget extends StatelessWidget {
               scrollDirection: Axis.vertical,
               child: Column(
                 children: [
-                  const HomeProfileWidget(),
+                  // const HomeProfileWidget(),
                   // const SearchBarWidget(),
                   BlocBuilder<AnimeBloc, AnimeState>(
                     builder: (context, state) {

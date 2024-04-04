@@ -11,4 +11,7 @@ abstract class AnimeRepository {
     required String order,
     required String type,
   });
+  Future<Either<Failure<String>, AnimeModel>> animeGetDetail({
+    required String endpoint,
+  });
 }

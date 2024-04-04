@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // Dark
-const Color kMainDarkBackgroundColor = Color.fromARGB(255, 19, 27, 29);
+const Color kMainDarkBackgroundColor = Color.fromARGB(255, 19, 24, 26);
 const Color kMainDarkOnBackgroundColor = Color.fromARGB(255, 255, 255, 255);
 const Color kMainDarkTextColor = Color.fromARGB(255, 255, 255, 255);
 const Color kMainDarkSurfaceColor = kMainAccentColor;

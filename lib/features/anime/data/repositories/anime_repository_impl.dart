@@ -38,4 +38,17 @@ class AnimeRepositoryImpl implements AnimeRepository {
       return Left(Failure.serverError(message: message));
     }
   }
+
+  @override
+  Future<Either<Failure<String>, AnimeModel>> animeGetDetail(
+      {required String endpoint}) async {
+    try {
+      final AnimeModel r =
+          await animeRemoteDataSource.animeDetail(endpoint: endpoint);
+      return Right(r);
+    } catch (e) {
+      final message = e.toString();
+      return Left(Failure.serverError(message: message));
+    }
+  }
 }

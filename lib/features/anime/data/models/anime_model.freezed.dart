@@ -26,6 +26,16 @@ mixin _$AnimeModel {
   double? get score => throw _privateConstructorUsedError;
   String? get released => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
+  String? get japanese => throw _privateConstructorUsedError;
+  String? get source => throw _privateConstructorUsedError;
+  String? get english => throw _privateConstructorUsedError;
+  String? get duration => throw _privateConstructorUsedError;
+  String? get season => throw _privateConstructorUsedError;
+  String? get studio => throw _privateConstructorUsedError;
+  String? get producers => throw _privateConstructorUsedError;
+  String? get trailer => throw _privateConstructorUsedError;
+  List<EpisodeModel>? get episodeList => throw _privateConstructorUsedError;
+  int? get totalEpisode => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AnimeModelCopyWith<AnimeModel> get copyWith =>
@@ -48,7 +58,17 @@ abstract class $AnimeModelCopyWith<$Res> {
       String? description,
       double? score,
       String? released,
-      String? status});
+      String? status,
+      String? japanese,
+      String? source,
+      String? english,
+      String? duration,
+      String? season,
+      String? studio,
+      String? producers,
+      String? trailer,
+      List<EpisodeModel>? episodeList,
+      int? totalEpisode});
 }
 
 /// @nodoc
@@ -74,6 +94,16 @@ class _$AnimeModelCopyWithImpl<$Res, $Val extends AnimeModel>
     Object? score = freezed,
     Object? released = freezed,
     Object? status = freezed,
+    Object? japanese = freezed,
+    Object? source = freezed,
+    Object? english = freezed,
+    Object? duration = freezed,
+    Object? season = freezed,
+    Object? studio = freezed,
+    Object? producers = freezed,
+    Object? trailer = freezed,
+    Object? episodeList = freezed,
+    Object? totalEpisode = freezed,
   }) {
     return _then(_value.copyWith(
       title: null == title
@@ -116,6 +146,46 @@ class _$AnimeModelCopyWithImpl<$Res, $Val extends AnimeModel>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
+      japanese: freezed == japanese
+          ? _value.japanese
+          : japanese // ignore: cast_nullable_to_non_nullable
+              as String?,
+      source: freezed == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as String?,
+      english: freezed == english
+          ? _value.english
+          : english // ignore: cast_nullable_to_non_nullable
+              as String?,
+      duration: freezed == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as String?,
+      season: freezed == season
+          ? _value.season
+          : season // ignore: cast_nullable_to_non_nullable
+              as String?,
+      studio: freezed == studio
+          ? _value.studio
+          : studio // ignore: cast_nullable_to_non_nullable
+              as String?,
+      producers: freezed == producers
+          ? _value.producers
+          : producers // ignore: cast_nullable_to_non_nullable
+              as String?,
+      trailer: freezed == trailer
+          ? _value.trailer
+          : trailer // ignore: cast_nullable_to_non_nullable
+              as String?,
+      episodeList: freezed == episodeList
+          ? _value.episodeList
+          : episodeList // ignore: cast_nullable_to_non_nullable
+              as List<EpisodeModel>?,
+      totalEpisode: freezed == totalEpisode
+          ? _value.totalEpisode
+          : totalEpisode // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -138,7 +208,17 @@ abstract class _$$AnimeModelImplCopyWith<$Res>
       String? description,
       double? score,
       String? released,
-      String? status});
+      String? status,
+      String? japanese,
+      String? source,
+      String? english,
+      String? duration,
+      String? season,
+      String? studio,
+      String? producers,
+      String? trailer,
+      List<EpisodeModel>? episodeList,
+      int? totalEpisode});
 }
 
 /// @nodoc
@@ -162,6 +242,16 @@ class __$$AnimeModelImplCopyWithImpl<$Res>
     Object? score = freezed,
     Object? released = freezed,
     Object? status = freezed,
+    Object? japanese = freezed,
+    Object? source = freezed,
+    Object? english = freezed,
+    Object? duration = freezed,
+    Object? season = freezed,
+    Object? studio = freezed,
+    Object? producers = freezed,
+    Object? trailer = freezed,
+    Object? episodeList = freezed,
+    Object? totalEpisode = freezed,
   }) {
     return _then(_$AnimeModelImpl(
       title: null == title
@@ -204,6 +294,46 @@ class __$$AnimeModelImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
+      japanese: freezed == japanese
+          ? _value.japanese
+          : japanese // ignore: cast_nullable_to_non_nullable
+              as String?,
+      source: freezed == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as String?,
+      english: freezed == english
+          ? _value.english
+          : english // ignore: cast_nullable_to_non_nullable
+              as String?,
+      duration: freezed == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as String?,
+      season: freezed == season
+          ? _value.season
+          : season // ignore: cast_nullable_to_non_nullable
+              as String?,
+      studio: freezed == studio
+          ? _value.studio
+          : studio // ignore: cast_nullable_to_non_nullable
+              as String?,
+      producers: freezed == producers
+          ? _value.producers
+          : producers // ignore: cast_nullable_to_non_nullable
+              as String?,
+      trailer: freezed == trailer
+          ? _value.trailer
+          : trailer // ignore: cast_nullable_to_non_nullable
+              as String?,
+      episodeList: freezed == episodeList
+          ? _value._episodeList
+          : episodeList // ignore: cast_nullable_to_non_nullable
+              as List<EpisodeModel>?,
+      totalEpisode: freezed == totalEpisode
+          ? _value.totalEpisode
+          : totalEpisode // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -221,8 +351,19 @@ class _$AnimeModelImpl implements _AnimeModel {
       this.description,
       this.score,
       this.released,
-      this.status})
-      : _genre = genre;
+      this.status,
+      this.japanese,
+      this.source,
+      this.english,
+      this.duration,
+      this.season,
+      this.studio,
+      this.producers,
+      this.trailer,
+      final List<EpisodeModel>? episodeList,
+      this.totalEpisode})
+      : _genre = genre,
+        _episodeList = episodeList;
 
   @override
   final String title;
@@ -252,10 +393,38 @@ class _$AnimeModelImpl implements _AnimeModel {
   final String? released;
   @override
   final String? status;
+  @override
+  final String? japanese;
+  @override
+  final String? source;
+  @override
+  final String? english;
+  @override
+  final String? duration;
+  @override
+  final String? season;
+  @override
+  final String? studio;
+  @override
+  final String? producers;
+  @override
+  final String? trailer;
+  final List<EpisodeModel>? _episodeList;
+  @override
+  List<EpisodeModel>? get episodeList {
+    final value = _episodeList;
+    if (value == null) return null;
+    if (_episodeList is EqualUnmodifiableListView) return _episodeList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  final int? totalEpisode;
 
   @override
   String toString() {
-    return 'AnimeModel(title: $title, endpoint: $endpoint, poster: $poster, genre: $genre, episode: $episode, type: $type, description: $description, score: $score, released: $released, status: $status)';
+    return 'AnimeModel(title: $title, endpoint: $endpoint, poster: $poster, genre: $genre, episode: $episode, type: $type, description: $description, score: $score, released: $released, status: $status, japanese: $japanese, source: $source, english: $english, duration: $duration, season: $season, studio: $studio, producers: $producers, trailer: $trailer, episodeList: $episodeList, totalEpisode: $totalEpisode)';
   }
 
   @override
@@ -275,22 +444,48 @@ class _$AnimeModelImpl implements _AnimeModel {
             (identical(other.score, score) || other.score == score) &&
             (identical(other.released, released) ||
                 other.released == released) &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.japanese, japanese) ||
+                other.japanese == japanese) &&
+            (identical(other.source, source) || other.source == source) &&
+            (identical(other.english, english) || other.english == english) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration) &&
+            (identical(other.season, season) || other.season == season) &&
+            (identical(other.studio, studio) || other.studio == studio) &&
+            (identical(other.producers, producers) ||
+                other.producers == producers) &&
+            (identical(other.trailer, trailer) || other.trailer == trailer) &&
+            const DeepCollectionEquality()
+                .equals(other._episodeList, _episodeList) &&
+            (identical(other.totalEpisode, totalEpisode) ||
+                other.totalEpisode == totalEpisode));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      title,
-      endpoint,
-      poster,
-      const DeepCollectionEquality().hash(_genre),
-      episode,
-      type,
-      description,
-      score,
-      released,
-      status);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        title,
+        endpoint,
+        poster,
+        const DeepCollectionEquality().hash(_genre),
+        episode,
+        type,
+        description,
+        score,
+        released,
+        status,
+        japanese,
+        source,
+        english,
+        duration,
+        season,
+        studio,
+        producers,
+        trailer,
+        const DeepCollectionEquality().hash(_episodeList),
+        totalEpisode
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -310,7 +505,17 @@ abstract class _AnimeModel implements AnimeModel {
       final String? description,
       final double? score,
       final String? released,
-      final String? status}) = _$AnimeModelImpl;
+      final String? status,
+      final String? japanese,
+      final String? source,
+      final String? english,
+      final String? duration,
+      final String? season,
+      final String? studio,
+      final String? producers,
+      final String? trailer,
+      final List<EpisodeModel>? episodeList,
+      final int? totalEpisode}) = _$AnimeModelImpl;
 
   @override
   String get title;
@@ -332,6 +537,26 @@ abstract class _AnimeModel implements AnimeModel {
   String? get released;
   @override
   String? get status;
+  @override
+  String? get japanese;
+  @override
+  String? get source;
+  @override
+  String? get english;
+  @override
+  String? get duration;
+  @override
+  String? get season;
+  @override
+  String? get studio;
+  @override
+  String? get producers;
+  @override
+  String? get trailer;
+  @override
+  List<EpisodeModel>? get episodeList;
+  @override
+  int? get totalEpisode;
   @override
   @JsonKey(ignore: true)
   _$$AnimeModelImplCopyWith<_$AnimeModelImpl> get copyWith =>

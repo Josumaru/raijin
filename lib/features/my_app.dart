@@ -7,6 +7,7 @@ import 'package:raijin/core/routes/route_name.dart';
 import 'package:raijin/core/services/injection_container.dart';
 import 'package:raijin/core/themes/theme.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_complete_bloc/anime_complete_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime_detail_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_new_bloc/anime_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_ongoing_bloc/anime_ongoing_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_popular_bloc/anime_popular_bloc.dart';
@@ -78,6 +79,7 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
         ),
+        BlocProvider(create: (context) => sl<AnimeDetailBloc>())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -14,6 +14,7 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PersistentTabView(
+      navBarHeight: heightMediaQuery(context: context) * 0.075,
       context,
       confineInSafeArea: true,
       backgroundColor: backgroundColor(context: context),
