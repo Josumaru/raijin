@@ -14,6 +14,9 @@ class TAppTheme {
 
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
+    appBarTheme: const AppBarTheme(
+      elevation: 0,
+    ),
     colorScheme: ColorScheme.fromSeed(seedColor: kMainAccentColor).copyWith(
       background: kMainLightBackgroundColor,
       onBackground: kMainLightOnBackgroundColor,
@@ -38,6 +41,9 @@ class TAppTheme {
   );
 
   static ThemeData darkTheme = ThemeData(
+    appBarTheme: const AppBarTheme(
+      elevation: 0,
+    ),
     colorScheme: ColorScheme.fromSeed(seedColor: kMainAccentColor).copyWith(
       background: kMainDarkBackgroundColor,
       onBackground: kMainDarkOnBackgroundColor,

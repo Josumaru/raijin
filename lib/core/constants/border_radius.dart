@@ -9,3 +9,8 @@ BorderRadius kTopLeftBottomRightBorderRadius = const BorderRadius.only(
   topLeft: Radius.circular(10),
   bottomRight: Radius.circular(10),
 );
+
+BorderRadius kTopBorderRadius = const BorderRadius.only(
+  topLeft: Radius.circular(10),
+  topRight: Radius.circular(10),
+);
