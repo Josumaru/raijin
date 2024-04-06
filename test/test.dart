@@ -155,5 +155,5 @@ void main() async {
     genre: genre,
     episodeList: episodeList,
   );
-  print(animeModel);
+  // print(animeModel);
 }

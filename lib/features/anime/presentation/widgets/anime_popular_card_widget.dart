@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:raijin/core/commons/widgets/anime_card_shimmer_widget.dart';
 import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/core/constants/border_radius.dart';
 import 'package:raijin/core/constants/colors.dart';
@@ -21,6 +22,7 @@ class AnimePopularCardWidget extends StatelessWidget {
   });
   final int? index;
   final AnimeModel animeModel;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -29,6 +31,7 @@ class AnimePopularCardWidget extends StatelessWidget {
       },
       child: CachedNetworkImage(
         imageUrl: animeModel.poster,
+        errorWidget: (context, url, error) => Container(),
         imageBuilder: (context, imageProvider) {
           return Column(
             mainAxisAlignment: kMainAxisAligmentStart(),
@@ -73,26 +76,6 @@ class AnimePopularCardWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // Positioned(
-                  //   child: Container(
-                  //     width: 35,
-                  //     height: 35,
-                  //     decoration: BoxDecoration(
-                  //       borderRadius: kTopLeftBottomRightBorderRadius,
-                  //       color: primaryColor(
-                  //         context: context,
-                  //       ),
-                  //     ),
-                  //     child: Center(
-                  //       child: Text(
-                  //         index == null ? animeModel.type! : '$index',
-                  //         style: bodyLarge(context: context).copyWith(
-                  //           color: kMainDarkTextColor,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                   index == null
                       ? Positioned(
                           left: 5,
@@ -149,7 +132,6 @@ class AnimePopularCardWidget extends StatelessWidget {
                             ),
                           ),
                         ),
-
                   Positioned(
                     bottom: 5,
                     left: index == null ? null : 5,

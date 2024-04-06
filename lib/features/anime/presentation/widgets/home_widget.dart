@@ -1,13 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:raijin/core/commons/widgets/exit_widget.dart';
-import 'package:raijin/features/anime/presentation/blocs/anime_new_bloc/anime_bloc.dart';
+import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/features/anime/presentation/widgets/anime_complete_widget.dart';
 import 'package:raijin/features/anime/presentation/widgets/anime_ongoing_widget.dart';
 import 'package:raijin/features/anime/presentation/widgets/anime_popular_widget.dart';
-import 'package:raijin/features/anime/presentation/widgets/carousel_shimmer_widget.dart';
 import 'package:raijin/features/anime/presentation/widgets/carousel_widget.dart';
 
 class HomeWidget extends StatelessWidget {
@@ -37,24 +35,14 @@ class HomeWidget extends StatelessWidget {
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
-                children: [
+                mainAxisAlignment: kMainAxisAligmentStart(),
+                children: const [
                   // const HomeProfileWidget(),
                   // const SearchBarWidget(),
-                  BlocBuilder<AnimeBloc, AnimeState>(
-                    builder: (context, state) {
-                      return state.when(
-                        initial: () => Container(),
-                        loading: () => const CarouselShimmerWidget(),
-                        loaded: (animeModel) {
-                          return CarouselWidget(animeModel: animeModel!);
-                        },
-                        error: (message) => Text(message),
-                      );
-                    },
-                  ),
-                  const AnimePopularWidget(),
-                  const AnimeOngoingWidget(),
-                  const AnimeCompleteWidget(),
+                  CarouselWidget(),
+                  AnimePopularWidget(),
+                  AnimeOngoingWidget(),
+                  AnimeCompleteWidget(),
                 ],
               ),
             ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:raijin/core/commons/widgets/anime_card_shimmer_widget.dart';
 import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/core/constants/border_radius.dart';
 import 'package:raijin/core/constants/colors.dart';
@@ -19,10 +20,10 @@ class AnimeCardWidget extends StatelessWidget {
     required this.animeModel,
     this.index,
     required this.removeTitle,
-    required this.mode,
+    this.mode,
   });
   final int? index;
-  final String mode;
+  final String? mode;
   final AnimeModel animeModel;
   final bool removeTitle;
   @override
@@ -33,6 +34,18 @@ class AnimeCardWidget extends StatelessWidget {
       },
       child: CachedNetworkImage(
         imageUrl: animeModel.poster,
+        progressIndicatorBuilder: (context, url, progress) => Column(
+          children: [
+            Container(
+              width: (widthMediaQuery(context: context) / 3) - (40 / 3),
+              height: heightMediaQuery(context: context) / 4.5,
+              decoration: BoxDecoration(
+                borderRadius: kMainBorderRadius,
+                color: backgroundColor(context: context),
+              ),
+            )
+          ],
+        ),
         imageBuilder: (context, imageProvider) {
           return Column(
             mainAxisAlignment: kMainAxisAligmentStart(),

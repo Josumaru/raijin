@@ -208,7 +208,7 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
           source = data;
         case 'Duration':
           try {
-            duration = int.parse(data) as String;
+            duration = data.split(' ')[0];
           } catch (e) {
             duration = data;
           }
