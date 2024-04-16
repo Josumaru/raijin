@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:raijin/features/anime/data/models/episode_model.dart';
+import 'package:raijin/features/anime/data/models/episode_model/episode_model.dart';
 import 'package:raijin/features/anime/domain/entities/anime_entity.dart';
 part 'anime_model.freezed.dart';
 

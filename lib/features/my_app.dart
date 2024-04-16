@@ -11,6 +11,7 @@ import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime
 import 'package:raijin/features/anime/presentation/blocs/anime_new_bloc/anime_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_ongoing_bloc/anime_ongoing_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_popular_bloc/anime_popular_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_video_bloc/anime_video_bloc.dart';
 import 'package:raijin/features/auth/presentation/bloc/auth_bloc.dart';
 
 class MyApp extends StatefulWidget {
@@ -79,7 +80,8 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
         ),
-        BlocProvider(create: (context) => sl<AnimeDetailBloc>())
+        BlocProvider(create: (context) => sl<AnimeDetailBloc>()),
+        BlocProvider(create: (context) => sl<AnimeVideoBloc>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

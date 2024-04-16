@@ -22,6 +22,11 @@ class MainPage extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       navBarStyle: NavBarStyle.style3,
       controller: _persistentTabController,
+      hideNavigationBar:
+          MediaQuery.of(context).orientation == Orientation.portrait
+              ? false
+              : true,
+      hideNavigationBarWhenKeyboardShows: true,
       screens: _buildScreens,
       items: _buildItems(context),
     );

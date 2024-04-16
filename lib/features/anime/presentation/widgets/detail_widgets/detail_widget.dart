@@ -1,22 +1,30 @@
-import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:raijin/core/commons/widgets/anime_card_widget.dart';
+import 'package:raijin/core/commons/widgets/anime_episode_card.dart';
 import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/core/constants/border_radius.dart';
 import 'package:raijin/core/constants/colors.dart';
 import 'package:raijin/core/constants/font.dart';
 import 'package:raijin/core/constants/padding.dart';
 import 'package:raijin/core/constants/sizes.dart';
-import 'package:raijin/features/anime/data/models/anime_model.dart';
+import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
+import 'package:raijin/features/anime/data/models/episode_model/episode_model.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime_detail_bloc.dart';
 
-class DetailWidget extends StatelessWidget {
-  const DetailWidget({
-    super.key,
-  });
+class DetailWidget extends StatefulWidget {
+  const DetailWidget({super.key});
+
+  @override
+  State<DetailWidget> createState() => _DetailWidgetState();
+}
+
+class _DetailWidgetState extends State<DetailWidget> {
+  final RefreshController _refreshController = RefreshController();
+  List<EpisodeModel> episodeList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -38,21 +46,34 @@ class DetailWidget extends StatelessWidget {
     );
   }
 
+  _addEpisode(List<EpisodeModel> arrA, List<EpisodeModel> arrB) {
+    int index = arrA.length;
+    int last = arrB.length;
+    for (int i = 0; i < 6; i++) {
+      if (index < last) {
+        episodeList.add(arrB[index]);
+      }
+      index++;
+    }
+    return arrA;
+  }
+
   _buildLoaded(AnimeModel animeModel, BuildContext context) {
+    episodeList = _addEpisode(episodeList, animeModel.episodeList!);
     return Stack(
       children: [
-        Positioned.fill(
-          child: CachedNetworkImage(
-            imageUrl: animeModel.poster,
-            fit: BoxFit.cover,
-          ),
-        ),
-        Positioned.fill(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-            child: Container(),
-          ),
-        ),
+        // Positioned.fill(
+        //   child: CachedNetworkImage(
+        //     imageUrl: animeModel.poster,
+        //     fit: BoxFit.cover,
+        //   ),
+        // ),
+        // Positioned.fill(
+        //   child: BackdropFilter(
+        //     filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+        //     child: Container(),
+        //   ),
+        // ),
         CustomScrollView(
           slivers: [
             SliverAppBar(
@@ -87,21 +108,21 @@ class DetailWidget extends StatelessWidget {
                   imageUrl: animeModel.poster,
                   imageBuilder: (context, imageProvider) => Stack(
                     children: [
-                      Positioned.fill(
-                        child: RotationTransition(
-                          turns: const AlwaysStoppedAnimation(180 / 360),
-                          child: Image(
-                            image: imageProvider,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Positioned.fill(
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                          child: Container(),
-                        ),
-                      ),
+                      // Positioned.fill(
+                      //   child: RotationTransition(
+                      //     turns: const AlwaysStoppedAnimation(180 / 360),
+                      //     child: Image(
+                      //       image: imageProvider,
+                      //       fit: BoxFit.cover,
+                      //     ),
+                      //   ),
+                      // ),
+                      // Positioned.fill(
+                      //   child: BackdropFilter(
+                      //     filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+                      //     child: Container(),
+                      //   ),
+                      // ),
                       Positioned(
                         bottom: 50,
                         left: 25,
@@ -144,7 +165,35 @@ class DetailWidget extends StatelessWidget {
                         child: TabBarView(
                           children: [
                             _buildOverview(animeModel, context),
-                            _buildEpisodes(animeModel),
+                            SmartRefresher(
+                              controller: _refreshController,
+                              enablePullUp: episodeList.length !=
+                                  animeModel.episodeList!.length,
+                              enablePullDown: false,
+                              onLoading: () async {
+                                if (episodeList.length !=
+                                    animeModel.episodeList!.length) {
+                                  _addEpisode(
+                                      episodeList, animeModel.episodeList!);
+                                  setState(() {});
+                                  await Future.delayed(
+                                      const Duration(seconds: 2));
+                                  _refreshController.loadComplete();
+                                } else {
+                                  _refreshController.loadComplete();
+                                }
+                              },
+                              child: ListView.builder(
+                                itemCount: episodeList.length,
+                                itemBuilder: (context, index) => Padding(
+                                  padding: kMainPadding,
+                                  child: AnimeEpisodeCard(
+                                    episodeModel: episodeList[index],
+                                    poster: animeModel.poster,
+                                  ),
+                                ),
+                              ),
+                            ),
                             Padding(
                               padding: kMainPadding,
                               child: Column(
@@ -237,81 +286,100 @@ class DetailWidget extends StatelessWidget {
       ],
     );
   }
+}
+//   _buildEpisodes(AnimeModel animeModel) {
+//     List<EpisodeModel> episodeList = [];
+//     refresh(List<EpisodeModel> animeList) {
+//       for (var item in animeModel.episodeList!) {
+//         setState(() {
+//           episodeList.add(item);
+//         });
+//       }
+//       _refreshController.refreshCompleted();
+//     }
 
-  SingleChildScrollView _buildEpisodes(AnimeModel animeModel) {
-    return SingleChildScrollView(
-      child: Column(
-        children: List.generate(
-          animeModel.episodeList!.length,
-          (index) => ListTile(
-            leading: CachedNetworkImage(
-              imageUrl: animeModel.poster,
+//     return SmartRefresher(
+//       controller: _refreshController,
+//       enablePullUp: true,
+//       enablePullDown: true,
+//       onRefresh: () {
+//         refresh(animeModel.episodeList!);
+//       },
+//       child: SingleChildScrollView(
+//         child: Column(
+//           children: List.generate(
+//             episodeList.length,
+//             (index) => ListTile(
+//               leading: CachedNetworkImage(
+//                 imageUrl: animeModel.poster,
+//               ),
+//               title: Text(animeModel.episodeList![index].title),
+//               subtitle: Text(
+//                 animeModel.episodeList![index].date,
+//               ),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+Column _buildOverview(AnimeModel animeModel, BuildContext context) {
+  return Column(
+    crossAxisAlignment: kCrossAxisAlignmentStart(),
+    children: [
+      Padding(
+        padding: kHorizontalPadding,
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: kCrossAxisAlignmentStart(),
+                children: [
+                  Text(
+                    animeModel.title,
+                    style: headlineLarge(context: context).copyWith(
+                      fontSize: 30,
+                      color: onBackgroundColor(context: context),
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                  ),
+                  Text(
+                    '${animeModel.season!} | ${animeModel.genre![0].replaceFirst(
+                      animeModel.genre![0][0],
+                      animeModel.genre![0][0].toUpperCase(),
+                    )} | ${animeModel.status}',
+                    style: bodySmall(context: context),
+                  )
+                ],
+              ),
             ),
-            title: Text(animeModel.episodeList![index].title),
-            subtitle: Text(
-              animeModel.episodeList![index].date,
-            ),
-          ),
+          ],
         ),
       ),
-    );
-  }
-
-  Column _buildOverview(AnimeModel animeModel, BuildContext context) {
-    return Column(
-      crossAxisAlignment: kCrossAxisAlignmentStart(),
-      children: [
-        Padding(
+      SizedBox(
+        // height: heightMediaQuery(context: context) / 3,
+        child: Padding(
           padding: kHorizontalPadding,
-          child: Row(
+          child: Column(
+            crossAxisAlignment: kCrossAxisAlignmentStart(),
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: kCrossAxisAlignmentStart(),
-                  children: [
-                    Text(
-                      animeModel.title,
-                      style: headlineLarge(context: context)
-                          .copyWith(fontSize: 30),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
-                    Text(
-                      '${animeModel.season!} | ${animeModel.genre![0].replaceFirst(
-                        animeModel.genre![0][0],
-                        animeModel.genre![0][0].toUpperCase(),
-                      )} | ${animeModel.status}',
-                      style: bodySmall(context: context),
-                    )
-                  ],
-                ),
+              Text(
+                'Synopsis',
+                style: bodyLarge(context: context),
               ),
+              Text(
+                animeModel.description!,
+                // overflow: TextOverflow.ellipsis,
+                // maxLines: 14,
+              )
             ],
           ),
         ),
-        SizedBox(
-          // height: heightMediaQuery(context: context) / 3,
-          child: Padding(
-            padding: kHorizontalPadding,
-            child: Column(
-              crossAxisAlignment: kCrossAxisAlignmentStart(),
-              children: [
-                Text(
-                  'Synopsis',
-                  style: bodyLarge(context: context),
-                ),
-                Text(
-                  animeModel.description!,
-                  // overflow: TextOverflow.ellipsis,
-                  // maxLines: 14,
-                )
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
 }
 
 class EpisodeStatWidget extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:raijin/core/errors/failure.dart';
-import 'package:raijin/features/anime/data/models/anime_model.dart';
+import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/domain/repositories/anime_repository.dart';
 
 class AnimeGetUseCase {

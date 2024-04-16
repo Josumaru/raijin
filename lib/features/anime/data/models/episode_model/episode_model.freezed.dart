@@ -20,6 +20,7 @@ mixin _$EpisodeModel {
   int get episode => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get date => throw _privateConstructorUsedError;
+  String? get poster => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $EpisodeModelCopyWith<EpisodeModel> get copyWith =>
@@ -32,7 +33,12 @@ abstract class $EpisodeModelCopyWith<$Res> {
           EpisodeModel value, $Res Function(EpisodeModel) then) =
       _$EpisodeModelCopyWithImpl<$Res, EpisodeModel>;
   @useResult
-  $Res call({String endpoint, int episode, String title, String date});
+  $Res call(
+      {String endpoint,
+      int episode,
+      String title,
+      String date,
+      String? poster});
 }
 
 /// @nodoc
@@ -52,6 +58,7 @@ class _$EpisodeModelCopyWithImpl<$Res, $Val extends EpisodeModel>
     Object? episode = null,
     Object? title = null,
     Object? date = null,
+    Object? poster = freezed,
   }) {
     return _then(_value.copyWith(
       endpoint: null == endpoint
@@ -70,6 +77,10 @@ class _$EpisodeModelCopyWithImpl<$Res, $Val extends EpisodeModel>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as String,
+      poster: freezed == poster
+          ? _value.poster
+          : poster // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -82,7 +93,12 @@ abstract class _$$EpisodeModelImplCopyWith<$Res>
       __$$EpisodeModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String endpoint, int episode, String title, String date});
+  $Res call(
+      {String endpoint,
+      int episode,
+      String title,
+      String date,
+      String? poster});
 }
 
 /// @nodoc
@@ -100,6 +116,7 @@ class __$$EpisodeModelImplCopyWithImpl<$Res>
     Object? episode = null,
     Object? title = null,
     Object? date = null,
+    Object? poster = freezed,
   }) {
     return _then(_$EpisodeModelImpl(
       endpoint: null == endpoint
@@ -118,6 +135,10 @@ class __$$EpisodeModelImplCopyWithImpl<$Res>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as String,
+      poster: freezed == poster
+          ? _value.poster
+          : poster // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -129,7 +150,8 @@ class _$EpisodeModelImpl implements _EpisodeModel {
       {required this.endpoint,
       required this.episode,
       required this.title,
-      required this.date});
+      required this.date,
+      this.poster});
 
   @override
   final String endpoint;
@@ -139,10 +161,12 @@ class _$EpisodeModelImpl implements _EpisodeModel {
   final String title;
   @override
   final String date;
+  @override
+  final String? poster;
 
   @override
   String toString() {
-    return 'EpisodeModel(endpoint: $endpoint, episode: $episode, title: $title, date: $date)';
+    return 'EpisodeModel(endpoint: $endpoint, episode: $episode, title: $title, date: $date, poster: $poster)';
   }
 
   @override
@@ -154,11 +178,13 @@ class _$EpisodeModelImpl implements _EpisodeModel {
                 other.endpoint == endpoint) &&
             (identical(other.episode, episode) || other.episode == episode) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.date, date) || other.date == date));
+            (identical(other.date, date) || other.date == date) &&
+            (identical(other.poster, poster) || other.poster == poster));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, endpoint, episode, title, date);
+  int get hashCode =>
+      Object.hash(runtimeType, endpoint, episode, title, date, poster);
 
   @JsonKey(ignore: true)
   @override
@@ -172,7 +198,8 @@ abstract class _EpisodeModel implements EpisodeModel {
       {required final String endpoint,
       required final int episode,
       required final String title,
-      required final String date}) = _$EpisodeModelImpl;
+      required final String date,
+      final String? poster}) = _$EpisodeModelImpl;
 
   @override
   String get endpoint;
@@ -182,6 +209,8 @@ abstract class _EpisodeModel implements EpisodeModel {
   String get title;
   @override
   String get date;
+  @override
+  String? get poster;
   @override
   @JsonKey(ignore: true)
   _$$EpisodeModelImplCopyWith<_$EpisodeModelImpl> get copyWith =>

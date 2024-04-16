@@ -8,5 +8,6 @@ abstract class EpisodeModel with _$EpisodeModel {
     required int episode,
     required String title,
     required String date,
+    String? poster,
   }) = _EpisodeModel;
 }

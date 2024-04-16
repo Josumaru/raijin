@@ -10,11 +10,13 @@ import 'package:raijin/features/anime/domain/repositories/anime_repository.dart'
 import 'package:raijin/features/anime/domain/usecases/anime_get_detail_use_case.dart';
 import 'package:raijin/features/anime/domain/usecases/anime_get_new_use_case.dart';
 import 'package:raijin/features/anime/domain/usecases/anime_get_use_case.dart';
+import 'package:raijin/features/anime/domain/usecases/anime_get_video_use_case.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_complete_bloc/anime_complete_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime_detail_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_new_bloc/anime_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_ongoing_bloc/anime_ongoing_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_popular_bloc/anime_popular_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_video_bloc/anime_video_bloc.dart';
 import 'package:raijin/features/auth/data/datasources/remote/auth_remote_data_source.dart';
 import 'package:raijin/features/auth/data/datasources/remote/auth_reomote_data_source_impl.dart';
 import 'package:raijin/features/auth/data/repositories/auth_repository_impl.dart';
@@ -66,7 +68,15 @@ Future<void> init() async {
     () => AnimeCompleteBloc(animeGetUseCase: sl()),
   );
   sl.registerFactory<AnimeDetailBloc>(
-      () => AnimeDetailBloc(animeGetDetailUseCase: sl()));
+    () => AnimeDetailBloc(animeGetDetailUseCase: sl()),
+  );
+
+  sl.registerFactory(
+    () => AnimeVideoBloc(
+      animeGetVideoUseCase: sl(),
+      toastUseCase: sl(),
+    ),
+  );
 
   // Datasource
   sl.registerSingleton<AuthRemoteDataSource>(
@@ -101,5 +111,8 @@ Future<void> init() async {
   );
   sl.registerSingleton<AnimeGetDetailUseCase>(
     AnimeGetDetailUseCase(animeRepository: sl()),
+  );
+  sl.registerSingleton<AnimeGetVideoUseCase>(
+    AnimeGetVideoUseCase(animeRepository: sl()),
   );
 }

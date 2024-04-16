@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:raijin/core/commons/widgets/anime_card_shimmer_widget.dart';
 import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/core/constants/border_radius.dart';
 import 'package:raijin/core/constants/colors.dart';
 import 'package:raijin/core/constants/font.dart';
 import 'package:raijin/core/constants/padding.dart';
 import 'package:raijin/core/constants/sizes.dart';
-import 'package:raijin/features/anime/data/models/anime_model.dart';
+import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime_detail_bloc.dart';
 import 'package:raijin/features/anime/presentation/pages/detail_page.dart';
 
@@ -78,7 +77,12 @@ class AnimeCardWidget extends StatelessWidget {
                               color: primaryColor(context: context),
                               borderRadius: kMainBorderRadius / 4,
                             ),
-                            child: const Text('END'),
+                            child: Text(
+                              'END',
+                              style: bodyMedium(context: context).copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         )
                       : Container(),

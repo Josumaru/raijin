@@ -6,30 +6,29 @@ import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/core/constants/colors.dart';
 import 'package:raijin/core/constants/font.dart';
 import 'package:raijin/core/constants/padding.dart';
-import 'package:raijin/features/anime/data/models/anime_model.dart';
-import 'package:raijin/features/anime/presentation/blocs/anime_complete_bloc/anime_complete_bloc.dart';
-import 'package:raijin/features/anime/presentation/widgets/anime_popular_card_widget.dart';
+import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_popular_bloc/anime_popular_bloc.dart';
 
-class AnimeCompleteWidget extends StatelessWidget {
-  const AnimeCompleteWidget({super.key});
+class AnimePopularWidget extends StatelessWidget {
+  const AnimePopularWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AnimeCompleteBloc, AnimeCompleteState>(
+    return BlocBuilder<AnimePopularBloc, AnimePopularState>(
       builder: (context, state) {
         return state.when(
-          initial: () => Container(),
-          loading: () => _buildLoading(),
-          loaded: (animeModel) {
-            return _buildLoaded(context, animeModel);
-          },
-          error: (message) => Text(message),
+          initial: () => _buildLoading(context),
+          loading: () => _buildLoading(context),
+          loaded: (animeModel) => _buildLoaded(context, animeModel),
+          error: (message) => const Text('Unable to Load'),
         );
       },
     );
   }
 
-  _buildLoading() => const AnimeCardShimmerWidget();
+  _buildLoading(BuildContext context) {
+    return const AnimeCardShimmerWidget();
+  }
 
   Column _buildLoaded(BuildContext context, List<AnimeModel>? animeModel) {
     return Column(
@@ -40,7 +39,7 @@ class AnimeCompleteWidget extends StatelessWidget {
         Padding(
           padding: kLeftPadding,
           child: Text(
-            'Finished Airing Anime',
+            'Top 10 Anime',
             style: headlineLarge(context: context).copyWith(
               color: onBackgroundColor(context: context),
             ),
@@ -51,11 +50,12 @@ class AnimeCompleteWidget extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: Row(
             children: List.generate(
-              animeModel!.length,
+              10,
               (index) => Padding(
                 padding: index == 0 ? kHorizontalPadding : kRightPadding,
                 child: AnimeCardWidget(
-                  animeModel: animeModel[index],
+                  index: index + 1,
+                  animeModel: animeModel![index],
                   removeTitle: false,
                 ),
               ),

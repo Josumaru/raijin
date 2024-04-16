@@ -6,9 +6,8 @@ import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/core/constants/colors.dart';
 import 'package:raijin/core/constants/font.dart';
 import 'package:raijin/core/constants/padding.dart';
-import 'package:raijin/features/anime/data/models/anime_model.dart';
+import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_ongoing_bloc/anime_ongoing_bloc.dart';
-import 'package:raijin/features/anime/presentation/widgets/anime_popular_card_widget.dart';
 
 class AnimeOngoingWidget extends StatelessWidget {
   const AnimeOngoingWidget({super.key});

@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:raijin/core/errors/failure.dart';
 import 'package:raijin/features/anime/data/datasources/remote/anime_data_source.dart';
-import 'package:raijin/features/anime/data/models/anime_model.dart';
+import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
+import 'package:raijin/features/anime/data/models/video_model/video_model.dart';
 import 'package:raijin/features/anime/domain/repositories/anime_repository.dart';
 
 class AnimeRepositoryImpl implements AnimeRepository {
@@ -40,11 +41,26 @@ class AnimeRepositoryImpl implements AnimeRepository {
   }
 
   @override
-  Future<Either<Failure<String>, AnimeModel>> animeGetDetail(
-      {required String endpoint}) async {
+  Future<Either<Failure<String>, AnimeModel>> animeGetDetail({
+    required String endpoint,
+  }) async {
     try {
       final AnimeModel r =
           await animeRemoteDataSource.animeDetail(endpoint: endpoint);
+      return Right(r);
+    } catch (e) {
+      final message = e.toString();
+      return Left(Failure.serverError(message: message));
+    }
+  }
+
+  @override
+  Future<Either<Failure<String>, List<VideoModel>>> animeGetVideo({
+    required String endpoint,
+  }) async {
+    try {
+      final List<VideoModel> r =
+          await animeRemoteDataSource.animeVideo(endpoint: endpoint);
       return Right(r);
     } catch (e) {
       final message = e.toString();

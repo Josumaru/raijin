@@ -57,3 +57,9 @@ List<Color> gradientListColor({required BuildContext context}) => [
       Colors.transparent,
       kMainDarkBackgroundColor,
     ];
+Color darkColor() => kMainDarkBackgroundColor.withOpacity(0.3);
+
+List<Color> gradientVideoListColor({required BuildContext context}) => [
+      Colors.transparent,
+      kMainDarkBackgroundColor.withOpacity(0.9),
+    ];

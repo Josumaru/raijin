@@ -1,159 +1,87 @@
 import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
-import 'package:raijin/core/constants/constants.dart';
-import 'package:raijin/features/anime/data/models/anime_model.dart';
-import 'package:raijin/features/anime/data/models/episode_model.dart';
+import 'package:raijin/features/anime/data/models/episode_model/episode_model.dart';
+import 'package:raijin/features/anime/data/models/video_model/video_model.dart';
 
 void main() async {
   final Dio dio = Dio();
 
-  String getTextByClass({
-    required Element element,
-    required String className,
-    String? attr,
-  }) {
-    if (attr != null) {
-      final data =
-          element.getElementsByClassName(className).first.attributes[attr];
-      return data!;
-    }
-    final data = element.getElementsByClassName(className).first.text;
-    return data;
-  }
 
-  const endpoint =
-      'https://samehadaku.email/anime/dekisokonai-to-yobareta-motoeiyuu-wa-jikka-kara-tsuihou-sareta-node-sukikatte-ni-ikiru-koto-ni-shita/';
+  const endpoint = 'https://samehadaku.email/ninja-kamui-episode-9/';
+
+  List<VideoModel> mirrorList = [];
+  List<EpisodeModel> episodeList = [];
+
   final response = await dio.get(endpoint);
-  final responseBody = parse(response.data).body;
-  final elements = responseBody!.getElementsByClassName('infox').last;
-  final detailElements = elements.getElementsByTagName('span');
-  final title = elements
-      .getElementsByClassName('anim-detail')
+  final responseBody = parse(response.data);
+  String title = responseBody
+      .getElementsByClassName('entry-title')
       .first
       .text
-      .replaceAll('Detail Anime', '')
-      .trim();
-  final description = responseBody
-      .getElementsByClassName('entry-content entry-content-single')
-      .first
-      .text
-      .trim();
-  double score;
-  try {
-    score = double.parse(
-      responseBody
-          .getElementsByClassName('archiveanime-rating')
-          .first
-          .getElementsByTagName('span')
-          .first
-          .text,
-    );
-  } catch (e) {
-    score = 0.0;
-  }
-  final poster =
-      getTextByClass(element: responseBody, className: 'anmsa', attr: 'src');
-  final genres = responseBody
-      .getElementsByClassName('genre-info')
-      .first
-      .getElementsByTagName('a');
-  final trailer = responseBody
-      .getElementsByClassName('player-embed')
-      .first
-      .getElementsByTagName('iframe')
-      .first
-      .attributes['src'];
-  final episodeElements = responseBody
+      .replaceFirst(' Sub Indo', '');
+
+  List<Element> listEpisode = responseBody
       .getElementsByClassName('listeps')
       .first
-      .getElementsByTagName('ul')
-      .first
-      .getElementsByTagName('li');
-  List<EpisodeModel> episodeList = [];
-  for (final item in episodeElements) {
-    final episode = int.parse(
-        getTextByClass(element: item, className: 'eps').split(' ')[0]);
-    final title = getTextByClass(element: item, className: 'lchx');
-    final date = getTextByClass(element: item, className: 'date');
-    final endpoint = item.getElementsByTagName('a').first.attributes['href'];
+      .getElementsByTagName('ul > li');
+  for (var element in listEpisode) {
+    String title = element.getElementsByTagName('div > span').first.text;
+    int episode = int.parse(title.split('Episode ').last);
+    String date = element.getElementsByClassName('date').first.text;
+    String endpoint =
+        element.getElementsByTagName('div > a').first.attributes['href']!;
+    String poster = element
+        .getElementsByClassName('thumbnailrighteps')
+        .first
+        .getElementsByTagName('a > img')
+        .first
+        .attributes['src']!;
     episodeList.add(EpisodeModel(
-        episode: episode, title: title, date: date, endpoint: endpoint!));
+      endpoint: endpoint,
+      episode: episode,
+      title: title,
+      date: date,
+      poster: poster,
+    ));
   }
-  List<String> genre = [];
-  for (final item in genres) {
-    genre.add(item.attributes['href']!.split('/').last);
-  }
-  late String japanese = '';
-  late String english = '';
-  late String status = '';
-  late String source = '';
-  late String type = '';
-  late String duration = '';
-  late String season = '';
-  late String studio = '';
-  late String producers = '';
-  late String released = '';
-  late int totalEpisode = 0;
 
-  for (final element in detailElements) {
-    final separator = element.getElementsByTagName('b').first.text.trim();
-    final data = element.text.replaceAll(separator, '').trim();
-    switch (separator) {
-      case 'Japanese':
-        japanese = data;
-      case 'English':
-        english = data;
-      case 'Status':
-        status = data;
-      case 'Type':
-        type = data;
-      case 'Source':
-        source = data.split(' ')[0];
-      case 'Duration':
-        try {
-          duration = int.parse(data) as String;
-        } catch (e) {
-          duration = data;
-        }
-      case 'Total Episode':
-        try {
-          totalEpisode = int.parse(data);
-        } catch (e) {
-          totalEpisode = 0;
-        }
-      case 'Season':
-        season = data;
-      case 'Studio':
-        studio = data;
-      case 'Producers':
-        producers = data;
-      case 'Rilis:':
-        released = data;
-      default:
-        continue;
+  List<Element> navigationEpisode = responseBody
+      .getElementsByClassName('naveps')
+      .first
+      .getElementsByTagName('div > a');
+
+  String prevEpisode = navigationEpisode.first.attributes['href']!;
+  String nextEpisode = navigationEpisode.last.attributes['href']!;
+
+  final downloadElement = responseBody.body!
+      .getElementsByClassName('download-eps')
+      .first
+      .getElementsByTagName('ul > li');
+
+  for (final element in downloadElement) {
+    String serverQuality = element.getElementsByTagName('strong').first.text;
+    for (final server in element.getElementsByTagName('> span > a')) {
+      String mirror = server.text.trim().toLowerCase();
+      if (mirror.contains('kraken')) {
+        final Response mirrorResponse =
+            await dio.get(server.attributes['href']!);
+        final Element mirrorAttributes =
+            parse(mirrorResponse.data).getElementById('my-video')!;
+        mirrorList.add(
+          VideoModel(
+            quality: serverQuality,
+            mirror: mirror,
+            endpoint: 'https:${mirrorAttributes.attributes['data-src-url']!}',
+            poster: 'https:${mirrorAttributes.attributes['poster']!}',
+            anotherEpisode: episodeList,
+            nextEpisode: nextEpisode,
+            prevEpisode: prevEpisode,
+            title: title,
+          ),
+        );
+      }
     }
   }
-  AnimeModel animeModel = AnimeModel(
-    endpoint: endpoint,
-    poster: poster,
-    title: title,
-    japanese: japanese,
-    english: english,
-    status: status,
-    type: type,
-    source: source,
-    duration: duration,
-    totalEpisode: totalEpisode,
-    season: season,
-    studio: studio,
-    producers: producers,
-    released: released,
-    score: score,
-    description: description,
-    trailer: trailer,
-    genre: genre,
-    episodeList: episodeList,
-  );
-  // print(animeModel);
+  print(mirrorList);
 }

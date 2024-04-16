@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:raijin/core/errors/failure.dart';
-import 'package:raijin/features/anime/data/models/anime_model.dart';
+import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
+import 'package:raijin/features/anime/data/models/video_model/video_model.dart';
 
 abstract class AnimeRepository {
   Future<Either<Failure<String>, List<AnimeModel>>> getNewAnime({
@@ -12,6 +13,9 @@ abstract class AnimeRepository {
     required String type,
   });
   Future<Either<Failure<String>, AnimeModel>> animeGetDetail({
+    required String endpoint,
+  });
+  Future<Either<Failure<String>, List<VideoModel>>> animeGetVideo({
     required String endpoint,
   });
 }
