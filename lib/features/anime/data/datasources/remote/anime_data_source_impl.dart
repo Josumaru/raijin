@@ -5,6 +5,7 @@ import 'package:raijin/core/constants/constants.dart';
 import 'package:raijin/features/anime/data/datasources/remote/anime_data_source.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/data/models/episode_model/episode_model.dart';
+import 'package:raijin/features/anime/data/models/schedule_model/schedule_model.dart';
 import 'package:raijin/features/anime/data/models/video_model/video_model.dart';
 
 class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
@@ -331,5 +332,15 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
       }
     }
     return mirrorList;
+  }
+
+  @override
+  Future<List<ScheduleModel>> animeSchedule({required String day}) async {
+    final endpoint =
+        '$kAnimeEndpoint/wp-json/custom/v1/all-schedule?day=$day&type=schtml';
+    final response = await dio.get(endpoint);
+    final List<ScheduleModel> animeList =
+        (response.data as List).map((e) => ScheduleModel.fromJson(e)).toList();
+    return animeList;
   }
 }

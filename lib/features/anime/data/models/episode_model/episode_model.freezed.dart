@@ -14,6 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+EpisodeModel _$EpisodeModelFromJson(Map<String, dynamic> json) {
+  return _EpisodeModel.fromJson(json);
+}
+
 /// @nodoc
 mixin _$EpisodeModel {
   String get endpoint => throw _privateConstructorUsedError;
@@ -22,6 +26,7 @@ mixin _$EpisodeModel {
   String get date => throw _privateConstructorUsedError;
   String? get poster => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $EpisodeModelCopyWith<EpisodeModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -144,7 +149,7 @@ class __$$EpisodeModelImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$EpisodeModelImpl implements _EpisodeModel {
   const _$EpisodeModelImpl(
       {required this.endpoint,
@@ -152,6 +157,9 @@ class _$EpisodeModelImpl implements _EpisodeModel {
       required this.title,
       required this.date,
       this.poster});
+
+  factory _$EpisodeModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$EpisodeModelImplFromJson(json);
 
   @override
   final String endpoint;
@@ -182,6 +190,7 @@ class _$EpisodeModelImpl implements _EpisodeModel {
             (identical(other.poster, poster) || other.poster == poster));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode =>
       Object.hash(runtimeType, endpoint, episode, title, date, poster);
@@ -191,6 +200,13 @@ class _$EpisodeModelImpl implements _EpisodeModel {
   @pragma('vm:prefer-inline')
   _$$EpisodeModelImplCopyWith<_$EpisodeModelImpl> get copyWith =>
       __$$EpisodeModelImplCopyWithImpl<_$EpisodeModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$EpisodeModelImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _EpisodeModel implements EpisodeModel {
@@ -200,6 +216,9 @@ abstract class _EpisodeModel implements EpisodeModel {
       required final String title,
       required final String date,
       final String? poster}) = _$EpisodeModelImpl;
+
+  factory _EpisodeModel.fromJson(Map<String, dynamic> json) =
+      _$EpisodeModelImpl.fromJson;
 
   @override
   String get endpoint;

@@ -1,7 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:raijin/features/anime/data/models/episode_model/episode_model.dart';
 import 'package:raijin/features/anime/domain/entities/anime_entity.dart';
+
 part 'anime_model.freezed.dart';
+part 'anime_model.g.dart';
 
 @freezed
 abstract class AnimeModel with _$AnimeModel {
@@ -35,4 +37,6 @@ abstract class AnimeModel with _$AnimeModel {
       poster: animeEntity.poster,
     );
   }
+
+  factory AnimeModel.fromJson(Map<String, dynamic> json) =>_$AnimeModelFromJson(json);
 }

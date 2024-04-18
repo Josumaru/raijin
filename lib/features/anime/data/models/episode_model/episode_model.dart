@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'episode_model.freezed.dart';
+part 'episode_model.g.dart';
 
 @freezed
 abstract class EpisodeModel with _$EpisodeModel {
@@ -10,4 +11,6 @@ abstract class EpisodeModel with _$EpisodeModel {
     required String date,
     String? poster,
   }) = _EpisodeModel;
+
+  factory EpisodeModel.fromJson(Map<String, dynamic> json) => _$EpisodeModelFromJson(json);
 }

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:raijin/core/routes/route.dart';
 import 'package:raijin/core/routes/route_name.dart';
 import 'package:raijin/core/services/injection_container.dart';
@@ -11,7 +12,9 @@ import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime
 import 'package:raijin/features/anime/presentation/blocs/anime_new_bloc/anime_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_ongoing_bloc/anime_ongoing_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_popular_bloc/anime_popular_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_schedule_bloc/anime_schedule_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_video_bloc/anime_video_bloc.dart';
+import 'package:raijin/features/anime/presentation/cubits/anime_schedule_cubit/anime_schedule_cubit.dart';
 import 'package:raijin/features/auth/presentation/bloc/auth_bloc.dart';
 
 class MyApp extends StatefulWidget {
@@ -24,6 +27,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late final GlobalKey<NavigatorState> navigatorKey;
   late FToast fToast;
+  late String day;
   @override
   void initState() {
     navigatorKey = GlobalKey<NavigatorState>();
@@ -31,6 +35,7 @@ class _MyAppState extends State<MyApp> {
       fToast = FToast();
       fToast.init(navigatorKey.currentContext!);
     });
+    day = DateFormat('EEEE').format(DateTime.now()).toLowerCase();
     super.initState();
   }
 
@@ -82,6 +87,17 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(create: (context) => sl<AnimeDetailBloc>()),
         BlocProvider(create: (context) => sl<AnimeVideoBloc>()),
+        BlocProvider(
+          create: (context) => sl<AnimeScheduleBloc>()
+            ..add(
+              AnimeScheduleEvent.animeGetSchedule(
+                day: day,
+              ),
+            ),
+        ),
+        BlocProvider(
+          create: (context) => AnimeScheduleCubit()..select(day: day),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:raijin/core/errors/failure.dart';
 import 'package:raijin/features/anime/data/datasources/remote/anime_data_source.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
+import 'package:raijin/features/anime/data/models/schedule_model/schedule_model.dart';
 import 'package:raijin/features/anime/data/models/video_model/video_model.dart';
 import 'package:raijin/features/anime/domain/repositories/anime_repository.dart';
 
@@ -65,6 +66,16 @@ class AnimeRepositoryImpl implements AnimeRepository {
     } catch (e) {
       final message = e.toString();
       return Left(Failure.serverError(message: message));
+    }
+  }
+
+  @override
+  Future<Either<Failure<String>, List<ScheduleModel>>> animeGetSchedule({required String day}) async {
+    try {
+      final List<ScheduleModel> r = await animeRemoteDataSource.animeSchedule(day: day);
+      return Right(r);
+    } catch (e) {
+      return Left(Failure.serverError(message: e.toString()));
     }
   }
 }

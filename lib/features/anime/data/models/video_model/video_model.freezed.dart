@@ -21,9 +21,9 @@ mixin _$VideoModel {
   String get endpoint => throw _privateConstructorUsedError;
   String get poster => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
+  List<EpisodeModel> get anotherEpisode => throw _privateConstructorUsedError;
   String? get prevEpisode => throw _privateConstructorUsedError;
   String? get nextEpisode => throw _privateConstructorUsedError;
-  List<EpisodeModel> get anotherEpisode => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $VideoModelCopyWith<VideoModel> get copyWith =>
@@ -42,9 +42,9 @@ abstract class $VideoModelCopyWith<$Res> {
       String endpoint,
       String poster,
       String title,
+      List<EpisodeModel> anotherEpisode,
       String? prevEpisode,
-      String? nextEpisode,
-      List<EpisodeModel> anotherEpisode});
+      String? nextEpisode});
 }
 
 /// @nodoc
@@ -65,9 +65,9 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
     Object? endpoint = null,
     Object? poster = null,
     Object? title = null,
+    Object? anotherEpisode = null,
     Object? prevEpisode = freezed,
     Object? nextEpisode = freezed,
-    Object? anotherEpisode = null,
   }) {
     return _then(_value.copyWith(
       quality: null == quality
@@ -90,6 +90,10 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      anotherEpisode: null == anotherEpisode
+          ? _value.anotherEpisode
+          : anotherEpisode // ignore: cast_nullable_to_non_nullable
+              as List<EpisodeModel>,
       prevEpisode: freezed == prevEpisode
           ? _value.prevEpisode
           : prevEpisode // ignore: cast_nullable_to_non_nullable
@@ -98,10 +102,6 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
           ? _value.nextEpisode
           : nextEpisode // ignore: cast_nullable_to_non_nullable
               as String?,
-      anotherEpisode: null == anotherEpisode
-          ? _value.anotherEpisode
-          : anotherEpisode // ignore: cast_nullable_to_non_nullable
-              as List<EpisodeModel>,
     ) as $Val);
   }
 }
@@ -120,9 +120,9 @@ abstract class _$$VideoModelImplCopyWith<$Res>
       String endpoint,
       String poster,
       String title,
+      List<EpisodeModel> anotherEpisode,
       String? prevEpisode,
-      String? nextEpisode,
-      List<EpisodeModel> anotherEpisode});
+      String? nextEpisode});
 }
 
 /// @nodoc
@@ -141,9 +141,9 @@ class __$$VideoModelImplCopyWithImpl<$Res>
     Object? endpoint = null,
     Object? poster = null,
     Object? title = null,
+    Object? anotherEpisode = null,
     Object? prevEpisode = freezed,
     Object? nextEpisode = freezed,
-    Object? anotherEpisode = null,
   }) {
     return _then(_$VideoModelImpl(
       quality: null == quality
@@ -166,6 +166,10 @@ class __$$VideoModelImplCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      anotherEpisode: null == anotherEpisode
+          ? _value._anotherEpisode
+          : anotherEpisode // ignore: cast_nullable_to_non_nullable
+              as List<EpisodeModel>,
       prevEpisode: freezed == prevEpisode
           ? _value.prevEpisode
           : prevEpisode // ignore: cast_nullable_to_non_nullable
@@ -174,10 +178,6 @@ class __$$VideoModelImplCopyWithImpl<$Res>
           ? _value.nextEpisode
           : nextEpisode // ignore: cast_nullable_to_non_nullable
               as String?,
-      anotherEpisode: null == anotherEpisode
-          ? _value._anotherEpisode
-          : anotherEpisode // ignore: cast_nullable_to_non_nullable
-              as List<EpisodeModel>,
     ));
   }
 }
@@ -191,9 +191,9 @@ class _$VideoModelImpl implements _VideoModel {
       required this.endpoint,
       required this.poster,
       required this.title,
-      required this.prevEpisode,
-      required this.nextEpisode,
-      required final List<EpisodeModel> anotherEpisode})
+      required final List<EpisodeModel> anotherEpisode,
+      this.prevEpisode,
+      this.nextEpisode})
       : _anotherEpisode = anotherEpisode;
 
   @override
@@ -206,10 +206,6 @@ class _$VideoModelImpl implements _VideoModel {
   final String poster;
   @override
   final String title;
-  @override
-  final String? prevEpisode;
-  @override
-  final String? nextEpisode;
   final List<EpisodeModel> _anotherEpisode;
   @override
   List<EpisodeModel> get anotherEpisode {
@@ -219,8 +215,13 @@ class _$VideoModelImpl implements _VideoModel {
   }
 
   @override
+  final String? prevEpisode;
+  @override
+  final String? nextEpisode;
+
+  @override
   String toString() {
-    return 'VideoModel(quality: $quality, mirror: $mirror, endpoint: $endpoint, poster: $poster, title: $title, prevEpisode: $prevEpisode, nextEpisode: $nextEpisode, anotherEpisode: $anotherEpisode)';
+    return 'VideoModel(quality: $quality, mirror: $mirror, endpoint: $endpoint, poster: $poster, title: $title, anotherEpisode: $anotherEpisode, prevEpisode: $prevEpisode, nextEpisode: $nextEpisode)';
   }
 
   @override
@@ -234,12 +235,12 @@ class _$VideoModelImpl implements _VideoModel {
                 other.endpoint == endpoint) &&
             (identical(other.poster, poster) || other.poster == poster) &&
             (identical(other.title, title) || other.title == title) &&
+            const DeepCollectionEquality()
+                .equals(other._anotherEpisode, _anotherEpisode) &&
             (identical(other.prevEpisode, prevEpisode) ||
                 other.prevEpisode == prevEpisode) &&
             (identical(other.nextEpisode, nextEpisode) ||
-                other.nextEpisode == nextEpisode) &&
-            const DeepCollectionEquality()
-                .equals(other._anotherEpisode, _anotherEpisode));
+                other.nextEpisode == nextEpisode));
   }
 
   @override
@@ -250,9 +251,9 @@ class _$VideoModelImpl implements _VideoModel {
       endpoint,
       poster,
       title,
+      const DeepCollectionEquality().hash(_anotherEpisode),
       prevEpisode,
-      nextEpisode,
-      const DeepCollectionEquality().hash(_anotherEpisode));
+      nextEpisode);
 
   @JsonKey(ignore: true)
   @override
@@ -268,9 +269,9 @@ abstract class _VideoModel implements VideoModel {
       required final String endpoint,
       required final String poster,
       required final String title,
-      required final String? prevEpisode,
-      required final String? nextEpisode,
-      required final List<EpisodeModel> anotherEpisode}) = _$VideoModelImpl;
+      required final List<EpisodeModel> anotherEpisode,
+      final String? prevEpisode,
+      final String? nextEpisode}) = _$VideoModelImpl;
 
   @override
   String get quality;
@@ -283,11 +284,11 @@ abstract class _VideoModel implements VideoModel {
   @override
   String get title;
   @override
+  List<EpisodeModel> get anotherEpisode;
+  @override
   String? get prevEpisode;
   @override
   String? get nextEpisode;
-  @override
-  List<EpisodeModel> get anotherEpisode;
   @override
   @JsonKey(ignore: true)
   _$$VideoModelImplCopyWith<_$VideoModelImpl> get copyWith =>

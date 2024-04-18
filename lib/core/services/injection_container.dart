@@ -9,6 +9,7 @@ import 'package:raijin/features/anime/data/repositories/anime_repository_impl.da
 import 'package:raijin/features/anime/domain/repositories/anime_repository.dart';
 import 'package:raijin/features/anime/domain/usecases/anime_get_detail_use_case.dart';
 import 'package:raijin/features/anime/domain/usecases/anime_get_new_use_case.dart';
+import 'package:raijin/features/anime/domain/usecases/anime_get_schedule_use_case.dart';
 import 'package:raijin/features/anime/domain/usecases/anime_get_use_case.dart';
 import 'package:raijin/features/anime/domain/usecases/anime_get_video_use_case.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_complete_bloc/anime_complete_bloc.dart';
@@ -16,6 +17,7 @@ import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime
 import 'package:raijin/features/anime/presentation/blocs/anime_new_bloc/anime_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_ongoing_bloc/anime_ongoing_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_popular_bloc/anime_popular_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_schedule_bloc/anime_schedule_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_video_bloc/anime_video_bloc.dart';
 import 'package:raijin/features/auth/data/datasources/remote/auth_remote_data_source.dart';
 import 'package:raijin/features/auth/data/datasources/remote/auth_reomote_data_source_impl.dart';
@@ -52,9 +54,7 @@ Future<void> init() async {
   );
 
   sl.registerFactory<AnimeBloc>(
-    () => AnimeBloc(
-      animeGetNewUseCase: sl(),
-    ),
+    () => AnimeBloc(animeGetNewUseCase: sl()),
   );
 
   sl.registerFactory<AnimePopularBloc>(
@@ -72,10 +72,10 @@ Future<void> init() async {
   );
 
   sl.registerFactory(
-    () => AnimeVideoBloc(
-      animeGetVideoUseCase: sl(),
-      toastUseCase: sl(),
-    ),
+    () => AnimeVideoBloc(animeGetVideoUseCase: sl(), toastUseCase: sl()),
+  );
+  sl.registerFactory(
+    () => AnimeScheduleBloc(animeGetScheduleUseCase: sl(), toastUseCase: sl()),
   );
 
   // Datasource
@@ -83,14 +83,16 @@ Future<void> init() async {
     AuthRemoteDataSourceImpl(firebaseAuth: sl()),
   );
   sl.registerSingleton<AnimeRemoteDataSource>(
-      AnimeRemoteDataSourceImpl(dio: sl()));
+    AnimeRemoteDataSourceImpl(dio: sl()),
+  );
 
   // Repository
   sl.registerSingleton<AuthRepository>(
     AuthRepositoryImpl(authRemoteDataSource: sl()),
   );
   sl.registerSingleton<AnimeRepository>(
-      AnimeRepositoryImpl(animeRemoteDataSource: sl()));
+    AnimeRepositoryImpl(animeRemoteDataSource: sl()),
+  );
 
   // UseCase
   sl.registerSingleton<AuthLoginUseCase>(
@@ -102,7 +104,9 @@ Future<void> init() async {
   sl.registerSingleton<AuthLogoutUseCase>(
     AuthLogoutUseCase(authrepository: sl()),
   );
-  sl.registerSingleton<ToastUseCase>(ToastUseCase(fToast: sl()));
+  sl.registerSingleton<ToastUseCase>(
+    ToastUseCase(fToast: sl()),
+  );
   sl.registerSingleton<AnimeGetNewUseCase>(
     AnimeGetNewUseCase(animeRepository: sl()),
   );
@@ -114,5 +118,8 @@ Future<void> init() async {
   );
   sl.registerSingleton<AnimeGetVideoUseCase>(
     AnimeGetVideoUseCase(animeRepository: sl()),
+  );
+  sl.registerSingleton<AnimeGetScheduleUseCase>(
+    AnimeGetScheduleUseCase(animeRepository: sl()),
   );
 }

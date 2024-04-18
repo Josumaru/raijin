@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:raijin/core/constants/font.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:raijin/core/constants/colors.dart';
 import 'package:raijin/core/constants/padding.dart';
 
 class SearchBarWidget extends StatelessWidget {
@@ -17,12 +17,16 @@ class SearchBarWidget extends StatelessWidget {
           TextFormField(
             autocorrect: true,
             decoration: InputDecoration(
-              prefixIcon: const Icon(Iconsax.search_normal),
+              // prefixIcon: const Icon(Iconsax.search_normal_14),
               // enabledBorder: InputBorder.none,
               // focusedBorder: InputBorder.none,
-              label: Text(
-                'Search for anime',
-                style: bodySmall(context: context),
+              // label: Text(
+              //   'Search',
+              //   style: bodySmall(context: context),
+              // ),
+              suffixIcon: LoadingAnimationWidget.threeArchedCircle(
+                color: primaryColor(context: context),
+                size: 20,
               ),
             ),
           ),
