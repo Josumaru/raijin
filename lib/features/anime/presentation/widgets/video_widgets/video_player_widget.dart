@@ -5,7 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/core/constants/colors.dart';
+import 'package:raijin/core/constants/font.dart';
 import 'package:raijin/core/constants/sizes.dart';
 import 'package:raijin/core/services/injection_container.dart';
 import 'package:raijin/core/usecases/toast_usecase/toas_use_case.dart';
@@ -161,6 +164,84 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
+            Positioned(
+              top: 5,
+              left: 5,
+              child: Row(
+                children: [
+                  Icon(
+                    Iconsax.arrow_left_2,
+                    color: Colors.white,
+                    size: showControl ? 24 : 0,
+                  ),
+                  Text(
+                    videoModel.first.title,
+                    style: bodyLarge(context: context).copyWith(
+                      color: Colors.white,
+                      fontSize: showControl ? 14 : 0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: 5,
+              right: 5,
+              child: InkWell(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => Column(
+                      children: [
+                        const Spacer(),
+                        CupertinoActionSheet(
+                          title: const Text('Video Quality'),
+                          message: const Text('Select avalable option'),
+                          actions: List.generate(
+                            videoModel.length,
+                            (index) => CupertinoActionSheetAction(
+                              onPressed: () {
+                                _controller = VideoPlayerController.contentUri(
+                                  Uri.parse(videoModel[index].endpoint),
+                                )
+                                  ..initialize()
+                                  ..seekTo(Duration(seconds: videoPosition))
+                                  ..play().then((value) => setState(() {}));
+                              },
+                              child: Text(videoModel[index].quality),
+                            ),
+                          ),
+                          // actions: [
+                          // CupertinoActionSheetAction(
+                          //   onPressed: () {},
+                          //   isDestructiveAction: true,
+                          //   child: const Text('480p'),
+                          // ),
+                          //   CupertinoActionSheetAction(
+                          //     onPressed: () {},
+                          //     isDestructiveAction: true,
+                          //     child: const Text('720p'),
+                          //   ),
+                          // ],
+                          cancelButton: CupertinoActionSheetAction(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            isDestructiveAction: true,
+                            child: const Text('Cancel'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                child: Icon(
+                  Iconsax.setting_2,
+                  color: Colors.white,
+                  size: showControl ? 24 : 0,
+                ),
+              ),
+            ),
             Row(
               children: [
                 GestureDetector(
@@ -197,8 +278,11 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                       );
                     },
                     child: isBuffering
-                        ? const CupertinoActivityIndicator(
-                            color: kMainAccentColor,
+                        ? Center(
+                            child: LoadingAnimationWidget.stretchedDots(
+                              color: backgroundColor(context: context),
+                              size: 40,
+                            ),
                           )
                         : Icon(
                             isPlaying ? Iconsax.pause : Iconsax.play,

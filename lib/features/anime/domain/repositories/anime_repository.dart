@@ -22,4 +22,7 @@ abstract class AnimeRepository {
   Future<Either<Failure<String>, List<ScheduleModel>>> animeGetSchedule({
     required String day,
   });
+  Future<Either<Failure<String>, List<AnimeModel>>> animeGetSearch({
+    required String query,
+  });
 }

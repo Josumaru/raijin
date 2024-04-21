@@ -6,6 +6,6 @@ class DiscoverPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const DiscoverWidget();
+    return DiscoverWidget();
   }
 }

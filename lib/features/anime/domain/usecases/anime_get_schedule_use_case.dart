@@ -6,8 +6,9 @@ import 'package:raijin/features/anime/domain/repositories/anime_repository.dart'
 
 class AnimeGetScheduleUseCase
     extends UseCase<Either<Failure<String>, List<ScheduleModel>>, String> {
-  AnimeGetScheduleUseCase({required AnimeRepository animeRepository})
-      : _animeRepository = animeRepository;
+  AnimeGetScheduleUseCase({
+    required AnimeRepository animeRepository,
+  }) : _animeRepository = animeRepository;
   final AnimeRepository _animeRepository;
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:raijin/core/commons/widgets/anime_card_shimmer_widget.dart';
 import 'package:raijin/core/commons/widgets/anime_card_widget.dart';
 import 'package:raijin/core/constants/alignment.dart';
@@ -37,11 +38,26 @@ class AnimeOngoingWidget extends StatelessWidget {
         Padding(
           padding: kHorizontalPadding,
           child: Row(
+            crossAxisAlignment: kCrossAxisAlignmentCenter(),
             children: [
               Text(
                 'Airing Anime',
                 style: headlineLarge(context: context).copyWith(
                   color: onBackgroundColor(context: context),
+                ),
+              ),
+              const Spacer(),
+              InkWell(
+                onTap: () {},
+                child: Row(
+                  children: [
+                    const Text('View All'),
+                    Icon(
+                      Iconsax.arrow_right_3,
+                      color: onBackgroundColor(context: context),
+                      size: 14,
+                    ),
+                  ],
                 ),
               ),
             ],

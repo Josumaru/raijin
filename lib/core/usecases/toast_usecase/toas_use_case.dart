@@ -13,7 +13,7 @@ class ToastUseCase extends UseCase {
       child: ToastWidget(
         message: params,
       ),
-      gravity: ToastGravity.BOTTOM,
+      gravity: ToastGravity.TOP,
       toastDuration: const Duration(seconds: 10),
     );
   }

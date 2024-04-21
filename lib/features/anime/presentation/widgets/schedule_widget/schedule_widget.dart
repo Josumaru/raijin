@@ -262,12 +262,12 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                             },
                             child: Row(
                               mainAxisAlignment: kMainAxisAligmentCenter(),
-                              children: [
+                              children: const [
                                 Icon(
                                   Iconsax.play,
-                                  color: onBackgroundColor(context: context),
+                                  color: Colors.white,
                                 ),
-                                const Text('Play'),
+                                Text('Play'),
                               ],
                             ),
                           ),

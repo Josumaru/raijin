@@ -21,8 +21,8 @@ const Color kMainLightError = kMainDangerColor;
 const Color kMainLightOnError = kMainDarkTextColor;
 
 // Global
-const Color kMainAccentColor = Color.fromARGB(255, 11, 110, 224);
-const Color kPrimaryColor = Color.fromARGB(255, 11, 110, 224);
+const Color kMainAccentColor = Color(0xffef4444);
+const Color kPrimaryColor = Color(0xffef4444);
 
 const Color kMainBorderColor = Color.fromARGB(255, 160, 160, 160);
 const Color kMainDangerColor = Color.fromARGB(255, 235, 71, 59);

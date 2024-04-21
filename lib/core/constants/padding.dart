@@ -46,4 +46,7 @@ EdgeInsetsGeometry kBottomPadding = EdgeInsets.only(
 EdgeInsetsGeometry kHorizontalPadding =
     EdgeInsets.symmetric(horizontal: kPadding, vertical: 0);
 
+EdgeInsetsGeometry kVerticalPadding =
+    EdgeInsets.symmetric(horizontal: 0, vertical: kPadding);
+
 EdgeInsetsGeometry kAllPadding = EdgeInsets.all(kPadding);

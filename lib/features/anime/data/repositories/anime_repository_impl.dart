@@ -70,9 +70,24 @@ class AnimeRepositoryImpl implements AnimeRepository {
   }
 
   @override
-  Future<Either<Failure<String>, List<ScheduleModel>>> animeGetSchedule({required String day}) async {
+  Future<Either<Failure<String>, List<ScheduleModel>>> animeGetSchedule(
+      {required String day}) async {
     try {
-      final List<ScheduleModel> r = await animeRemoteDataSource.animeSchedule(day: day);
+      final List<ScheduleModel> r =
+          await animeRemoteDataSource.animeSchedule(day: day);
+      return Right(r);
+    } catch (e) {
+      return Left(Failure.serverError(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure<String>, List<AnimeModel>>> animeGetSearch({
+    required String query,
+  }) async {
+    try {
+      final List<AnimeModel> r =
+          await animeRemoteDataSource.animeSearch(query: query);
       return Right(r);
     } catch (e) {
       return Left(Failure.serverError(message: e.toString()));

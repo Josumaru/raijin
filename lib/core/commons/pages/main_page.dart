@@ -22,6 +22,9 @@ class MainPage extends StatelessWidget {
       backgroundColor: backgroundColor(context: context),
       stateManagement: true,
       resizeToAvoidBottomInset: true,
+      neumorphicProperties: const NeumorphicProperties(
+        showSubtitleText: true,
+      ),
       navBarStyle: NavBarStyle.style3,
       controller: _controller,
       hideNavigationBar: isLandscape ? true : false,
@@ -34,26 +37,27 @@ class MainPage extends StatelessWidget {
   List<PersistentBottomNavBarItem> _buildItems(BuildContext context) {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(
-          Iconsax.home,
-          color: onBackgroundColor(context: context),
+        activeColorPrimary: primaryColor(context: context),
+        inactiveColorPrimary: onBackgroundColor(context: context).withOpacity(
+          0.3,
         ),
+        icon: const Icon(Iconsax.home),
         title: 'Home',
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(
-          Iconsax.calendar,
-          color: onBackgroundColor(context: context),
+        activeColorPrimary: primaryColor(context: context),
+        inactiveColorPrimary: onBackgroundColor(context: context).withOpacity(
+          0.3,
         ),
+        icon: const Icon(Iconsax.calendar),
         title: 'Schedule',
       ),
       PersistentBottomNavBarItem(
-        icon: SizedBox(
-          child: Icon(
-            Iconsax.discover,
-            color: onBackgroundColor(context: context),
-          ),
+        activeColorPrimary: primaryColor(context: context),
+        inactiveColorPrimary: onBackgroundColor(context: context).withOpacity(
+          0.3,
         ),
+        icon: const SizedBox(child: Icon(Iconsax.discover)),
         title: 'Discover',
       ),
     ];

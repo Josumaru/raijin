@@ -12,4 +12,5 @@ abstract class AnimeRemoteDataSource {
   Future<AnimeModel> animeDetail({required String endpoint});
   Future<List<VideoModel>> animeVideo({required String endpoint});
   Future<List<ScheduleModel>> animeSchedule({required String day});
+  Future<List<AnimeModel>> animeSearch({required String query});
 }

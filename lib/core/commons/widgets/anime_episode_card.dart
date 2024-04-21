@@ -58,7 +58,7 @@ class AnimeEpisodeCard extends StatelessWidget {
                     child: Text(
                       episodeModel.title.contains('[END]')
                           ? 'END'
-                          : episodeModel.title.split("Episode ")[1],
+                          : episodeModel.title.split("Episode ").last,
                       style: TextStyle(
                         fontSize: 30,
                         color: primaryColor(context: context),

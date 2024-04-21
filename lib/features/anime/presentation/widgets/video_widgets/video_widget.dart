@@ -88,7 +88,7 @@ class LoadingWidget extends StatelessWidget {
           aspectRatio: 16 / 9,
           child: Container(
             decoration: BoxDecoration(
-              color: onBackgroundColor(context: context),
+              color: onBackgroundColor(context: context).withOpacity(0),
             ),
             child: Center(
               child: LoadingAnimationWidget.stretchedDots(

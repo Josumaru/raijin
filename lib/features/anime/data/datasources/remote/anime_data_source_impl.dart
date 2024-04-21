@@ -343,4 +343,57 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
         (response.data as List).map((e) => ScheduleModel.fromJson(e)).toList();
     return animeList;
   }
+
+  @override
+  Future<List<AnimeModel>> animeSearch({required String query}) async {
+    final List<AnimeModel> animeList = [];
+    final String endpoint = '$kAnimeEndpoint/?s=$query';
+    final response = await dio.get(endpoint);
+    final responseBody = parse(response.data);
+    final result = responseBody.getElementsByTagName('article > div');
+    for (var element in result) {
+      final String title =
+          element.getElementsByClassName('title').first.text.trim();
+      final String endpoint =
+          element.getElementsByTagName('div > a').first.attributes['href']!;
+      final String poster =
+          element.getElementsByClassName('anmsa').first.attributes['src']!;
+      final String type = element.getElementsByClassName('type').first.text;
+      final double score = double.parse(
+          element.getElementsByClassName('score').first.text == ''
+              ? '0.0'
+              : element
+                  .getElementsByClassName('score')
+                  .first
+                  .text
+                  .replaceAll(',', '.')
+                  .trim());
+      final String status = element
+          .getElementsByClassName('data')
+          .first
+          .getElementsByClassName('type')
+          .first
+          .text;
+      final List<String> genre = element
+          .getElementsByClassName('mta')
+          .first
+          .getElementsByTagName('a')
+          .map((e) => e.attributes['href']!)
+          .toList();
+      final String description =
+          element.getElementsByClassName('ttls').first.text;
+
+      animeList.add(AnimeModel(
+        title: title,
+        endpoint: endpoint,
+        poster: poster,
+        type: type,
+        status: status,
+        score: score,
+        genre: genre,
+        description: description,
+      ));
+    }
+    return animeList;
+  }
 }

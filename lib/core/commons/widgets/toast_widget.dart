@@ -5,7 +5,7 @@ import 'package:raijin/core/constants/padding.dart';
 class ToastWidget extends StatelessWidget {
   const ToastWidget({super.key, required this.message});
   final String message;
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -14,7 +14,10 @@ class ToastWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
         color: kMainAccentColor.withOpacity(0.9),
       ),
-      child: Text(message),
+      child: Text(
+        message,
+        style: const TextStyle(color: Colors.white),
+      ),
     );
   }
 }
