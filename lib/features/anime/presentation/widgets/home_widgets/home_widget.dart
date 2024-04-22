@@ -72,13 +72,14 @@ class HomeWidget extends StatelessWidget {
     context.read<AnimeBloc>().add(const AnimeEvent.animeGetNew(page: 1));
     context.read<AnimePopularBloc>().add(
         const AnimePopularEvent.animeGetPopular(
-            status: '', order: 'popular', type: ''));
+            status: '', order: 'popular', type: '', page: 1));
     context
         .read<AnimeOngoingBloc>()
         .add(const AnimeOngoingEvent.animeGetOngoing(
           status: 'Currently+Airing',
           order: 'latest',
           type: '',
+          page: 1,
         ));
     context
         .read<AnimeCompleteBloc>()
@@ -86,6 +87,7 @@ class HomeWidget extends StatelessWidget {
           status: 'Finished+Airing',
           order: 'latest',
           type: '',
+          page: 1,
         ));
     await Future.delayed(const Duration(seconds: 2), () {
       _refreshController.refreshCompleted();

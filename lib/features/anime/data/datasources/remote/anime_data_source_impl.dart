@@ -19,7 +19,7 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
         page == 1 ? '$kAnimeEndpoint/' : '$kAnimeEndpoint/page/$page/';
     final response = await dio.get(endpoint);
     final responseBody = parse(response.data).body;
-    final elements = responseBody!.getElementsByClassName('post-show')[0];
+    final elements = responseBody!.getElementsByClassName('post-show').first;
     final ulElements = elements.getElementsByTagName('ul').first;
     final List<Element> liElements = ulElements.getElementsByTagName('li');
     for (int i = 0; i < liElements.length; i++) {
@@ -47,6 +47,7 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
     required String status,
     required String order,
     required String type,
+    required int page,
   }) async {
     final List<AnimeModel> animeModel = [];
 
@@ -62,7 +63,7 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
     }
 
     String endpoint =
-        '$kAnimeEndpoint/daftar-anime-2/?order=$order&status=$status&type=$type';
+        '$kAnimeEndpoint/daftar-anime-2/page/$page/?order=$order&status=$status&type=$type';
     final response = await dio.get(endpoint);
     final responseBody = parse(response.data).body;
     final elements = responseBody!.getElementsByClassName('animepost');

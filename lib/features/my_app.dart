@@ -7,9 +7,9 @@ import 'package:raijin/core/routes/route.dart';
 import 'package:raijin/core/routes/route_name.dart';
 import 'package:raijin/core/services/injection_container.dart';
 import 'package:raijin/core/themes/theme.dart';
-import 'package:raijin/features/anime/domain/usecases/anime_get_search_use_case.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_complete_bloc/anime_complete_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime_detail_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_more_bloc/anime_more_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_new_bloc/anime_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_ongoing_bloc/anime_ongoing_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_popular_bloc/anime_popular_bloc.dart';
@@ -64,6 +64,7 @@ class _MyAppState extends State<MyApp> {
                 status: '',
                 order: 'popular',
                 type: '',
+                page: 1,
               ),
             ),
         ),
@@ -74,6 +75,7 @@ class _MyAppState extends State<MyApp> {
                 status: 'Currently+Airing',
                 order: 'latest',
                 type: '',
+                page: 1,
               ),
             ),
         ),
@@ -84,6 +86,7 @@ class _MyAppState extends State<MyApp> {
                 status: 'Finished+Airing',
                 order: 'latest',
                 type: '',
+                page: 1,
               ),
             ),
         ),
@@ -103,6 +106,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => sl<AnimeSearchBloc>(),
         ),
+        BlocProvider(create: (context) => sl<AnimeMoreBloc>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

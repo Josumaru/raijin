@@ -12,6 +12,7 @@ abstract class AnimeRepository {
     required String status,
     required String order,
     required String type,
+    required int page,
   });
   Future<Either<Failure<String>, AnimeModel>> animeGetDetail({
     required String endpoint,
@@ -24,5 +25,8 @@ abstract class AnimeRepository {
   });
   Future<Either<Failure<String>, List<AnimeModel>>> animeGetSearch({
     required String query,
+  });
+  Future<Either<Failure<String>, List<AnimeModel>>> animeGetMore({
+    required int page,
   });
 }

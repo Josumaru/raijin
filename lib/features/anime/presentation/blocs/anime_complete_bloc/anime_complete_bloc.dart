@@ -18,10 +18,11 @@ class AnimeCompleteBloc extends Bloc<AnimeCompleteEvent, AnimeCompleteState> {
     on<AnimeCompleteEvent>(
       (event, emit) async {
         await event.when(
-          animeGetComplete: (status, order, type) => _animeGetComplete(
+          animeGetComplete: (status, order, type, page) => _animeGetComplete(
             status: status,
             order: order,
             type: type,
+            page: page,
           ),
         );
       },
@@ -31,12 +32,14 @@ class AnimeCompleteBloc extends Bloc<AnimeCompleteEvent, AnimeCompleteState> {
     required String status,
     required String order,
     required String type,
+    required int page,
   }) async {
     emit(const AnimeCompleteState.loading());
     final data = await animeGetUseCase(
       order: order,
       status: status,
       type: type,
+      page: page,
     );
     data.fold(
       (l) => emit(AnimeCompleteState.error(message: l.toString())),

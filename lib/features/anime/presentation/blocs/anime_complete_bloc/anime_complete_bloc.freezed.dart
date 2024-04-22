@@ -19,21 +19,23 @@ mixin _$AnimeCompleteEvent {
   String get status => throw _privateConstructorUsedError;
   String get order => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
+  int get page => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String status, String order, String type)
+    required TResult Function(
+            String status, String order, String type, int page)
         animeGetComplete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String status, String order, String type)?
+    TResult? Function(String status, String order, String type, int page)?
         animeGetComplete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String status, String order, String type)?
+    TResult Function(String status, String order, String type, int page)?
         animeGetComplete,
     required TResult orElse(),
   }) =>
@@ -66,7 +68,7 @@ abstract class $AnimeCompleteEventCopyWith<$Res> {
           AnimeCompleteEvent value, $Res Function(AnimeCompleteEvent) then) =
       _$AnimeCompleteEventCopyWithImpl<$Res, AnimeCompleteEvent>;
   @useResult
-  $Res call({String status, String order, String type});
+  $Res call({String status, String order, String type, int page});
 }
 
 /// @nodoc
@@ -85,6 +87,7 @@ class _$AnimeCompleteEventCopyWithImpl<$Res, $Val extends AnimeCompleteEvent>
     Object? status = null,
     Object? order = null,
     Object? type = null,
+    Object? page = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -99,6 +102,10 @@ class _$AnimeCompleteEventCopyWithImpl<$Res, $Val extends AnimeCompleteEvent>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
+      page: null == page
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -111,7 +118,7 @@ abstract class _$$AnimeGetCompleteImplCopyWith<$Res>
       __$$AnimeGetCompleteImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String status, String order, String type});
+  $Res call({String status, String order, String type, int page});
 }
 
 /// @nodoc
@@ -128,6 +135,7 @@ class __$$AnimeGetCompleteImplCopyWithImpl<$Res>
     Object? status = null,
     Object? order = null,
     Object? type = null,
+    Object? page = null,
   }) {
     return _then(_$AnimeGetCompleteImpl(
       status: null == status
@@ -142,6 +150,10 @@ class __$$AnimeGetCompleteImplCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
+      page: null == page
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -150,7 +162,10 @@ class __$$AnimeGetCompleteImplCopyWithImpl<$Res>
 
 class _$AnimeGetCompleteImpl implements _AnimeGetComplete {
   const _$AnimeGetCompleteImpl(
-      {required this.status, required this.order, required this.type});
+      {required this.status,
+      required this.order,
+      required this.type,
+      required this.page});
 
   @override
   final String status;
@@ -158,10 +173,12 @@ class _$AnimeGetCompleteImpl implements _AnimeGetComplete {
   final String order;
   @override
   final String type;
+  @override
+  final int page;
 
   @override
   String toString() {
-    return 'AnimeCompleteEvent.animeGetComplete(status: $status, order: $order, type: $type)';
+    return 'AnimeCompleteEvent.animeGetComplete(status: $status, order: $order, type: $type, page: $page)';
   }
 
   @override
@@ -171,11 +188,12 @@ class _$AnimeGetCompleteImpl implements _AnimeGetComplete {
             other is _$AnimeGetCompleteImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.order, order) || other.order == order) &&
-            (identical(other.type, type) || other.type == type));
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.page, page) || other.page == page));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, order, type);
+  int get hashCode => Object.hash(runtimeType, status, order, type, page);
 
   @JsonKey(ignore: true)
   @override
@@ -187,30 +205,31 @@ class _$AnimeGetCompleteImpl implements _AnimeGetComplete {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String status, String order, String type)
+    required TResult Function(
+            String status, String order, String type, int page)
         animeGetComplete,
   }) {
-    return animeGetComplete(status, order, type);
+    return animeGetComplete(status, order, type, page);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String status, String order, String type)?
+    TResult? Function(String status, String order, String type, int page)?
         animeGetComplete,
   }) {
-    return animeGetComplete?.call(status, order, type);
+    return animeGetComplete?.call(status, order, type, page);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String status, String order, String type)?
+    TResult Function(String status, String order, String type, int page)?
         animeGetComplete,
     required TResult orElse(),
   }) {
     if (animeGetComplete != null) {
-      return animeGetComplete(status, order, type);
+      return animeGetComplete(status, order, type, page);
     }
     return orElse();
   }
@@ -248,7 +267,8 @@ abstract class _AnimeGetComplete implements AnimeCompleteEvent {
   const factory _AnimeGetComplete(
       {required final String status,
       required final String order,
-      required final String type}) = _$AnimeGetCompleteImpl;
+      required final String type,
+      required final int page}) = _$AnimeGetCompleteImpl;
 
   @override
   String get status;
@@ -256,6 +276,8 @@ abstract class _AnimeGetComplete implements AnimeCompleteEvent {
   String get order;
   @override
   String get type;
+  @override
+  int get page;
   @override
   @JsonKey(ignore: true)
   _$$AnimeGetCompleteImplCopyWith<_$AnimeGetCompleteImpl> get copyWith =>

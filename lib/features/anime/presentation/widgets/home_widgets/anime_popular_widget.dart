@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:raijin/core/commons/widgets/anime_card_shimmer_widget.dart';
 import 'package:raijin/core/commons/widgets/anime_card_widget.dart';
 import 'package:raijin/core/constants/alignment.dart';
@@ -8,7 +9,9 @@ import 'package:raijin/core/constants/colors.dart';
 import 'package:raijin/core/constants/font.dart';
 import 'package:raijin/core/constants/padding.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_more_bloc/anime_more_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_popular_bloc/anime_popular_bloc.dart';
+import 'package:raijin/features/anime/presentation/pages/more_page.dart';
 
 class AnimePopularWidget extends StatelessWidget {
   const AnimePopularWidget({super.key});
@@ -50,7 +53,22 @@ class AnimePopularWidget extends StatelessWidget {
               ),
               const Spacer(),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  context.read<AnimeMoreBloc>().add(
+                        const AnimeMoreEvent.animeGetMore(
+                          status: '',
+                          order: 'popular',
+                          type: '',
+                          page: 1,
+                        ),
+                      );
+                  PersistentNavBarNavigator.pushNewScreenWithRouteSettings(
+                    context,
+                    screen: const MorePage(),
+                    settings: const RouteSettings(name: '/more'),
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                },
                 child: Row(
                   children: [
                     const Text('View All'),

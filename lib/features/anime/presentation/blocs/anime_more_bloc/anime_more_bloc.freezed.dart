@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'anime_popular_bloc.dart';
+part of 'anime_more_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$AnimePopularEvent {
+mixin _$AnimeMoreEvent {
   String get status => throw _privateConstructorUsedError;
   String get order => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
@@ -24,57 +24,57 @@ mixin _$AnimePopularEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(
             String status, String order, String type, int page)
-        animeGetPopular,
+        animeGetMore,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String status, String order, String type, int page)?
-        animeGetPopular,
+        animeGetMore,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String status, String order, String type, int page)?
-        animeGetPopular,
+        animeGetMore,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_AnimeGetPopular value) animeGetPopular,
+    required TResult Function(_AnimeGetMore value) animeGetMore,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_AnimeGetPopular value)? animeGetPopular,
+    TResult? Function(_AnimeGetMore value)? animeGetMore,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_AnimeGetPopular value)? animeGetPopular,
+    TResult Function(_AnimeGetMore value)? animeGetMore,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $AnimePopularEventCopyWith<AnimePopularEvent> get copyWith =>
+  $AnimeMoreEventCopyWith<AnimeMoreEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AnimePopularEventCopyWith<$Res> {
-  factory $AnimePopularEventCopyWith(
-          AnimePopularEvent value, $Res Function(AnimePopularEvent) then) =
-      _$AnimePopularEventCopyWithImpl<$Res, AnimePopularEvent>;
+abstract class $AnimeMoreEventCopyWith<$Res> {
+  factory $AnimeMoreEventCopyWith(
+          AnimeMoreEvent value, $Res Function(AnimeMoreEvent) then) =
+      _$AnimeMoreEventCopyWithImpl<$Res, AnimeMoreEvent>;
   @useResult
   $Res call({String status, String order, String type, int page});
 }
 
 /// @nodoc
-class _$AnimePopularEventCopyWithImpl<$Res, $Val extends AnimePopularEvent>
-    implements $AnimePopularEventCopyWith<$Res> {
-  _$AnimePopularEventCopyWithImpl(this._value, this._then);
+class _$AnimeMoreEventCopyWithImpl<$Res, $Val extends AnimeMoreEvent>
+    implements $AnimeMoreEventCopyWith<$Res> {
+  _$AnimeMoreEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -111,22 +111,22 @@ class _$AnimePopularEventCopyWithImpl<$Res, $Val extends AnimePopularEvent>
 }
 
 /// @nodoc
-abstract class _$$AnimeGetPopularImplCopyWith<$Res>
-    implements $AnimePopularEventCopyWith<$Res> {
-  factory _$$AnimeGetPopularImplCopyWith(_$AnimeGetPopularImpl value,
-          $Res Function(_$AnimeGetPopularImpl) then) =
-      __$$AnimeGetPopularImplCopyWithImpl<$Res>;
+abstract class _$$AnimeGetMoreImplCopyWith<$Res>
+    implements $AnimeMoreEventCopyWith<$Res> {
+  factory _$$AnimeGetMoreImplCopyWith(
+          _$AnimeGetMoreImpl value, $Res Function(_$AnimeGetMoreImpl) then) =
+      __$$AnimeGetMoreImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String status, String order, String type, int page});
 }
 
 /// @nodoc
-class __$$AnimeGetPopularImplCopyWithImpl<$Res>
-    extends _$AnimePopularEventCopyWithImpl<$Res, _$AnimeGetPopularImpl>
-    implements _$$AnimeGetPopularImplCopyWith<$Res> {
-  __$$AnimeGetPopularImplCopyWithImpl(
-      _$AnimeGetPopularImpl _value, $Res Function(_$AnimeGetPopularImpl) _then)
+class __$$AnimeGetMoreImplCopyWithImpl<$Res>
+    extends _$AnimeMoreEventCopyWithImpl<$Res, _$AnimeGetMoreImpl>
+    implements _$$AnimeGetMoreImplCopyWith<$Res> {
+  __$$AnimeGetMoreImplCopyWithImpl(
+      _$AnimeGetMoreImpl _value, $Res Function(_$AnimeGetMoreImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -137,7 +137,7 @@ class __$$AnimeGetPopularImplCopyWithImpl<$Res>
     Object? type = null,
     Object? page = null,
   }) {
-    return _then(_$AnimeGetPopularImpl(
+    return _then(_$AnimeGetMoreImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -160,8 +160,8 @@ class __$$AnimeGetPopularImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AnimeGetPopularImpl implements _AnimeGetPopular {
-  const _$AnimeGetPopularImpl(
+class _$AnimeGetMoreImpl implements _AnimeGetMore {
+  const _$AnimeGetMoreImpl(
       {required this.status,
       required this.order,
       required this.type,
@@ -178,14 +178,14 @@ class _$AnimeGetPopularImpl implements _AnimeGetPopular {
 
   @override
   String toString() {
-    return 'AnimePopularEvent.animeGetPopular(status: $status, order: $order, type: $type, page: $page)';
+    return 'AnimeMoreEvent.animeGetMore(status: $status, order: $order, type: $type, page: $page)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AnimeGetPopularImpl &&
+            other is _$AnimeGetMoreImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.order, order) || other.order == order) &&
             (identical(other.type, type) || other.type == type) &&
@@ -198,38 +198,37 @@ class _$AnimeGetPopularImpl implements _AnimeGetPopular {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AnimeGetPopularImplCopyWith<_$AnimeGetPopularImpl> get copyWith =>
-      __$$AnimeGetPopularImplCopyWithImpl<_$AnimeGetPopularImpl>(
-          this, _$identity);
+  _$$AnimeGetMoreImplCopyWith<_$AnimeGetMoreImpl> get copyWith =>
+      __$$AnimeGetMoreImplCopyWithImpl<_$AnimeGetMoreImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
             String status, String order, String type, int page)
-        animeGetPopular,
+        animeGetMore,
   }) {
-    return animeGetPopular(status, order, type, page);
+    return animeGetMore(status, order, type, page);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String status, String order, String type, int page)?
-        animeGetPopular,
+        animeGetMore,
   }) {
-    return animeGetPopular?.call(status, order, type, page);
+    return animeGetMore?.call(status, order, type, page);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String status, String order, String type, int page)?
-        animeGetPopular,
+        animeGetMore,
     required TResult orElse(),
   }) {
-    if (animeGetPopular != null) {
-      return animeGetPopular(status, order, type, page);
+    if (animeGetMore != null) {
+      return animeGetMore(status, order, type, page);
     }
     return orElse();
   }
@@ -237,38 +236,38 @@ class _$AnimeGetPopularImpl implements _AnimeGetPopular {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_AnimeGetPopular value) animeGetPopular,
+    required TResult Function(_AnimeGetMore value) animeGetMore,
   }) {
-    return animeGetPopular(this);
+    return animeGetMore(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_AnimeGetPopular value)? animeGetPopular,
+    TResult? Function(_AnimeGetMore value)? animeGetMore,
   }) {
-    return animeGetPopular?.call(this);
+    return animeGetMore?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_AnimeGetPopular value)? animeGetPopular,
+    TResult Function(_AnimeGetMore value)? animeGetMore,
     required TResult orElse(),
   }) {
-    if (animeGetPopular != null) {
-      return animeGetPopular(this);
+    if (animeGetMore != null) {
+      return animeGetMore(this);
     }
     return orElse();
   }
 }
 
-abstract class _AnimeGetPopular implements AnimePopularEvent {
-  const factory _AnimeGetPopular(
+abstract class _AnimeGetMore implements AnimeMoreEvent {
+  const factory _AnimeGetMore(
       {required final String status,
       required final String order,
       required final String type,
-      required final int page}) = _$AnimeGetPopularImpl;
+      required final int page}) = _$AnimeGetMoreImpl;
 
   @override
   String get status;
@@ -280,12 +279,12 @@ abstract class _AnimeGetPopular implements AnimePopularEvent {
   int get page;
   @override
   @JsonKey(ignore: true)
-  _$$AnimeGetPopularImplCopyWith<_$AnimeGetPopularImpl> get copyWith =>
+  _$$AnimeGetMoreImplCopyWith<_$AnimeGetMoreImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$AnimePopularState {
+mixin _$AnimeMoreState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -339,16 +338,16 @@ mixin _$AnimePopularState {
 }
 
 /// @nodoc
-abstract class $AnimePopularStateCopyWith<$Res> {
-  factory $AnimePopularStateCopyWith(
-          AnimePopularState value, $Res Function(AnimePopularState) then) =
-      _$AnimePopularStateCopyWithImpl<$Res, AnimePopularState>;
+abstract class $AnimeMoreStateCopyWith<$Res> {
+  factory $AnimeMoreStateCopyWith(
+          AnimeMoreState value, $Res Function(AnimeMoreState) then) =
+      _$AnimeMoreStateCopyWithImpl<$Res, AnimeMoreState>;
 }
 
 /// @nodoc
-class _$AnimePopularStateCopyWithImpl<$Res, $Val extends AnimePopularState>
-    implements $AnimePopularStateCopyWith<$Res> {
-  _$AnimePopularStateCopyWithImpl(this._value, this._then);
+class _$AnimeMoreStateCopyWithImpl<$Res, $Val extends AnimeMoreState>
+    implements $AnimeMoreStateCopyWith<$Res> {
+  _$AnimeMoreStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -365,7 +364,7 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$AnimePopularStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$AnimeMoreStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
@@ -379,7 +378,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'AnimePopularState.initial()';
+    return 'AnimeMoreState.initial()';
   }
 
   @override
@@ -466,7 +465,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements AnimePopularState {
+abstract class _Initial implements AnimeMoreState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -479,7 +478,7 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$AnimePopularStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$AnimeMoreStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
@@ -493,7 +492,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'AnimePopularState.loading()';
+    return 'AnimeMoreState.loading()';
   }
 
   @override
@@ -580,7 +579,7 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements AnimePopularState {
+abstract class _Loading implements AnimeMoreState {
   const factory _Loading() = _$LoadingImpl;
 }
 
@@ -595,7 +594,7 @@ abstract class _$$LoadedImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$AnimePopularStateCopyWithImpl<$Res, _$LoadedImpl>
+    extends _$AnimeMoreStateCopyWithImpl<$Res, _$LoadedImpl>
     implements _$$LoadedImplCopyWith<$Res> {
   __$$LoadedImplCopyWithImpl(
       _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
@@ -633,7 +632,7 @@ class _$LoadedImpl implements _Loaded {
 
   @override
   String toString() {
-    return 'AnimePopularState.loaded(animeModel: $animeModel)';
+    return 'AnimeMoreState.loaded(animeModel: $animeModel)';
   }
 
   @override
@@ -730,7 +729,7 @@ class _$LoadedImpl implements _Loaded {
   }
 }
 
-abstract class _Loaded implements AnimePopularState {
+abstract class _Loaded implements AnimeMoreState {
   const factory _Loaded({final List<AnimeModel>? animeModel}) = _$LoadedImpl;
 
   List<AnimeModel>? get animeModel;
@@ -750,7 +749,7 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$AnimePopularStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$AnimeMoreStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
@@ -780,7 +779,7 @@ class _$ErrorImpl implements _Error {
 
   @override
   String toString() {
-    return 'AnimePopularState.error(message: $message)';
+    return 'AnimeMoreState.error(message: $message)';
   }
 
   @override
@@ -875,7 +874,7 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements AnimePopularState {
+abstract class _Error implements AnimeMoreState {
   const factory _Error({required final String message}) = _$ErrorImpl;
 
   String get message;

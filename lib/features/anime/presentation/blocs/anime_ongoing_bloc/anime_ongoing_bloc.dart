@@ -15,10 +15,11 @@ class AnimeOngoingBloc extends Bloc<AnimeOngoingEvent, AnimeOngoingState> {
       : super(const AnimeOngoingState.initial()) {
     on<AnimeOngoingEvent>((event, emit) {
       event.when(
-        animeGetOngoing: (status, order, type) => _animeGetPopular(
+        animeGetOngoing: (status, order, type, page) => _animeGetPopular(
           status: status,
           order: order,
           type: type,
+          page: page
         ),
       );
     });
@@ -27,12 +28,14 @@ class AnimeOngoingBloc extends Bloc<AnimeOngoingEvent, AnimeOngoingState> {
     required String status,
     required String order,
     required String type,
+    required int page,
   }) async {
     emit(const AnimeOngoingState.loading());
     final data = await animeGetUseCase(
       order: order,
       status: status,
       type: type,
+      page: page,
     );
     data.fold(
       (l) => emit(AnimeOngoingState.error(message: l.toString())),

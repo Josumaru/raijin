@@ -19,21 +19,24 @@ mixin _$AnimeOngoingEvent {
   String get status => throw _privateConstructorUsedError;
   String get order => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
+  int get page => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String status, String order, String type)
+    required TResult Function(
+            String status, String order, String type, int page)
         animeGetOngoing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String status, String order, String type)?
+    TResult? Function(String status, String order, String type, int page)?
         animeGetOngoing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String status, String order, String type)? animeGetOngoing,
+    TResult Function(String status, String order, String type, int page)?
+        animeGetOngoing,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -65,7 +68,7 @@ abstract class $AnimeOngoingEventCopyWith<$Res> {
           AnimeOngoingEvent value, $Res Function(AnimeOngoingEvent) then) =
       _$AnimeOngoingEventCopyWithImpl<$Res, AnimeOngoingEvent>;
   @useResult
-  $Res call({String status, String order, String type});
+  $Res call({String status, String order, String type, int page});
 }
 
 /// @nodoc
@@ -84,6 +87,7 @@ class _$AnimeOngoingEventCopyWithImpl<$Res, $Val extends AnimeOngoingEvent>
     Object? status = null,
     Object? order = null,
     Object? type = null,
+    Object? page = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -98,6 +102,10 @@ class _$AnimeOngoingEventCopyWithImpl<$Res, $Val extends AnimeOngoingEvent>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
+      page: null == page
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -110,7 +118,7 @@ abstract class _$$AnimeGetImplCopyWith<$Res>
       __$$AnimeGetImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String status, String order, String type});
+  $Res call({String status, String order, String type, int page});
 }
 
 /// @nodoc
@@ -127,6 +135,7 @@ class __$$AnimeGetImplCopyWithImpl<$Res>
     Object? status = null,
     Object? order = null,
     Object? type = null,
+    Object? page = null,
   }) {
     return _then(_$AnimeGetImpl(
       status: null == status
@@ -141,6 +150,10 @@ class __$$AnimeGetImplCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
+      page: null == page
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -149,7 +162,10 @@ class __$$AnimeGetImplCopyWithImpl<$Res>
 
 class _$AnimeGetImpl implements _AnimeGet {
   const _$AnimeGetImpl(
-      {required this.status, required this.order, required this.type});
+      {required this.status,
+      required this.order,
+      required this.type,
+      required this.page});
 
   @override
   final String status;
@@ -157,10 +173,12 @@ class _$AnimeGetImpl implements _AnimeGet {
   final String order;
   @override
   final String type;
+  @override
+  final int page;
 
   @override
   String toString() {
-    return 'AnimeOngoingEvent.animeGetOngoing(status: $status, order: $order, type: $type)';
+    return 'AnimeOngoingEvent.animeGetOngoing(status: $status, order: $order, type: $type, page: $page)';
   }
 
   @override
@@ -170,11 +188,12 @@ class _$AnimeGetImpl implements _AnimeGet {
             other is _$AnimeGetImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.order, order) || other.order == order) &&
-            (identical(other.type, type) || other.type == type));
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.page, page) || other.page == page));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, order, type);
+  int get hashCode => Object.hash(runtimeType, status, order, type, page);
 
   @JsonKey(ignore: true)
   @override
@@ -185,29 +204,31 @@ class _$AnimeGetImpl implements _AnimeGet {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String status, String order, String type)
+    required TResult Function(
+            String status, String order, String type, int page)
         animeGetOngoing,
   }) {
-    return animeGetOngoing(status, order, type);
+    return animeGetOngoing(status, order, type, page);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String status, String order, String type)?
+    TResult? Function(String status, String order, String type, int page)?
         animeGetOngoing,
   }) {
-    return animeGetOngoing?.call(status, order, type);
+    return animeGetOngoing?.call(status, order, type, page);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String status, String order, String type)? animeGetOngoing,
+    TResult Function(String status, String order, String type, int page)?
+        animeGetOngoing,
     required TResult orElse(),
   }) {
     if (animeGetOngoing != null) {
-      return animeGetOngoing(status, order, type);
+      return animeGetOngoing(status, order, type, page);
     }
     return orElse();
   }
@@ -245,7 +266,8 @@ abstract class _AnimeGet implements AnimeOngoingEvent {
   const factory _AnimeGet(
       {required final String status,
       required final String order,
-      required final String type}) = _$AnimeGetImpl;
+      required final String type,
+      required final int page}) = _$AnimeGetImpl;
 
   @override
   String get status;
@@ -253,6 +275,8 @@ abstract class _AnimeGet implements AnimeOngoingEvent {
   String get order;
   @override
   String get type;
+  @override
+  int get page;
   @override
   @JsonKey(ignore: true)
   _$$AnimeGetImplCopyWith<_$AnimeGetImpl> get copyWith =>

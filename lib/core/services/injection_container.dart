@@ -8,6 +8,7 @@ import 'package:raijin/features/anime/data/datasources/remote/anime_data_source_
 import 'package:raijin/features/anime/data/repositories/anime_repository_impl.dart';
 import 'package:raijin/features/anime/domain/repositories/anime_repository.dart';
 import 'package:raijin/features/anime/domain/usecases/anime_get_detail_use_case.dart';
+import 'package:raijin/features/anime/domain/usecases/anime_get_more_use_case.dart';
 import 'package:raijin/features/anime/domain/usecases/anime_get_new_use_case.dart';
 import 'package:raijin/features/anime/domain/usecases/anime_get_schedule_use_case.dart';
 import 'package:raijin/features/anime/domain/usecases/anime_get_search_use_case.dart';
@@ -15,6 +16,7 @@ import 'package:raijin/features/anime/domain/usecases/anime_get_use_case.dart';
 import 'package:raijin/features/anime/domain/usecases/anime_get_video_use_case.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_complete_bloc/anime_complete_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime_detail_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_more_bloc/anime_more_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_new_bloc/anime_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_ongoing_bloc/anime_ongoing_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_popular_bloc/anime_popular_bloc.dart';
@@ -82,6 +84,9 @@ Future<void> init() async {
   sl.registerFactory<AnimeSearchBloc>(
     () => AnimeSearchBloc(animeGetSearchUseCase: sl(), toastUseCase: sl()),
   );
+  sl.registerFactory<AnimeMoreBloc>(
+    () => AnimeMoreBloc(animeGetMoreUseCase: sl()),
+  );
 
   // Datasource
   sl.registerSingleton<AuthRemoteDataSource>(
@@ -129,5 +134,8 @@ Future<void> init() async {
   );
   sl.registerSingleton<AnimeGetSearchUseCase>(
     AnimeGetSearchUseCase(animeRepository: sl()),
+  );
+  sl.registerSingleton<AnimeGetMoreUseCase>(
+    AnimeGetMoreUseCase(animeRepository: sl()),
   );
 }

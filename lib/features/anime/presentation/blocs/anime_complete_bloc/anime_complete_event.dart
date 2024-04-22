@@ -6,5 +6,6 @@ class AnimeCompleteEvent with _$AnimeCompleteEvent {
     required String status,
     required String order,
     required String type,
+    required int page,
   }) = _AnimeGetComplete;
 }

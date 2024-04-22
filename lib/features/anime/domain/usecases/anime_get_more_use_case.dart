@@ -3,10 +3,10 @@ import 'package:raijin/core/errors/failure.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/domain/repositories/anime_repository.dart';
 
-class AnimeGetUseCase {
+class AnimeGetMoreUseCase {
   final AnimeRepository animeRepository;
 
-  AnimeGetUseCase({required this.animeRepository});
+  AnimeGetMoreUseCase({required this.animeRepository});
 
   Future<Either<Failure<String>, List<AnimeModel>>> call({
     required String status,
@@ -15,6 +15,10 @@ class AnimeGetUseCase {
     required int page,
   }) async {
     return await animeRepository.animeGet(
-        order: order, status: status, type: type, page: page);
+      order: order,
+      status: status,
+      type: type,
+      page: page,
+    );
   }
 }

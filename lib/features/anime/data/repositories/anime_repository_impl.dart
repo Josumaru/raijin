@@ -10,8 +10,9 @@ class AnimeRepositoryImpl implements AnimeRepository {
   final AnimeRemoteDataSource animeRemoteDataSource;
   const AnimeRepositoryImpl({required this.animeRemoteDataSource});
   @override
-  Future<Either<Failure<String>, List<AnimeModel>>> getNewAnime(
-      {required int page}) async {
+  Future<Either<Failure<String>, List<AnimeModel>>> getNewAnime({
+    required int page,
+  }) async {
     try {
       final List<AnimeModel> r =
           await animeRemoteDataSource.animeGetNew(page: page);
@@ -27,12 +28,14 @@ class AnimeRepositoryImpl implements AnimeRepository {
     required String status,
     required String order,
     required String type,
+    required int page,
   }) async {
     try {
       final List<AnimeModel> r = await animeRemoteDataSource.animeGet(
         order: order,
         status: status,
         type: type,
+        page: page,
       );
       return Right(r);
     } catch (e) {
@@ -92,5 +95,12 @@ class AnimeRepositoryImpl implements AnimeRepository {
     } catch (e) {
       return Left(Failure.serverError(message: e.toString()));
     }
+  }
+
+  @override
+  Future<Either<Failure<String>, List<AnimeModel>>> animeGetMore(
+      {required int page}) {
+    // TODO: implement animeGetMore
+    throw UnimplementedError();
   }
 }
