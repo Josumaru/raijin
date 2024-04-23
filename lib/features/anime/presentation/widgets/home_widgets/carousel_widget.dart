@@ -229,7 +229,7 @@ class CarouselLoading extends StatelessWidget {
               width: 140,
               height: 18,
               decoration: BoxDecoration(
-                borderRadius: kMainBorderRadius / 2,
+                borderRadius: kMainBorderRadius,
                 color: backgroundColor(context: context),
               ),
             ),

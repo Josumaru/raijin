@@ -15,6 +15,10 @@ class AnimeGetUseCase {
     required int page,
   }) async {
     return await animeRepository.animeGet(
-        order: order, status: status, type: type, page: page);
+      order: order,
+      status: status,
+      type: type,
+      page: page,
+    );
   }
 }

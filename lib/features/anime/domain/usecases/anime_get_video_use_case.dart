@@ -8,7 +8,7 @@ class AnimeGetVideoUseCase {
   AnimeGetVideoUseCase({
     required AnimeRepository animeRepository,
   }) : _animeRepository = animeRepository;
-  
+
   Future<Either<Failure<String>, List<VideoModel>>> call({
     required String endpoint,
   }) async {

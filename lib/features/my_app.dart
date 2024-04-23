@@ -116,7 +116,7 @@ class _MyAppState extends State<MyApp> {
             : RouteName.authPage,
         scrollBehavior: const ScrollBehavior().copyWith(
           overscroll: false,
-          physics: const ClampingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
         ),
         theme: TAppTheme.lightTheme,
         darkTheme: TAppTheme.darkTheme,

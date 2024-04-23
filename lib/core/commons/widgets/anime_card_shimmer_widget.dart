@@ -24,7 +24,7 @@ class AnimeCardShimmerWidget extends StatelessWidget {
               width: 140,
               height: 18,
               decoration: BoxDecoration(
-                borderRadius: kMainBorderRadius / 2,
+                borderRadius: kMainBorderRadius,
                 color: backgroundColor(context: context),
               ),
             ),
@@ -56,7 +56,7 @@ class AnimeCardShimmerWidget extends StatelessWidget {
                             (widthMediaQuery(context: context) / 3) - (40 / 3),
                         height: 36,
                         decoration: BoxDecoration(
-                          borderRadius: kMainBorderRadius / 2,
+                          borderRadius: kMainBorderRadius,
                           color: backgroundColor(context: context),
                         ),
                       ),

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
+import 'package:raijin/core/usecases/more_usecase/more_use_case.dart';
 import 'package:raijin/core/usecases/toast_usecase/toas_use_case.dart';
 import 'package:raijin/features/anime/data/datasources/remote/anime_data_source.dart';
 import 'package:raijin/features/anime/data/datasources/remote/anime_data_source_impl.dart';

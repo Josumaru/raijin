@@ -71,7 +71,7 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
       final title = getTextByClass(element: element, className: 'title');
       final type = getTextByClass(element: element, className: 'type');
       final description = getTextByClass(element: element, className: 'ttls');
-      String score = getTextByClass(element: element, className: 'score');
+      String score = getTextByClass(element: element, className: 'score').replaceAll(',', '.');
       double doubleScore = score == ' ' ? 0.0 : double.parse(score);
 
       final endpoint =

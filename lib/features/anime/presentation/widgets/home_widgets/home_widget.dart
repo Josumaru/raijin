@@ -17,14 +17,14 @@ import 'package:raijin/features/anime/presentation/widgets/home_widgets/carousel
 
 class HomeWidget extends StatelessWidget {
   HomeWidget({super.key});
-  final RefreshController _refreshController = RefreshController();
+  final RefreshController _controller = RefreshController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: SmartRefresher(
           enablePullDown: true,
-          controller: _refreshController,
+          controller: _controller,
           header: ClassicHeader(
             idleIcon: Icon(
               Iconsax.direct_down,
@@ -38,29 +38,16 @@ class HomeWidget extends StatelessWidget {
           onRefresh: () async {
             _refresh(context);
           },
-          child: PopScope(
-            canPop: false,
-            onPopInvoked: (didPop) {
-              showExitDialog(
-                context: context,
-                title: 'Exit',
-                content: 'Are you sure to close the Application ?',
-                onPressed: () {
-                  exit(0);
-                },
-              );
-            },
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                mainAxisAlignment: kMainAxisAligmentStart(),
-                children: const [
-                  CarouselWidget(),
-                  AnimePopularWidget(),
-                  AnimeOngoingWidget(),
-                  AnimeCompleteWidget(),
-                ],
-              ),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              mainAxisAlignment: kMainAxisAligmentStart(),
+              children: const [
+                CarouselWidget(),
+                AnimePopularWidget(),
+                AnimeOngoingWidget(),
+                AnimeCompleteWidget(),
+              ],
             ),
           ),
         ),
@@ -90,7 +77,7 @@ class HomeWidget extends StatelessWidget {
           page: 1,
         ));
     await Future.delayed(const Duration(seconds: 2), () {
-      _refreshController.refreshCompleted();
+      _controller.refreshCompleted();
     });
   }
 }
