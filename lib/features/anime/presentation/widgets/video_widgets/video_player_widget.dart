@@ -1,12 +1,11 @@
 import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:raijin/core/constants/alignment.dart';
+import 'package:raijin/core/constants/border_radius.dart';
 import 'package:raijin/core/constants/colors.dart';
 import 'package:raijin/core/constants/font.dart';
 import 'package:raijin/core/constants/sizes.dart';
@@ -188,6 +187,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
               top: 5,
               right: 5,
               child: InkWell(
+                borderRadius: kMainBorderRadius,
                 onTap: () {
                   showDialog(
                     context: context,
@@ -196,7 +196,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                         const Spacer(),
                         CupertinoActionSheet(
                           title: const Text('Video Quality'),
-                          message: const Text('Select avalable option'),
+                          message: const Text('Select available option'),
                           actions: List.generate(
                             videoModel.length,
                             (index) => CupertinoActionSheetAction(
@@ -211,23 +211,12 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                               child: Text(videoModel[index].quality),
                             ),
                           ),
-                          // actions: [
-                          // CupertinoActionSheetAction(
-                          //   onPressed: () {},
-                          //   isDestructiveAction: true,
-                          //   child: const Text('480p'),
-                          // ),
-                          //   CupertinoActionSheetAction(
-                          //     onPressed: () {},
-                          //     isDestructiveAction: true,
-                          //     child: const Text('720p'),
-                          //   ),
-                          // ],
+                  
                           cancelButton: CupertinoActionSheetAction(
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            isDestructiveAction: true,
+                            // isDestructiveAction: true,
                             child: const Text('Cancel'),
                           ),
                         ),

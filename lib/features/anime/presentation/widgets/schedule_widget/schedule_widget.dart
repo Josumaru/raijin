@@ -57,6 +57,7 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                         return Padding(
                           padding: kMainPadding,
                           child: InkWell(
+                            borderRadius: kMainBorderRadius,
                             onTap: () {
                               context
                                   .read<cubit.AnimeScheduleCubit>()

@@ -8,6 +8,7 @@ abstract class AnimeRemoteDataSource {
     required String status,
     required String order,
     required String type,
+    required String genre,
     required int page,
   });
   Future<AnimeModel> animeDetail({required String endpoint});

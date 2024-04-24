@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:raijin/core/commons/widgets/anime_card_widget.dart';
 import 'package:raijin/core/commons/widgets/anime_episode_card.dart';
@@ -14,6 +15,7 @@ import 'package:raijin/core/constants/sizes.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/data/models/episode_model/episode_model.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime_detail_bloc.dart';
+import 'package:raijin/features/anime/presentation/widgets/trailer_widgets/trailer_widget.dart';
 
 class DetailWidget extends StatefulWidget {
   const DetailWidget({super.key});
@@ -38,7 +40,12 @@ class _DetailWidgetState extends State<DetailWidget> {
               loaded: (animeModel) {
                 return _buildLoaded(animeModel, context);
               },
-              error: (message) => Text(message),
+              error: (message) {
+                WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                  Navigator.of(context).pop();
+                });
+                return Container();
+              },
             );
           },
         ),
@@ -108,21 +115,6 @@ class _DetailWidgetState extends State<DetailWidget> {
                   imageUrl: animeModel.poster,
                   imageBuilder: (context, imageProvider) => Stack(
                     children: [
-                      // Positioned.fill(
-                      //   child: RotationTransition(
-                      //     turns: const AlwaysStoppedAnimation(180 / 360),
-                      //     child: Image(
-                      //       image: imageProvider,
-                      //       fit: BoxFit.cover,
-                      //     ),
-                      //   ),
-                      // ),
-                      // Positioned.fill(
-                      //   child: BackdropFilter(
-                      //     filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                      //     child: Container(),
-                      //   ),
-                      // ),
                       Positioned(
                         bottom: 50,
                         left: 25,
@@ -131,7 +123,7 @@ class _DetailWidgetState extends State<DetailWidget> {
                           removeTitle: true,
                           mode: 'large',
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -287,98 +279,85 @@ class _DetailWidgetState extends State<DetailWidget> {
     );
   }
 }
-//   _buildEpisodes(AnimeModel animeModel) {
-//     List<EpisodeModel> episodeList = [];
-//     refresh(List<EpisodeModel> animeList) {
-//       for (var item in animeModel.episodeList!) {
-//         setState(() {
-//           episodeList.add(item);
-//         });
-//       }
-//       _refreshController.refreshCompleted();
-//     }
 
-//     return SmartRefresher(
-//       controller: _refreshController,
-//       enablePullUp: true,
-//       enablePullDown: true,
-//       onRefresh: () {
-//         refresh(animeModel.episodeList!);
-//       },
-//       child: SingleChildScrollView(
-//         child: Column(
-//           children: List.generate(
-//             episodeList.length,
-//             (index) => ListTile(
-//               leading: CachedNetworkImage(
-//                 imageUrl: animeModel.poster,
-//               ),
-//               title: Text(animeModel.episodeList![index].title),
-//               subtitle: Text(
-//                 animeModel.episodeList![index].date,
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-
-Column _buildOverview(AnimeModel animeModel, BuildContext context) {
-  return Column(
-    crossAxisAlignment: kCrossAxisAlignmentStart(),
-    children: [
-      Padding(
-        padding: kHorizontalPadding,
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: kCrossAxisAlignmentStart(),
-                children: [
-                  Text(
-                    animeModel.title,
-                    style: headlineLarge(context: context).copyWith(
-                      fontSize: 30,
-                      color: onBackgroundColor(context: context),
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
-                  Text(
-                    '${animeModel.season!} | ${animeModel.genre![0].replaceFirst(
-                      animeModel.genre![0][0],
-                      animeModel.genre![0][0].toUpperCase(),
-                    )} | ${animeModel.status}',
-                    style: bodySmall(context: context),
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      SizedBox(
-        // height: heightMediaQuery(context: context) / 3,
-        child: Padding(
+_buildOverview(AnimeModel animeModel, BuildContext context) {
+  return SingleChildScrollView(
+    child: Column(
+      crossAxisAlignment: kCrossAxisAlignmentStart(),
+      children: [
+        Padding(
           padding: kHorizontalPadding,
-          child: Column(
-            crossAxisAlignment: kCrossAxisAlignmentStart(),
+          child: Row(
             children: [
-              Text(
-                'Synopsis',
-                style: bodyLarge(context: context),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: kCrossAxisAlignmentStart(),
+                  children: [
+                    Text(
+                      animeModel.title,
+                      style: headlineLarge(context: context).copyWith(
+                        fontSize: 30,
+                        color: onBackgroundColor(context: context),
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    ),
+                    Text(
+                      '${animeModel.season!} | ${animeModel.genre![0].replaceFirst(
+                        animeModel.genre![0][0],
+                        animeModel.genre![0][0].toUpperCase(),
+                      )} | ${animeModel.status}',
+                      style: bodySmall(context: context),
+                    )
+                  ],
+                ),
               ),
-              Text(
-                animeModel.description!,
-                // overflow: TextOverflow.ellipsis,
-                // maxLines: 14,
-              )
             ],
           ),
         ),
-      ),
-    ],
+        SizedBox(
+          // height: heightMediaQuery(context: context) / 3,
+          child: Padding(
+            padding: kHorizontalPadding,
+            child: Column(
+              crossAxisAlignment: kCrossAxisAlignmentStart(),
+              children: [
+                Text(
+                  'Synopsis',
+                  style: bodyLarge(context: context),
+                ),
+                Text(
+                  animeModel.description!,
+                  // overflow: TextOverflow.ellipsis,
+                  // maxLines: 14,
+                )
+              ],
+            ),
+          ),
+        ),
+        Padding(
+          padding: kAllPadding,
+          child: TrailerWidget(url: animeModel.trailer!),
+        ),
+        
+        Padding(
+          padding: kAllPadding,
+          child: OutlinedButton(
+            onPressed: () {},
+            child: Row(
+              mainAxisAlignment: kMainAxisAligmentCenter(),
+              children: [
+                const Icon(Iconsax.play),
+                Text(
+                  'Play now',
+                  style: bodyLarge(context: context),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    ),
   );
 }
 

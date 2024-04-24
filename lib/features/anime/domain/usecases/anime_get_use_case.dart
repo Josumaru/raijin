@@ -12,6 +12,7 @@ class AnimeGetUseCase {
     required String status,
     required String order,
     required String type,
+    required String genre,
     required int page,
   }) async {
     return await animeRepository.animeGet(
@@ -19,6 +20,7 @@ class AnimeGetUseCase {
       status: status,
       type: type,
       page: page,
+      genre: genre,
     );
   }
 }

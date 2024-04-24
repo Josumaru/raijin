@@ -25,47 +25,52 @@ class _VideoWidgetState extends State<VideoWidget> {
         body: BlocBuilder<AnimeVideoBloc, AnimeVideoState>(
           builder: (context, state) {
             return state.when(
-              initial: () => Container(),
-              loading: () => const LoadingWidget(),
-              loaded: (videoModel) {
-                return Column(
-                  mainAxisAlignment: kMainAxisAligmentStart(),
-                  crossAxisAlignment: kCrossAxisAlignmentStart(),
-                  children: [
-                    VideoPlayerWidget(videoModel: videoModel),
-                    MediaQuery.of(context).orientation == Orientation.portrait
-                        ? Padding(
-                            padding: kMainPadding,
-                            child: Text(
-                              'Another Episodes',
-                              style: bodyLarge(context: context),
-                            ),
-                          )
-                        : Container(),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Column(
-                          children: List.generate(
-                            videoModel[0].anotherEpisode.length,
-                            (index) => Padding(
+                initial: () => Container(),
+                loading: () => const LoadingWidget(),
+                loaded: (videoModel) {
+                  return Column(
+                    mainAxisAlignment: kMainAxisAligmentStart(),
+                    crossAxisAlignment: kCrossAxisAlignmentStart(),
+                    children: [
+                      VideoPlayerWidget(videoModel: videoModel),
+                      MediaQuery.of(context).orientation == Orientation.portrait
+                          ? Padding(
                               padding: kMainPadding,
-                              child: AnimeEpisodeCard(
-                                episodeModel:
-                                    videoModel[0].anotherEpisode[index],
-                                poster:
-                                    videoModel[0].anotherEpisode[index].poster!,
+                              child: Text(
+                                'Another Episodes',
+                                style: bodyLarge(context: context),
+                              ),
+                            )
+                          : Container(),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Column(
+                            children: List.generate(
+                              videoModel[0].anotherEpisode.length,
+                              (index) => Padding(
+                                padding: kMainPadding,
+                                child: AnimeEpisodeCard(
+                                  episodeModel:
+                                      videoModel[0].anotherEpisode[index],
+                                  poster: videoModel[0]
+                                      .anotherEpisode[index]
+                                      .poster!,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
-                );
-              },
-              error: (message) => Text(message),
-            );
+                      )
+                    ],
+                  );
+                },
+                error: (message) {
+                  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                    Navigator.of(context).pop();
+                  });
+                  return Container();
+                });
           },
         ),
       ),

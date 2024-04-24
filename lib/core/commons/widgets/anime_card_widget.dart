@@ -28,6 +28,7 @@ class AnimeCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      borderRadius: kMainBorderRadius,
       onTap: () {
         _goToDetail(endpoint: animeModel.endpoint, context: context);
       },
@@ -130,9 +131,9 @@ class AnimeCardWidget extends StatelessWidget {
                                   case 'ONA':
                                     return Colors.greenAccent;
                                   case 'SPECIAL':
-                                    return Colors.blueAccent;
+                                    return Colors.purpleAccent;
                                   case 'MOVIE':
-                                    return Colors.limeAccent;
+                                    return Colors.deepOrange;
                                   default:
                                     return primaryColor(context: context);
                                 }
@@ -215,7 +216,10 @@ class AnimeCardWidget extends StatelessWidget {
                   height: 40,
                   child: Text(
                     animeModel.title,
-                    style: bodyLarge(context: context),
+                    style: titleMedium(context: context).copyWith(
+                      color:
+                          onBackgroundColor(context: context).withOpacity(0.6),
+                    ),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),

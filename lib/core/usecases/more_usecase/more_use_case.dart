@@ -13,6 +13,7 @@ class MoreUseCase extends UseCase<void, MoreUseCaseParams> {
             status: params.status,
             order: params.order,
             type: params.type,
+            genre: params.genre,
             page: params.page,
           ),
         );
@@ -32,12 +33,14 @@ class MoreUseCaseParams {
   final String status;
   final String order;
   final String type;
+  final String genre;
   final int page;
   MoreUseCaseParams({
     required this.context,
     required this.status,
     required this.order,
     required this.type,
+    required this.genre,
     required this.page,
   });
 }

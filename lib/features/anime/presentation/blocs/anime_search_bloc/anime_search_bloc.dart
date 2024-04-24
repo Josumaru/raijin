@@ -31,9 +31,11 @@ class AnimeSearchBloc extends Bloc<AnimeSearchEvent, AnimeSearchState> {
     final data = await _animeGetSearchUseCase(params: query);
     data.fold(
       (l) {
+        _toastUseCase(params: 'Something wrong!');
         return emit(AnimeSearchState.error(message: l.messages));
       },
       (r) {
+        _toastUseCase(params: 'Found $query: ${r.length} items');
         return emit(AnimeSearchState.loaded(animeModel: r));
       },
     );

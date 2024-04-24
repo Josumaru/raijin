@@ -6,6 +6,7 @@ class AnimeMoreEvent with _$AnimeMoreEvent {
     required String status,
     required String order,
     required String type,
+    required String genre,
     required int page,
   }) = _AnimeGetMore;
 }

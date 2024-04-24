@@ -35,9 +35,10 @@ class AnimeOngoingWidget extends StatelessWidget {
     moreUseCase(
       params: MoreUseCaseParams(
         context: context,
-        status: '',
-        order: 'update',
+        status: 'Currently+Airing',
+        order: 'latest',
         type: '',
+        genre: '',
         page: 1,
       ),
     );
@@ -70,10 +71,14 @@ class AnimeOngoingWidget extends StatelessWidget {
                   padding: kLeftPadding,
                   child: Row(
                     children: [
-                      const Text('View All'),
+                     Text(
+                        'View All',
+                        style: bodySmall(context: context),
+                      ),
                       Icon(
                         Iconsax.arrow_right_3,
-                        color: onBackgroundColor(context: context),
+                        color: onBackgroundColor(context: context)
+                            .withOpacity(0.5),
                         size: 14,
                       ),
                     ],

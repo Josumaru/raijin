@@ -6,6 +6,7 @@ class AnimePopularEvent with _$AnimePopularEvent {
     required String status,
     required String order,
     required String type,
+    required String genre,
     required int page,
   }) = _AnimeGetPopular;
 }

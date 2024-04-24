@@ -80,6 +80,7 @@ class _CarouselLoadedState extends State<CarouselLoaded> {
           itemCount: animeModel.length,
           itemBuilder: (context, index, realIndex) {
             return InkWell(
+              borderRadius: kMainBorderRadius,
               onTap: () {
                 _play(endpoint: animeModel[index].endpoint);
               },

@@ -16,10 +16,11 @@ class AnimeMoreBloc extends Bloc<AnimeMoreEvent, AnimeMoreState> {
         super(const AnimeMoreState.initial()) {
     on<AnimeMoreEvent>((event, emit) async {
       await event.when(
-        animeGetMore: (status, order, type, page) => _animeGetMore(
+        animeGetMore: (status, order, type, genre, page) => _animeGetMore(
           status: status,
           order: order,
           type: type,
+          genre: genre,
           page: page,
         ),
       );
@@ -29,6 +30,7 @@ class AnimeMoreBloc extends Bloc<AnimeMoreEvent, AnimeMoreState> {
     required String status,
     required String order,
     required String type,
+    required String genre,
     required int page,
   }) async {
     emit(const AnimeMoreState.loading());
@@ -36,6 +38,7 @@ class AnimeMoreBloc extends Bloc<AnimeMoreEvent, AnimeMoreState> {
       order: order,
       status: status,
       type: type,
+      genre: genre,
       page: page,
     );
     data.fold(

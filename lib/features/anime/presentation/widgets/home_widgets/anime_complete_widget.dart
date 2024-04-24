@@ -4,9 +4,11 @@ import 'package:iconsax/iconsax.dart';
 import 'package:raijin/core/commons/widgets/anime_card_shimmer_widget.dart';
 import 'package:raijin/core/commons/widgets/anime_card_widget.dart';
 import 'package:raijin/core/constants/alignment.dart';
+import 'package:raijin/core/constants/border_radius.dart';
 import 'package:raijin/core/constants/colors.dart';
 import 'package:raijin/core/constants/font.dart';
 import 'package:raijin/core/constants/padding.dart';
+import 'package:raijin/core/usecases/more_usecase/more_use_case.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_complete_bloc/anime_complete_bloc.dart';
 
@@ -30,6 +32,19 @@ class AnimeCompleteWidget extends StatelessWidget {
   }
 
   _buildLoading() => const AnimeCardShimmerWidget();
+  _buildMore(BuildContext context) {
+    MoreUseCase moreUseCase = MoreUseCase();
+    moreUseCase(
+      params: MoreUseCaseParams(
+        context: context,
+        status: 'Finished+Airing',
+        order: 'latest',
+        type: '',
+        genre: '',
+        page: 1,
+      ),
+    );
+  }
 
   Column _buildLoaded(BuildContext context, List<AnimeModel>? animeModel) {
     return Column(
@@ -50,16 +65,26 @@ class AnimeCompleteWidget extends StatelessWidget {
               ),
               const Spacer(),
               InkWell(
-                onTap: () {},
-                child: Row(
-                  children: [
-                    const Text('View All'),
-                    Icon(
-                      Iconsax.arrow_right_3,
-                      color: onBackgroundColor(context: context),
-                      size: 14,
-                    ),
-                  ],
+                borderRadius: kMainBorderRadius,
+                onTap: () {
+                  _buildMore(context);
+                },
+                child: Padding(
+                  padding: kLeftPadding,
+                  child: Row(
+                    children: [
+                      Text(
+                        'View All',
+                        style: bodySmall(context: context),
+                      ),
+                      Icon(
+                        Iconsax.arrow_right_3,
+                        color: onBackgroundColor(context: context)
+                            .withOpacity(0.5),
+                        size: 14,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

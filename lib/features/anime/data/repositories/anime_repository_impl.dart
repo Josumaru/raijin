@@ -28,6 +28,7 @@ class AnimeRepositoryImpl implements AnimeRepository {
     required String status,
     required String order,
     required String type,
+    required String genre,
     required int page,
   }) async {
     try {
@@ -36,6 +37,7 @@ class AnimeRepositoryImpl implements AnimeRepository {
         status: status,
         type: type,
         page: page,
+        genre: genre,
       );
       return Right(r);
     } catch (e) {
@@ -65,6 +67,10 @@ class AnimeRepositoryImpl implements AnimeRepository {
     try {
       final List<VideoModel> r =
           await animeRemoteDataSource.animeVideo(endpoint: endpoint);
+      if (r.isEmpty) {
+        return Left(
+            const Failure.serverError(message: 'Kraken Server not Available'));
+      }
       return Right(r);
     } catch (e) {
       final message = e.toString();
@@ -95,12 +101,5 @@ class AnimeRepositoryImpl implements AnimeRepository {
     } catch (e) {
       return Left(Failure.serverError(message: e.toString()));
     }
-  }
-
-  @override
-  Future<Either<Failure<String>, List<AnimeModel>>> animeGetMore(
-      {required int page}) {
-    // TODO: implement animeGetMore
-    throw UnimplementedError();
   }
 }

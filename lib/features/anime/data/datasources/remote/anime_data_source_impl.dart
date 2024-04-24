@@ -47,6 +47,7 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
     required String status,
     required String order,
     required String type,
+    required String genre,
     required int page,
   }) async {
     final List<AnimeModel> animeModel = [];
@@ -63,7 +64,7 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
     }
 
     String endpoint =
-        '$kAnimeEndpoint/daftar-anime-2/page/$page/?order=$order&status=$status&type=$type';
+        '$kAnimeEndpoint/daftar-anime-2/page/$page/?order=$order&status=$status&type=$type&genre=$genre';
     final response = await dio.get(endpoint);
     final responseBody = parse(response.data).body;
     final elements = responseBody!.getElementsByClassName('animepost');
@@ -71,7 +72,8 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
       final title = getTextByClass(element: element, className: 'title');
       final type = getTextByClass(element: element, className: 'type');
       final description = getTextByClass(element: element, className: 'ttls');
-      String score = getTextByClass(element: element, className: 'score').replaceAll(',', '.');
+      String score = getTextByClass(element: element, className: 'score')
+          .replaceAll(',', '.');
       double doubleScore = score == ' ' ? 0.0 : double.parse(score);
 
       final endpoint =
@@ -262,6 +264,15 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
     List<VideoModel> mirrorList = [];
     List<EpisodeModel> episodeList = [];
 
+    int getEpisode(String title) {
+      final reqExp = RegExp(r'Episode (\d+)');
+      final match = reqExp.firstMatch(title);
+      if (match != null) {
+        return int.parse(match.group(1)!);
+      }
+      return 0;
+    }
+
     final response = await dio.get(endpoint);
     final responseBody = parse(response.data);
     String title = responseBody
@@ -276,7 +287,7 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
         .getElementsByTagName('ul > li');
     for (var element in listEpisode) {
       String title = element.getElementsByTagName('div > span').first.text;
-      int episode = int.parse(title.split('Episode ').last.split(' ')[0]);
+      int episode = getEpisode(title);
       String date = element.getElementsByClassName('date').first.text;
       String endpoint =
           element.getElementsByTagName('div > a').first.attributes['href']!;
@@ -361,7 +372,7 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
           element.getElementsByClassName('anmsa').first.attributes['src']!;
       final String type = element.getElementsByClassName('type').first.text;
       final double score = double.parse(
-          element.getElementsByClassName('score').first.text == ''
+          element.getElementsByClassName('score').first.text.trim() == ''
               ? '0.0'
               : element
                   .getElementsByClassName('score')

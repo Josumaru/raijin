@@ -15,10 +15,11 @@ class AnimePopularBloc extends Bloc<AnimePopularEvent, AnimePopularState> {
       : super(const AnimePopularState.initial()) {
     on<AnimePopularEvent>((event, emit) async {
       event.when(
-        animeGetPopular: (status, order, type, page) => _animeGetPopular(
+        animeGetPopular: (status, order, type, genre, page) => _animeGetPopular(
           status: status,
           order: order,
           type: type,
+          genre: genre,
           page: page,
         ),
       );
@@ -28,6 +29,7 @@ class AnimePopularBloc extends Bloc<AnimePopularEvent, AnimePopularState> {
     required String status,
     required String order,
     required String type,
+    required String genre,
     required int page,
   }) async {
     emit(const AnimePopularState.loading());
@@ -35,6 +37,7 @@ class AnimePopularBloc extends Bloc<AnimePopularEvent, AnimePopularState> {
       order: order,
       status: status,
       type: type,
+      genre: genre,
       page: page,
     );
     data.fold(

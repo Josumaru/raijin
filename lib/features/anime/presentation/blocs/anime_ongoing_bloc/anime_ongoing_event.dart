@@ -6,6 +6,7 @@ class AnimeOngoingEvent with _$AnimeOngoingEvent {
     required String status,
     required String order,
     required String type,
+    required String genre,
     required int page,
   }) = _AnimeGet;
 }

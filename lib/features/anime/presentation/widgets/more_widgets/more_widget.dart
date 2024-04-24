@@ -12,15 +12,17 @@ import 'package:raijin/features/anime/presentation/blocs/anime_more_bloc/anime_m
 import 'package:shimmer/shimmer.dart';
 
 class MoreWidget extends StatelessWidget {
-  MoreWidget({super.key, required MoreUseCaseParams moreUseCaseParams})
-      : _moreUseCaseParams = moreUseCaseParams;
+  MoreWidget({
+    super.key,
+    required MoreUseCaseParams moreUseCaseParams,
+  }) : _moreUseCaseParams = moreUseCaseParams;
   final RefreshController _controller = RefreshController();
   final MoreUseCaseParams _moreUseCaseParams;
 
   @override
   Widget build(BuildContext context) {
     List<AnimeModel> animeModelList = [];
-    int page = 1;
+    int page = 0;
 
     return SafeArea(
       child: Scaffold(
@@ -40,7 +42,6 @@ class MoreWidget extends StatelessWidget {
                 for (int i = 0; i < animeModel!.length; i++) {
                   animeModelList.add(animeModel[i]);
                 }
-                print('Rebuild on widget $page');
                 return _loaded(
                   animeModel: animeModelList,
                   context: context,
@@ -111,6 +112,7 @@ class MoreWidget extends StatelessWidget {
             status: _moreUseCaseParams.status,
             order: _moreUseCaseParams.order,
             type: _moreUseCaseParams.type,
+            genre: _moreUseCaseParams.genre,
             page: page,
           ),
         );
@@ -126,16 +128,12 @@ class MoreWidget extends StatelessWidget {
   }) {
     int length = (animeModel.length / 3).round();
     int index = 0;
-    print('Nilai dari page = $page');
     return SmartRefresher(
       controller: _controller,
       enablePullUp: true,
       enablePullDown: false,
       onLoading: () async {
-        print('page = $page and ${animeModel.length}');
-
-        _pullUp(context: context, page: page);
-        print('Nilai dari page on = $page');
+        _pullUp(context: context, page: (animeModel.length / 30).round());
       },
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
