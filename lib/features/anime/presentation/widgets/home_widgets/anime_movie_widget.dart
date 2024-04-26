@@ -13,7 +13,6 @@ import 'package:raijin/core/usecases/more_usecase/more_use_case.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime_detail_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_movie_bloc/anime_movie_bloc.dart';
-import 'package:raijin/features/anime/presentation/blocs/anime_video_bloc/anime_video_bloc.dart';
 import 'package:raijin/features/anime/presentation/pages/detail_page.dart';
 
 class AnimeMovieWidget extends StatelessWidget {

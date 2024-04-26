@@ -21,12 +21,12 @@ class DiscoverWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<CategoryModel> categoryList = [
-      CategoryModel(title: 'Recomendation', icon: Iconsax.category),
       CategoryModel(title: 'Romance', icon: Iconsax.lovely),
       CategoryModel(title: 'School', icon: Iconsax.building),
       CategoryModel(title: 'Game', icon: Iconsax.game),
       CategoryModel(title: 'Music', icon: Iconsax.music),
       CategoryModel(title: 'Detective', icon: Iconsax.search_normal),
+      CategoryModel(title: 'Recomendation', icon: Iconsax.category),
     ];
 
     return SafeArea(
@@ -158,9 +158,14 @@ class DiscoverWidget extends StatelessWidget {
               BlocBuilder<AnimeSearchBloc, AnimeSearchState>(
                 builder: (context, state) => state.when(
                   initial: () => Container(),
-                  loading: () => LoadingAnimationWidget.stretchedDots(
-                    color: primaryColor(context: context),
-                    size: 32,
+                  loading: () => Padding(
+                    padding: kAllPadding,
+                    child: Center(
+                      child: LoadingAnimationWidget.stretchedDots(
+                        color: primaryColor(context: context),
+                        size: 32,
+                      ),
+                    ),
                   ),
                   loaded: (animeModel) => _loaded(animeModel),
                   error: (message) => Padding(
@@ -197,10 +202,13 @@ class DiscoverWidget extends StatelessWidget {
   }
 
   _loaded(List<AnimeModel> animeModel) {
-    int length = (animeModel.length / 3).round();
+    int length = (animeModel.length / 3).ceil();
     int index = 0;
     if (animeModel.isEmpty) {
-      return const Text('Not Found');
+      return Padding(
+        padding: kMainPadding,
+        child: const Center(child: Text('Not Found')),
+      );
     }
     return Padding(
       padding: kTopPadding,
@@ -214,16 +222,17 @@ class DiscoverWidget extends StatelessWidget {
                 children: List.generate(
                   3,
                   (j) {
-                    if (index == animeModel.length - 1) {
-                      return Container();
-                    }
                     return Padding(
                       padding: j == 0 ? kHorizontalPadding : kRightPadding,
-                      child: AnimeCardWidget(
-                        animeModel: animeModel[
-                            index < animeModel.length - 1 ? index++ : index],
-                        removeTitle: false,
-                      ),
+                      child: () {
+                        if (index == animeModel.length) {
+                          return Container();
+                        }
+                        return AnimeCardWidget(
+                          animeModel: animeModel[index++],
+                          removeTitle: false,
+                        );
+                      }(),
                     );
                   },
                 ),

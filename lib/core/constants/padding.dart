@@ -35,6 +35,12 @@ EdgeInsetsGeometry kTopPadding = EdgeInsets.only(
   right: 0,
   top: kPadding,
 );
+EdgeInsetsGeometry kHorizontalTopPadding = EdgeInsets.only(
+  bottom: 0,
+  left: kPadding,
+  right: kPadding,
+  top: kPadding,
+);
 
 EdgeInsetsGeometry kBottomPadding = EdgeInsets.only(
   bottom: kPadding,

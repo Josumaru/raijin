@@ -71,7 +71,7 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                               builder: (context, state) {
                                 return state.when(
                                   initial: () => Container(),
-                                  loading: () => const LoadingWidget(),
+                                  loading: () => const Text('Loading'),
                                   loaded: (day) => ScheduleCardWidget(
                                     isSelected: currentDay.toLowerCase() ==
                                         day.toLowerCase(),

@@ -126,7 +126,7 @@ class MoreWidget extends StatelessWidget {
     required BuildContext context,
     required int page,
   }) {
-    int length = (animeModel.length / 3).round();
+    int length = (animeModel.length / 3).ceil();
     int index = 0;
     return SmartRefresher(
       controller: _controller,
@@ -147,14 +147,13 @@ class MoreWidget extends StatelessWidget {
                   children: List.generate(
                     3,
                     (j) {
-                      if (index == animeModel.length - 1) {
+                      if (index == animeModel.length) {
                         return Container();
                       }
                       return Padding(
                         padding: j == 0 ? kHorizontalPadding : kRightPadding,
                         child: AnimeCardWidget(
-                          animeModel: animeModel[
-                              index < animeModel.length - 1 ? index++ : index],
+                          animeModel: animeModel[index++],
                           removeTitle: false,
                         ),
                       );

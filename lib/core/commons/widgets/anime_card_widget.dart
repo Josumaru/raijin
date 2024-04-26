@@ -123,7 +123,7 @@ class AnimeCardWidget extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: kTopLeftBottomRightBorderRadius,
                               color: () {
-                                switch (animeModel.type!) {
+                                switch (animeModel.type!.trim().toUpperCase()) {
                                   case 'TV':
                                     return Colors.redAccent;
                                   case 'OVA':
@@ -133,7 +133,7 @@ class AnimeCardWidget extends StatelessWidget {
                                   case 'SPECIAL':
                                     return Colors.purpleAccent;
                                   case 'MOVIE':
-                                    return Colors.deepOrange;
+                                    return Colors.blueAccent;
                                   default:
                                     return primaryColor(context: context);
                                 }
