@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/data/models/episode_model/episode_model.dart';
 
 part 'video_model.freezed.dart';
@@ -13,7 +14,11 @@ class VideoModel with _$VideoModel {
     required String poster,
     required String title,
     required List<EpisodeModel> anotherEpisode,
+    AnimeModel? anime,
     String? prevEpisode,
     String? nextEpisode,
+    int? position,
+    int? duration,
+    DateTime? date,
   }) = _VideoModel;
 }

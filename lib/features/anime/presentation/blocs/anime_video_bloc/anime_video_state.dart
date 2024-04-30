@@ -4,32 +4,40 @@ part of 'anime_video_bloc.dart';
 class AnimeVideoState with _$AnimeVideoState {
   const AnimeVideoState._();
   const factory AnimeVideoState({
-    required bool isLoading,
-    required bool isBuffering,
-    required bool isShowControll,
-    required bool isPlaying,
-    required bool isBackward,
-    required bool isForward,
+    required bool initialize,
+    required bool error,
+    required String mirror,
+    required bool loading,
+    required bool buffering,
+    required bool showControll,
+    required bool playing,
+    required bool backward,
+    required bool forward,
     required int videoDuration,
     required int videoPosition,
-    required int sliderPosition,
+    required double sliderPosition,
     required List<VideoModel> videoList,
     required List<EpisodeModel> episodeList,
     // required Option<Either<Failure<String>, List<VideoModel>>> videoList,
     // required Option<Either<Failure<String>, List<EpisodeModel>>> episodeList,
   }) = _AnimeVideoState;
 
-  factory AnimeVideoState.started() => const AnimeVideoState(
-        isLoading: false,
-        videoDuration: 0,
-        videoPosition: 0,
-        videoList: [],
-        episodeList: [],
-        isBuffering: false,
-        isBackward: false,
-        isForward: false,
-        isPlaying: false,
-        isShowControll: false,
-        sliderPosition: 0,
-      );
+  factory AnimeVideoState.started() {
+    return const AnimeVideoState(
+      initialize: false,
+      error: false,
+      mirror: '',
+      loading: false,
+      videoDuration: 0,
+      videoPosition: 0,
+      videoList: [],
+      episodeList: [],
+      buffering: false,
+      backward: false,
+      forward: false,
+      playing: false,
+      sliderPosition: 0,
+      showControll: false,
+    );
+  }
 }

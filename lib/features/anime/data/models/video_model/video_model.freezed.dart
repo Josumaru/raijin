@@ -22,8 +22,12 @@ mixin _$VideoModel {
   String get poster => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   List<EpisodeModel> get anotherEpisode => throw _privateConstructorUsedError;
+  AnimeModel? get anime => throw _privateConstructorUsedError;
   String? get prevEpisode => throw _privateConstructorUsedError;
   String? get nextEpisode => throw _privateConstructorUsedError;
+  int? get position => throw _privateConstructorUsedError;
+  int? get duration => throw _privateConstructorUsedError;
+  DateTime? get date => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $VideoModelCopyWith<VideoModel> get copyWith =>
@@ -43,8 +47,14 @@ abstract class $VideoModelCopyWith<$Res> {
       String poster,
       String title,
       List<EpisodeModel> anotherEpisode,
+      AnimeModel? anime,
       String? prevEpisode,
-      String? nextEpisode});
+      String? nextEpisode,
+      int? position,
+      int? duration,
+      DateTime? date});
+
+  $AnimeModelCopyWith<$Res>? get anime;
 }
 
 /// @nodoc
@@ -66,8 +76,12 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
     Object? poster = null,
     Object? title = null,
     Object? anotherEpisode = null,
+    Object? anime = freezed,
     Object? prevEpisode = freezed,
     Object? nextEpisode = freezed,
+    Object? position = freezed,
+    Object? duration = freezed,
+    Object? date = freezed,
   }) {
     return _then(_value.copyWith(
       quality: null == quality
@@ -94,6 +108,10 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
           ? _value.anotherEpisode
           : anotherEpisode // ignore: cast_nullable_to_non_nullable
               as List<EpisodeModel>,
+      anime: freezed == anime
+          ? _value.anime
+          : anime // ignore: cast_nullable_to_non_nullable
+              as AnimeModel?,
       prevEpisode: freezed == prevEpisode
           ? _value.prevEpisode
           : prevEpisode // ignore: cast_nullable_to_non_nullable
@@ -102,7 +120,31 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
           ? _value.nextEpisode
           : nextEpisode // ignore: cast_nullable_to_non_nullable
               as String?,
+      position: freezed == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as int?,
+      duration: freezed == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int?,
+      date: freezed == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AnimeModelCopyWith<$Res>? get anime {
+    if (_value.anime == null) {
+      return null;
+    }
+
+    return $AnimeModelCopyWith<$Res>(_value.anime!, (value) {
+      return _then(_value.copyWith(anime: value) as $Val);
+    });
   }
 }
 
@@ -121,8 +163,15 @@ abstract class _$$VideoModelImplCopyWith<$Res>
       String poster,
       String title,
       List<EpisodeModel> anotherEpisode,
+      AnimeModel? anime,
       String? prevEpisode,
-      String? nextEpisode});
+      String? nextEpisode,
+      int? position,
+      int? duration,
+      DateTime? date});
+
+  @override
+  $AnimeModelCopyWith<$Res>? get anime;
 }
 
 /// @nodoc
@@ -142,8 +191,12 @@ class __$$VideoModelImplCopyWithImpl<$Res>
     Object? poster = null,
     Object? title = null,
     Object? anotherEpisode = null,
+    Object? anime = freezed,
     Object? prevEpisode = freezed,
     Object? nextEpisode = freezed,
+    Object? position = freezed,
+    Object? duration = freezed,
+    Object? date = freezed,
   }) {
     return _then(_$VideoModelImpl(
       quality: null == quality
@@ -170,6 +223,10 @@ class __$$VideoModelImplCopyWithImpl<$Res>
           ? _value._anotherEpisode
           : anotherEpisode // ignore: cast_nullable_to_non_nullable
               as List<EpisodeModel>,
+      anime: freezed == anime
+          ? _value.anime
+          : anime // ignore: cast_nullable_to_non_nullable
+              as AnimeModel?,
       prevEpisode: freezed == prevEpisode
           ? _value.prevEpisode
           : prevEpisode // ignore: cast_nullable_to_non_nullable
@@ -178,6 +235,18 @@ class __$$VideoModelImplCopyWithImpl<$Res>
           ? _value.nextEpisode
           : nextEpisode // ignore: cast_nullable_to_non_nullable
               as String?,
+      position: freezed == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as int?,
+      duration: freezed == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int?,
+      date: freezed == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -192,8 +261,12 @@ class _$VideoModelImpl implements _VideoModel {
       required this.poster,
       required this.title,
       required final List<EpisodeModel> anotherEpisode,
+      this.anime,
       this.prevEpisode,
-      this.nextEpisode})
+      this.nextEpisode,
+      this.position,
+      this.duration,
+      this.date})
       : _anotherEpisode = anotherEpisode;
 
   @override
@@ -215,13 +288,21 @@ class _$VideoModelImpl implements _VideoModel {
   }
 
   @override
+  final AnimeModel? anime;
+  @override
   final String? prevEpisode;
   @override
   final String? nextEpisode;
+  @override
+  final int? position;
+  @override
+  final int? duration;
+  @override
+  final DateTime? date;
 
   @override
   String toString() {
-    return 'VideoModel(quality: $quality, mirror: $mirror, endpoint: $endpoint, poster: $poster, title: $title, anotherEpisode: $anotherEpisode, prevEpisode: $prevEpisode, nextEpisode: $nextEpisode)';
+    return 'VideoModel(quality: $quality, mirror: $mirror, endpoint: $endpoint, poster: $poster, title: $title, anotherEpisode: $anotherEpisode, anime: $anime, prevEpisode: $prevEpisode, nextEpisode: $nextEpisode, position: $position, duration: $duration, date: $date)';
   }
 
   @override
@@ -237,10 +318,16 @@ class _$VideoModelImpl implements _VideoModel {
             (identical(other.title, title) || other.title == title) &&
             const DeepCollectionEquality()
                 .equals(other._anotherEpisode, _anotherEpisode) &&
+            (identical(other.anime, anime) || other.anime == anime) &&
             (identical(other.prevEpisode, prevEpisode) ||
                 other.prevEpisode == prevEpisode) &&
             (identical(other.nextEpisode, nextEpisode) ||
-                other.nextEpisode == nextEpisode));
+                other.nextEpisode == nextEpisode) &&
+            (identical(other.position, position) ||
+                other.position == position) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration) &&
+            (identical(other.date, date) || other.date == date));
   }
 
   @override
@@ -252,8 +339,12 @@ class _$VideoModelImpl implements _VideoModel {
       poster,
       title,
       const DeepCollectionEquality().hash(_anotherEpisode),
+      anime,
       prevEpisode,
-      nextEpisode);
+      nextEpisode,
+      position,
+      duration,
+      date);
 
   @JsonKey(ignore: true)
   @override
@@ -270,8 +361,12 @@ abstract class _VideoModel implements VideoModel {
       required final String poster,
       required final String title,
       required final List<EpisodeModel> anotherEpisode,
+      final AnimeModel? anime,
       final String? prevEpisode,
-      final String? nextEpisode}) = _$VideoModelImpl;
+      final String? nextEpisode,
+      final int? position,
+      final int? duration,
+      final DateTime? date}) = _$VideoModelImpl;
 
   @override
   String get quality;
@@ -286,9 +381,17 @@ abstract class _VideoModel implements VideoModel {
   @override
   List<EpisodeModel> get anotherEpisode;
   @override
+  AnimeModel? get anime;
+  @override
   String? get prevEpisode;
   @override
   String? get nextEpisode;
+  @override
+  int? get position;
+  @override
+  int? get duration;
+  @override
+  DateTime? get date;
   @override
   @JsonKey(ignore: true)
   _$$VideoModelImplCopyWith<_$VideoModelImpl> get copyWith =>

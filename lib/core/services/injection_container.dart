@@ -33,6 +33,7 @@ import 'package:raijin/features/auth/domain/usecases/auth_login_use_case.dart';
 import 'package:raijin/features/auth/domain/usecases/auth_logout_use_case.dart';
 import 'package:raijin/features/auth/domain/usecases/auth_register_use_case.dart';
 import 'package:raijin/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:video_player/video_player.dart';
 
 final sl = GetIt.instance;
 
@@ -44,6 +45,12 @@ Future<void> init() async {
   // Dio
   final Dio dio = Dio();
   sl.registerSingleton(dio);
+
+  // VideoPlayerController
+  final VideoPlayerController controller = VideoPlayerController.contentUri(
+    Uri.parse(''),
+  );
+  sl.registerSingleton(controller);
 
   // FToast
   FToast fToast = FToast();
@@ -78,7 +85,8 @@ Future<void> init() async {
   );
 
   sl.registerFactory(
-    () => AnimeVideoBloc(animeGetVideoUseCase: sl(), toastUseCase: sl()),
+    () => AnimeVideoBloc(
+        animeGetVideoUseCase: sl(), toastUseCase: sl(), controller: sl()),
   );
   sl.registerFactory(
     () => AnimeScheduleBloc(animeGetScheduleUseCase: sl(), toastUseCase: sl()),

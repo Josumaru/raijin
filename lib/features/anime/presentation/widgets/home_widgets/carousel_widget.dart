@@ -198,7 +198,7 @@ class _CarouselLoadedState extends State<CarouselLoaded> {
   _play({required String endpoint}) {
     context
         .read<AnimeVideoBloc>()
-        .add(AnimeVideoEvent.animeGetVideo(endpoint: endpoint));
+        .add(AnimeVideoEvent.getVideo(endpoint: endpoint));
     PersistentNavBarNavigator.pushNewScreenWithRouteSettings(context,
         screen: const VideoPage(),
         settings: const RouteSettings(name: '/video'),

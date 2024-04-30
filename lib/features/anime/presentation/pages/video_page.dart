@@ -6,6 +6,6 @@ class VideoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const VideoWidget();
+    return VideoWidget();
   }
 }

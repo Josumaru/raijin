@@ -57,6 +57,16 @@ List<Color> gradientListColor({required BuildContext context}) => [
       Colors.transparent,
       kMainDarkBackgroundColor,
     ];
+
+Gradient gradientColor({required BuildContext context}) => const LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        Color.fromARGB(85, 0, 0, 0),
+        kMainDarkBackgroundColor,
+      ],
+    );
+
 Color darkColor() => kMainDarkBackgroundColor.withOpacity(0.3);
 
 List<Color> gradientVideoListColor({required BuildContext context}) => [

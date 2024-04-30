@@ -18,51 +18,81 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AnimeVideoEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String endpoint) animeGetVideo,
-    required TResult Function(bool control) showControl,
-    required TResult Function(int position) seekPosition,
+    required TResult Function(String endpoint) getVideo,
+    required TResult Function(bool showControl) showControl,
+    required TResult Function(double position) seekPosition,
     required TResult Function(String mirror) changeResolution,
+    required TResult Function(String endpoint) changeEpisode,
+    required TResult Function(bool buffering) setBuffering,
+    required TResult Function(bool isPlay) playVideo,
+    required TResult Function(VideoModel video) addHistory,
+    required TResult Function(int position, int duration) setPosition,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String endpoint)? animeGetVideo,
-    TResult? Function(bool control)? showControl,
-    TResult? Function(int position)? seekPosition,
+    TResult? Function(String endpoint)? getVideo,
+    TResult? Function(bool showControl)? showControl,
+    TResult? Function(double position)? seekPosition,
     TResult? Function(String mirror)? changeResolution,
+    TResult? Function(String endpoint)? changeEpisode,
+    TResult? Function(bool buffering)? setBuffering,
+    TResult? Function(bool isPlay)? playVideo,
+    TResult? Function(VideoModel video)? addHistory,
+    TResult? Function(int position, int duration)? setPosition,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String endpoint)? animeGetVideo,
-    TResult Function(bool control)? showControl,
-    TResult Function(int position)? seekPosition,
+    TResult Function(String endpoint)? getVideo,
+    TResult Function(bool showControl)? showControl,
+    TResult Function(double position)? seekPosition,
     TResult Function(String mirror)? changeResolution,
+    TResult Function(String endpoint)? changeEpisode,
+    TResult Function(bool buffering)? setBuffering,
+    TResult Function(bool isPlay)? playVideo,
+    TResult Function(VideoModel video)? addHistory,
+    TResult Function(int position, int duration)? setPosition,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_AnimeGetVideo value) animeGetVideo,
+    required TResult Function(_GetVideo value) getVideo,
     required TResult Function(_ShowControl value) showControl,
     required TResult Function(_SeekPosition value) seekPosition,
     required TResult Function(_ChangeResolution value) changeResolution,
+    required TResult Function(_ChangeEpisode value) changeEpisode,
+    required TResult Function(_SetBuffering value) setBuffering,
+    required TResult Function(_PlayVideo value) playVideo,
+    required TResult Function(_AddHistory value) addHistory,
+    required TResult Function(_SetPosition value) setPosition,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_AnimeGetVideo value)? animeGetVideo,
+    TResult? Function(_GetVideo value)? getVideo,
     TResult? Function(_ShowControl value)? showControl,
     TResult? Function(_SeekPosition value)? seekPosition,
     TResult? Function(_ChangeResolution value)? changeResolution,
+    TResult? Function(_ChangeEpisode value)? changeEpisode,
+    TResult? Function(_SetBuffering value)? setBuffering,
+    TResult? Function(_PlayVideo value)? playVideo,
+    TResult? Function(_AddHistory value)? addHistory,
+    TResult? Function(_SetPosition value)? setPosition,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_AnimeGetVideo value)? animeGetVideo,
+    TResult Function(_GetVideo value)? getVideo,
     TResult Function(_ShowControl value)? showControl,
     TResult Function(_SeekPosition value)? seekPosition,
     TResult Function(_ChangeResolution value)? changeResolution,
+    TResult Function(_ChangeEpisode value)? changeEpisode,
+    TResult Function(_SetBuffering value)? setBuffering,
+    TResult Function(_PlayVideo value)? playVideo,
+    TResult Function(_AddHistory value)? addHistory,
+    TResult Function(_SetPosition value)? setPosition,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -87,20 +117,20 @@ class _$AnimeVideoEventCopyWithImpl<$Res, $Val extends AnimeVideoEvent>
 }
 
 /// @nodoc
-abstract class _$$AnimeGetVideoImplCopyWith<$Res> {
-  factory _$$AnimeGetVideoImplCopyWith(
-          _$AnimeGetVideoImpl value, $Res Function(_$AnimeGetVideoImpl) then) =
-      __$$AnimeGetVideoImplCopyWithImpl<$Res>;
+abstract class _$$GetVideoImplCopyWith<$Res> {
+  factory _$$GetVideoImplCopyWith(
+          _$GetVideoImpl value, $Res Function(_$GetVideoImpl) then) =
+      __$$GetVideoImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String endpoint});
 }
 
 /// @nodoc
-class __$$AnimeGetVideoImplCopyWithImpl<$Res>
-    extends _$AnimeVideoEventCopyWithImpl<$Res, _$AnimeGetVideoImpl>
-    implements _$$AnimeGetVideoImplCopyWith<$Res> {
-  __$$AnimeGetVideoImplCopyWithImpl(
-      _$AnimeGetVideoImpl _value, $Res Function(_$AnimeGetVideoImpl) _then)
+class __$$GetVideoImplCopyWithImpl<$Res>
+    extends _$AnimeVideoEventCopyWithImpl<$Res, _$GetVideoImpl>
+    implements _$$GetVideoImplCopyWith<$Res> {
+  __$$GetVideoImplCopyWithImpl(
+      _$GetVideoImpl _value, $Res Function(_$GetVideoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -108,7 +138,7 @@ class __$$AnimeGetVideoImplCopyWithImpl<$Res>
   $Res call({
     Object? endpoint = null,
   }) {
-    return _then(_$AnimeGetVideoImpl(
+    return _then(_$GetVideoImpl(
       endpoint: null == endpoint
           ? _value.endpoint
           : endpoint // ignore: cast_nullable_to_non_nullable
@@ -119,22 +149,22 @@ class __$$AnimeGetVideoImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AnimeGetVideoImpl implements _AnimeGetVideo {
-  const _$AnimeGetVideoImpl({required this.endpoint});
+class _$GetVideoImpl implements _GetVideo {
+  const _$GetVideoImpl({required this.endpoint});
 
   @override
   final String endpoint;
 
   @override
   String toString() {
-    return 'AnimeVideoEvent.animeGetVideo(endpoint: $endpoint)';
+    return 'AnimeVideoEvent.getVideo(endpoint: $endpoint)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AnimeGetVideoImpl &&
+            other is _$GetVideoImpl &&
             (identical(other.endpoint, endpoint) ||
                 other.endpoint == endpoint));
   }
@@ -145,42 +175,57 @@ class _$AnimeGetVideoImpl implements _AnimeGetVideo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AnimeGetVideoImplCopyWith<_$AnimeGetVideoImpl> get copyWith =>
-      __$$AnimeGetVideoImplCopyWithImpl<_$AnimeGetVideoImpl>(this, _$identity);
+  _$$GetVideoImplCopyWith<_$GetVideoImpl> get copyWith =>
+      __$$GetVideoImplCopyWithImpl<_$GetVideoImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String endpoint) animeGetVideo,
-    required TResult Function(bool control) showControl,
-    required TResult Function(int position) seekPosition,
+    required TResult Function(String endpoint) getVideo,
+    required TResult Function(bool showControl) showControl,
+    required TResult Function(double position) seekPosition,
     required TResult Function(String mirror) changeResolution,
+    required TResult Function(String endpoint) changeEpisode,
+    required TResult Function(bool buffering) setBuffering,
+    required TResult Function(bool isPlay) playVideo,
+    required TResult Function(VideoModel video) addHistory,
+    required TResult Function(int position, int duration) setPosition,
   }) {
-    return animeGetVideo(endpoint);
+    return getVideo(endpoint);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String endpoint)? animeGetVideo,
-    TResult? Function(bool control)? showControl,
-    TResult? Function(int position)? seekPosition,
+    TResult? Function(String endpoint)? getVideo,
+    TResult? Function(bool showControl)? showControl,
+    TResult? Function(double position)? seekPosition,
     TResult? Function(String mirror)? changeResolution,
+    TResult? Function(String endpoint)? changeEpisode,
+    TResult? Function(bool buffering)? setBuffering,
+    TResult? Function(bool isPlay)? playVideo,
+    TResult? Function(VideoModel video)? addHistory,
+    TResult? Function(int position, int duration)? setPosition,
   }) {
-    return animeGetVideo?.call(endpoint);
+    return getVideo?.call(endpoint);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String endpoint)? animeGetVideo,
-    TResult Function(bool control)? showControl,
-    TResult Function(int position)? seekPosition,
+    TResult Function(String endpoint)? getVideo,
+    TResult Function(bool showControl)? showControl,
+    TResult Function(double position)? seekPosition,
     TResult Function(String mirror)? changeResolution,
+    TResult Function(String endpoint)? changeEpisode,
+    TResult Function(bool buffering)? setBuffering,
+    TResult Function(bool isPlay)? playVideo,
+    TResult Function(VideoModel video)? addHistory,
+    TResult Function(int position, int duration)? setPosition,
     required TResult orElse(),
   }) {
-    if (animeGetVideo != null) {
-      return animeGetVideo(endpoint);
+    if (getVideo != null) {
+      return getVideo(endpoint);
     }
     return orElse();
   }
@@ -188,48 +233,62 @@ class _$AnimeGetVideoImpl implements _AnimeGetVideo {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_AnimeGetVideo value) animeGetVideo,
+    required TResult Function(_GetVideo value) getVideo,
     required TResult Function(_ShowControl value) showControl,
     required TResult Function(_SeekPosition value) seekPosition,
     required TResult Function(_ChangeResolution value) changeResolution,
+    required TResult Function(_ChangeEpisode value) changeEpisode,
+    required TResult Function(_SetBuffering value) setBuffering,
+    required TResult Function(_PlayVideo value) playVideo,
+    required TResult Function(_AddHistory value) addHistory,
+    required TResult Function(_SetPosition value) setPosition,
   }) {
-    return animeGetVideo(this);
+    return getVideo(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_AnimeGetVideo value)? animeGetVideo,
+    TResult? Function(_GetVideo value)? getVideo,
     TResult? Function(_ShowControl value)? showControl,
     TResult? Function(_SeekPosition value)? seekPosition,
     TResult? Function(_ChangeResolution value)? changeResolution,
+    TResult? Function(_ChangeEpisode value)? changeEpisode,
+    TResult? Function(_SetBuffering value)? setBuffering,
+    TResult? Function(_PlayVideo value)? playVideo,
+    TResult? Function(_AddHistory value)? addHistory,
+    TResult? Function(_SetPosition value)? setPosition,
   }) {
-    return animeGetVideo?.call(this);
+    return getVideo?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_AnimeGetVideo value)? animeGetVideo,
+    TResult Function(_GetVideo value)? getVideo,
     TResult Function(_ShowControl value)? showControl,
     TResult Function(_SeekPosition value)? seekPosition,
     TResult Function(_ChangeResolution value)? changeResolution,
+    TResult Function(_ChangeEpisode value)? changeEpisode,
+    TResult Function(_SetBuffering value)? setBuffering,
+    TResult Function(_PlayVideo value)? playVideo,
+    TResult Function(_AddHistory value)? addHistory,
+    TResult Function(_SetPosition value)? setPosition,
     required TResult orElse(),
   }) {
-    if (animeGetVideo != null) {
-      return animeGetVideo(this);
+    if (getVideo != null) {
+      return getVideo(this);
     }
     return orElse();
   }
 }
 
-abstract class _AnimeGetVideo implements AnimeVideoEvent {
-  const factory _AnimeGetVideo({required final String endpoint}) =
-      _$AnimeGetVideoImpl;
+abstract class _GetVideo implements AnimeVideoEvent {
+  const factory _GetVideo({required final String endpoint}) = _$GetVideoImpl;
 
   String get endpoint;
   @JsonKey(ignore: true)
-  _$$AnimeGetVideoImplCopyWith<_$AnimeGetVideoImpl> get copyWith =>
+  _$$GetVideoImplCopyWith<_$GetVideoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -239,7 +298,7 @@ abstract class _$$ShowControlImplCopyWith<$Res> {
           _$ShowControlImpl value, $Res Function(_$ShowControlImpl) then) =
       __$$ShowControlImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({bool control});
+  $Res call({bool showControl});
 }
 
 /// @nodoc
@@ -253,12 +312,12 @@ class __$$ShowControlImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? control = null,
+    Object? showControl = null,
   }) {
     return _then(_$ShowControlImpl(
-      control: null == control
-          ? _value.control
-          : control // ignore: cast_nullable_to_non_nullable
+      showControl: null == showControl
+          ? _value.showControl
+          : showControl // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -267,14 +326,14 @@ class __$$ShowControlImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ShowControlImpl implements _ShowControl {
-  const _$ShowControlImpl({required this.control});
+  const _$ShowControlImpl({required this.showControl});
 
   @override
-  final bool control;
+  final bool showControl;
 
   @override
   String toString() {
-    return 'AnimeVideoEvent.showControl(control: $control)';
+    return 'AnimeVideoEvent.showControl(showControl: $showControl)';
   }
 
   @override
@@ -282,11 +341,12 @@ class _$ShowControlImpl implements _ShowControl {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ShowControlImpl &&
-            (identical(other.control, control) || other.control == control));
+            (identical(other.showControl, showControl) ||
+                other.showControl == showControl));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, control);
+  int get hashCode => Object.hash(runtimeType, showControl);
 
   @JsonKey(ignore: true)
   @override
@@ -297,36 +357,51 @@ class _$ShowControlImpl implements _ShowControl {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String endpoint) animeGetVideo,
-    required TResult Function(bool control) showControl,
-    required TResult Function(int position) seekPosition,
+    required TResult Function(String endpoint) getVideo,
+    required TResult Function(bool showControl) showControl,
+    required TResult Function(double position) seekPosition,
     required TResult Function(String mirror) changeResolution,
+    required TResult Function(String endpoint) changeEpisode,
+    required TResult Function(bool buffering) setBuffering,
+    required TResult Function(bool isPlay) playVideo,
+    required TResult Function(VideoModel video) addHistory,
+    required TResult Function(int position, int duration) setPosition,
   }) {
-    return showControl(control);
+    return showControl(this.showControl);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String endpoint)? animeGetVideo,
-    TResult? Function(bool control)? showControl,
-    TResult? Function(int position)? seekPosition,
+    TResult? Function(String endpoint)? getVideo,
+    TResult? Function(bool showControl)? showControl,
+    TResult? Function(double position)? seekPosition,
     TResult? Function(String mirror)? changeResolution,
+    TResult? Function(String endpoint)? changeEpisode,
+    TResult? Function(bool buffering)? setBuffering,
+    TResult? Function(bool isPlay)? playVideo,
+    TResult? Function(VideoModel video)? addHistory,
+    TResult? Function(int position, int duration)? setPosition,
   }) {
-    return showControl?.call(control);
+    return showControl?.call(this.showControl);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String endpoint)? animeGetVideo,
-    TResult Function(bool control)? showControl,
-    TResult Function(int position)? seekPosition,
+    TResult Function(String endpoint)? getVideo,
+    TResult Function(bool showControl)? showControl,
+    TResult Function(double position)? seekPosition,
     TResult Function(String mirror)? changeResolution,
+    TResult Function(String endpoint)? changeEpisode,
+    TResult Function(bool buffering)? setBuffering,
+    TResult Function(bool isPlay)? playVideo,
+    TResult Function(VideoModel video)? addHistory,
+    TResult Function(int position, int duration)? setPosition,
     required TResult orElse(),
   }) {
     if (showControl != null) {
-      return showControl(control);
+      return showControl(this.showControl);
     }
     return orElse();
   }
@@ -334,10 +409,15 @@ class _$ShowControlImpl implements _ShowControl {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_AnimeGetVideo value) animeGetVideo,
+    required TResult Function(_GetVideo value) getVideo,
     required TResult Function(_ShowControl value) showControl,
     required TResult Function(_SeekPosition value) seekPosition,
     required TResult Function(_ChangeResolution value) changeResolution,
+    required TResult Function(_ChangeEpisode value) changeEpisode,
+    required TResult Function(_SetBuffering value) setBuffering,
+    required TResult Function(_PlayVideo value) playVideo,
+    required TResult Function(_AddHistory value) addHistory,
+    required TResult Function(_SetPosition value) setPosition,
   }) {
     return showControl(this);
   }
@@ -345,10 +425,15 @@ class _$ShowControlImpl implements _ShowControl {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_AnimeGetVideo value)? animeGetVideo,
+    TResult? Function(_GetVideo value)? getVideo,
     TResult? Function(_ShowControl value)? showControl,
     TResult? Function(_SeekPosition value)? seekPosition,
     TResult? Function(_ChangeResolution value)? changeResolution,
+    TResult? Function(_ChangeEpisode value)? changeEpisode,
+    TResult? Function(_SetBuffering value)? setBuffering,
+    TResult? Function(_PlayVideo value)? playVideo,
+    TResult? Function(_AddHistory value)? addHistory,
+    TResult? Function(_SetPosition value)? setPosition,
   }) {
     return showControl?.call(this);
   }
@@ -356,10 +441,15 @@ class _$ShowControlImpl implements _ShowControl {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_AnimeGetVideo value)? animeGetVideo,
+    TResult Function(_GetVideo value)? getVideo,
     TResult Function(_ShowControl value)? showControl,
     TResult Function(_SeekPosition value)? seekPosition,
     TResult Function(_ChangeResolution value)? changeResolution,
+    TResult Function(_ChangeEpisode value)? changeEpisode,
+    TResult Function(_SetBuffering value)? setBuffering,
+    TResult Function(_PlayVideo value)? playVideo,
+    TResult Function(_AddHistory value)? addHistory,
+    TResult Function(_SetPosition value)? setPosition,
     required TResult orElse(),
   }) {
     if (showControl != null) {
@@ -370,9 +460,10 @@ class _$ShowControlImpl implements _ShowControl {
 }
 
 abstract class _ShowControl implements AnimeVideoEvent {
-  const factory _ShowControl({required final bool control}) = _$ShowControlImpl;
+  const factory _ShowControl({required final bool showControl}) =
+      _$ShowControlImpl;
 
-  bool get control;
+  bool get showControl;
   @JsonKey(ignore: true)
   _$$ShowControlImplCopyWith<_$ShowControlImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -384,7 +475,7 @@ abstract class _$$SeekPositionImplCopyWith<$Res> {
           _$SeekPositionImpl value, $Res Function(_$SeekPositionImpl) then) =
       __$$SeekPositionImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({int position});
+  $Res call({double position});
 }
 
 /// @nodoc
@@ -404,7 +495,7 @@ class __$$SeekPositionImplCopyWithImpl<$Res>
       position: null == position
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
     ));
   }
 }
@@ -415,7 +506,7 @@ class _$SeekPositionImpl implements _SeekPosition {
   const _$SeekPositionImpl({required this.position});
 
   @override
-  final int position;
+  final double position;
 
   @override
   String toString() {
@@ -443,10 +534,15 @@ class _$SeekPositionImpl implements _SeekPosition {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String endpoint) animeGetVideo,
-    required TResult Function(bool control) showControl,
-    required TResult Function(int position) seekPosition,
+    required TResult Function(String endpoint) getVideo,
+    required TResult Function(bool showControl) showControl,
+    required TResult Function(double position) seekPosition,
     required TResult Function(String mirror) changeResolution,
+    required TResult Function(String endpoint) changeEpisode,
+    required TResult Function(bool buffering) setBuffering,
+    required TResult Function(bool isPlay) playVideo,
+    required TResult Function(VideoModel video) addHistory,
+    required TResult Function(int position, int duration) setPosition,
   }) {
     return seekPosition(position);
   }
@@ -454,10 +550,15 @@ class _$SeekPositionImpl implements _SeekPosition {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String endpoint)? animeGetVideo,
-    TResult? Function(bool control)? showControl,
-    TResult? Function(int position)? seekPosition,
+    TResult? Function(String endpoint)? getVideo,
+    TResult? Function(bool showControl)? showControl,
+    TResult? Function(double position)? seekPosition,
     TResult? Function(String mirror)? changeResolution,
+    TResult? Function(String endpoint)? changeEpisode,
+    TResult? Function(bool buffering)? setBuffering,
+    TResult? Function(bool isPlay)? playVideo,
+    TResult? Function(VideoModel video)? addHistory,
+    TResult? Function(int position, int duration)? setPosition,
   }) {
     return seekPosition?.call(position);
   }
@@ -465,10 +566,15 @@ class _$SeekPositionImpl implements _SeekPosition {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String endpoint)? animeGetVideo,
-    TResult Function(bool control)? showControl,
-    TResult Function(int position)? seekPosition,
+    TResult Function(String endpoint)? getVideo,
+    TResult Function(bool showControl)? showControl,
+    TResult Function(double position)? seekPosition,
     TResult Function(String mirror)? changeResolution,
+    TResult Function(String endpoint)? changeEpisode,
+    TResult Function(bool buffering)? setBuffering,
+    TResult Function(bool isPlay)? playVideo,
+    TResult Function(VideoModel video)? addHistory,
+    TResult Function(int position, int duration)? setPosition,
     required TResult orElse(),
   }) {
     if (seekPosition != null) {
@@ -480,10 +586,15 @@ class _$SeekPositionImpl implements _SeekPosition {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_AnimeGetVideo value) animeGetVideo,
+    required TResult Function(_GetVideo value) getVideo,
     required TResult Function(_ShowControl value) showControl,
     required TResult Function(_SeekPosition value) seekPosition,
     required TResult Function(_ChangeResolution value) changeResolution,
+    required TResult Function(_ChangeEpisode value) changeEpisode,
+    required TResult Function(_SetBuffering value) setBuffering,
+    required TResult Function(_PlayVideo value) playVideo,
+    required TResult Function(_AddHistory value) addHistory,
+    required TResult Function(_SetPosition value) setPosition,
   }) {
     return seekPosition(this);
   }
@@ -491,10 +602,15 @@ class _$SeekPositionImpl implements _SeekPosition {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_AnimeGetVideo value)? animeGetVideo,
+    TResult? Function(_GetVideo value)? getVideo,
     TResult? Function(_ShowControl value)? showControl,
     TResult? Function(_SeekPosition value)? seekPosition,
     TResult? Function(_ChangeResolution value)? changeResolution,
+    TResult? Function(_ChangeEpisode value)? changeEpisode,
+    TResult? Function(_SetBuffering value)? setBuffering,
+    TResult? Function(_PlayVideo value)? playVideo,
+    TResult? Function(_AddHistory value)? addHistory,
+    TResult? Function(_SetPosition value)? setPosition,
   }) {
     return seekPosition?.call(this);
   }
@@ -502,10 +618,15 @@ class _$SeekPositionImpl implements _SeekPosition {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_AnimeGetVideo value)? animeGetVideo,
+    TResult Function(_GetVideo value)? getVideo,
     TResult Function(_ShowControl value)? showControl,
     TResult Function(_SeekPosition value)? seekPosition,
     TResult Function(_ChangeResolution value)? changeResolution,
+    TResult Function(_ChangeEpisode value)? changeEpisode,
+    TResult Function(_SetBuffering value)? setBuffering,
+    TResult Function(_PlayVideo value)? playVideo,
+    TResult Function(_AddHistory value)? addHistory,
+    TResult Function(_SetPosition value)? setPosition,
     required TResult orElse(),
   }) {
     if (seekPosition != null) {
@@ -516,10 +637,10 @@ class _$SeekPositionImpl implements _SeekPosition {
 }
 
 abstract class _SeekPosition implements AnimeVideoEvent {
-  const factory _SeekPosition({required final int position}) =
+  const factory _SeekPosition({required final double position}) =
       _$SeekPositionImpl;
 
-  int get position;
+  double get position;
   @JsonKey(ignore: true)
   _$$SeekPositionImplCopyWith<_$SeekPositionImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -590,10 +711,15 @@ class _$ChangeResolutionImpl implements _ChangeResolution {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String endpoint) animeGetVideo,
-    required TResult Function(bool control) showControl,
-    required TResult Function(int position) seekPosition,
+    required TResult Function(String endpoint) getVideo,
+    required TResult Function(bool showControl) showControl,
+    required TResult Function(double position) seekPosition,
     required TResult Function(String mirror) changeResolution,
+    required TResult Function(String endpoint) changeEpisode,
+    required TResult Function(bool buffering) setBuffering,
+    required TResult Function(bool isPlay) playVideo,
+    required TResult Function(VideoModel video) addHistory,
+    required TResult Function(int position, int duration) setPosition,
   }) {
     return changeResolution(mirror);
   }
@@ -601,10 +727,15 @@ class _$ChangeResolutionImpl implements _ChangeResolution {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String endpoint)? animeGetVideo,
-    TResult? Function(bool control)? showControl,
-    TResult? Function(int position)? seekPosition,
+    TResult? Function(String endpoint)? getVideo,
+    TResult? Function(bool showControl)? showControl,
+    TResult? Function(double position)? seekPosition,
     TResult? Function(String mirror)? changeResolution,
+    TResult? Function(String endpoint)? changeEpisode,
+    TResult? Function(bool buffering)? setBuffering,
+    TResult? Function(bool isPlay)? playVideo,
+    TResult? Function(VideoModel video)? addHistory,
+    TResult? Function(int position, int duration)? setPosition,
   }) {
     return changeResolution?.call(mirror);
   }
@@ -612,10 +743,15 @@ class _$ChangeResolutionImpl implements _ChangeResolution {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String endpoint)? animeGetVideo,
-    TResult Function(bool control)? showControl,
-    TResult Function(int position)? seekPosition,
+    TResult Function(String endpoint)? getVideo,
+    TResult Function(bool showControl)? showControl,
+    TResult Function(double position)? seekPosition,
     TResult Function(String mirror)? changeResolution,
+    TResult Function(String endpoint)? changeEpisode,
+    TResult Function(bool buffering)? setBuffering,
+    TResult Function(bool isPlay)? playVideo,
+    TResult Function(VideoModel video)? addHistory,
+    TResult Function(int position, int duration)? setPosition,
     required TResult orElse(),
   }) {
     if (changeResolution != null) {
@@ -627,10 +763,15 @@ class _$ChangeResolutionImpl implements _ChangeResolution {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_AnimeGetVideo value) animeGetVideo,
+    required TResult Function(_GetVideo value) getVideo,
     required TResult Function(_ShowControl value) showControl,
     required TResult Function(_SeekPosition value) seekPosition,
     required TResult Function(_ChangeResolution value) changeResolution,
+    required TResult Function(_ChangeEpisode value) changeEpisode,
+    required TResult Function(_SetBuffering value) setBuffering,
+    required TResult Function(_PlayVideo value) playVideo,
+    required TResult Function(_AddHistory value) addHistory,
+    required TResult Function(_SetPosition value) setPosition,
   }) {
     return changeResolution(this);
   }
@@ -638,10 +779,15 @@ class _$ChangeResolutionImpl implements _ChangeResolution {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_AnimeGetVideo value)? animeGetVideo,
+    TResult? Function(_GetVideo value)? getVideo,
     TResult? Function(_ShowControl value)? showControl,
     TResult? Function(_SeekPosition value)? seekPosition,
     TResult? Function(_ChangeResolution value)? changeResolution,
+    TResult? Function(_ChangeEpisode value)? changeEpisode,
+    TResult? Function(_SetBuffering value)? setBuffering,
+    TResult? Function(_PlayVideo value)? playVideo,
+    TResult? Function(_AddHistory value)? addHistory,
+    TResult? Function(_SetPosition value)? setPosition,
   }) {
     return changeResolution?.call(this);
   }
@@ -649,10 +795,15 @@ class _$ChangeResolutionImpl implements _ChangeResolution {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_AnimeGetVideo value)? animeGetVideo,
+    TResult Function(_GetVideo value)? getVideo,
     TResult Function(_ShowControl value)? showControl,
     TResult Function(_SeekPosition value)? seekPosition,
     TResult Function(_ChangeResolution value)? changeResolution,
+    TResult Function(_ChangeEpisode value)? changeEpisode,
+    TResult Function(_SetBuffering value)? setBuffering,
+    TResult Function(_PlayVideo value)? playVideo,
+    TResult Function(_AddHistory value)? addHistory,
+    TResult Function(_SetPosition value)? setPosition,
     required TResult orElse(),
   }) {
     if (changeResolution != null) {
@@ -673,16 +824,922 @@ abstract class _ChangeResolution implements AnimeVideoEvent {
 }
 
 /// @nodoc
+abstract class _$$ChangeEpisodeImplCopyWith<$Res> {
+  factory _$$ChangeEpisodeImplCopyWith(
+          _$ChangeEpisodeImpl value, $Res Function(_$ChangeEpisodeImpl) then) =
+      __$$ChangeEpisodeImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String endpoint});
+}
+
+/// @nodoc
+class __$$ChangeEpisodeImplCopyWithImpl<$Res>
+    extends _$AnimeVideoEventCopyWithImpl<$Res, _$ChangeEpisodeImpl>
+    implements _$$ChangeEpisodeImplCopyWith<$Res> {
+  __$$ChangeEpisodeImplCopyWithImpl(
+      _$ChangeEpisodeImpl _value, $Res Function(_$ChangeEpisodeImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? endpoint = null,
+  }) {
+    return _then(_$ChangeEpisodeImpl(
+      endpoint: null == endpoint
+          ? _value.endpoint
+          : endpoint // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ChangeEpisodeImpl implements _ChangeEpisode {
+  const _$ChangeEpisodeImpl({required this.endpoint});
+
+  @override
+  final String endpoint;
+
+  @override
+  String toString() {
+    return 'AnimeVideoEvent.changeEpisode(endpoint: $endpoint)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ChangeEpisodeImpl &&
+            (identical(other.endpoint, endpoint) ||
+                other.endpoint == endpoint));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, endpoint);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChangeEpisodeImplCopyWith<_$ChangeEpisodeImpl> get copyWith =>
+      __$$ChangeEpisodeImplCopyWithImpl<_$ChangeEpisodeImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String endpoint) getVideo,
+    required TResult Function(bool showControl) showControl,
+    required TResult Function(double position) seekPosition,
+    required TResult Function(String mirror) changeResolution,
+    required TResult Function(String endpoint) changeEpisode,
+    required TResult Function(bool buffering) setBuffering,
+    required TResult Function(bool isPlay) playVideo,
+    required TResult Function(VideoModel video) addHistory,
+    required TResult Function(int position, int duration) setPosition,
+  }) {
+    return changeEpisode(endpoint);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String endpoint)? getVideo,
+    TResult? Function(bool showControl)? showControl,
+    TResult? Function(double position)? seekPosition,
+    TResult? Function(String mirror)? changeResolution,
+    TResult? Function(String endpoint)? changeEpisode,
+    TResult? Function(bool buffering)? setBuffering,
+    TResult? Function(bool isPlay)? playVideo,
+    TResult? Function(VideoModel video)? addHistory,
+    TResult? Function(int position, int duration)? setPosition,
+  }) {
+    return changeEpisode?.call(endpoint);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String endpoint)? getVideo,
+    TResult Function(bool showControl)? showControl,
+    TResult Function(double position)? seekPosition,
+    TResult Function(String mirror)? changeResolution,
+    TResult Function(String endpoint)? changeEpisode,
+    TResult Function(bool buffering)? setBuffering,
+    TResult Function(bool isPlay)? playVideo,
+    TResult Function(VideoModel video)? addHistory,
+    TResult Function(int position, int duration)? setPosition,
+    required TResult orElse(),
+  }) {
+    if (changeEpisode != null) {
+      return changeEpisode(endpoint);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetVideo value) getVideo,
+    required TResult Function(_ShowControl value) showControl,
+    required TResult Function(_SeekPosition value) seekPosition,
+    required TResult Function(_ChangeResolution value) changeResolution,
+    required TResult Function(_ChangeEpisode value) changeEpisode,
+    required TResult Function(_SetBuffering value) setBuffering,
+    required TResult Function(_PlayVideo value) playVideo,
+    required TResult Function(_AddHistory value) addHistory,
+    required TResult Function(_SetPosition value) setPosition,
+  }) {
+    return changeEpisode(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetVideo value)? getVideo,
+    TResult? Function(_ShowControl value)? showControl,
+    TResult? Function(_SeekPosition value)? seekPosition,
+    TResult? Function(_ChangeResolution value)? changeResolution,
+    TResult? Function(_ChangeEpisode value)? changeEpisode,
+    TResult? Function(_SetBuffering value)? setBuffering,
+    TResult? Function(_PlayVideo value)? playVideo,
+    TResult? Function(_AddHistory value)? addHistory,
+    TResult? Function(_SetPosition value)? setPosition,
+  }) {
+    return changeEpisode?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetVideo value)? getVideo,
+    TResult Function(_ShowControl value)? showControl,
+    TResult Function(_SeekPosition value)? seekPosition,
+    TResult Function(_ChangeResolution value)? changeResolution,
+    TResult Function(_ChangeEpisode value)? changeEpisode,
+    TResult Function(_SetBuffering value)? setBuffering,
+    TResult Function(_PlayVideo value)? playVideo,
+    TResult Function(_AddHistory value)? addHistory,
+    TResult Function(_SetPosition value)? setPosition,
+    required TResult orElse(),
+  }) {
+    if (changeEpisode != null) {
+      return changeEpisode(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ChangeEpisode implements AnimeVideoEvent {
+  const factory _ChangeEpisode({required final String endpoint}) =
+      _$ChangeEpisodeImpl;
+
+  String get endpoint;
+  @JsonKey(ignore: true)
+  _$$ChangeEpisodeImplCopyWith<_$ChangeEpisodeImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SetBufferingImplCopyWith<$Res> {
+  factory _$$SetBufferingImplCopyWith(
+          _$SetBufferingImpl value, $Res Function(_$SetBufferingImpl) then) =
+      __$$SetBufferingImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool buffering});
+}
+
+/// @nodoc
+class __$$SetBufferingImplCopyWithImpl<$Res>
+    extends _$AnimeVideoEventCopyWithImpl<$Res, _$SetBufferingImpl>
+    implements _$$SetBufferingImplCopyWith<$Res> {
+  __$$SetBufferingImplCopyWithImpl(
+      _$SetBufferingImpl _value, $Res Function(_$SetBufferingImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? buffering = null,
+  }) {
+    return _then(_$SetBufferingImpl(
+      buffering: null == buffering
+          ? _value.buffering
+          : buffering // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SetBufferingImpl implements _SetBuffering {
+  const _$SetBufferingImpl({required this.buffering});
+
+  @override
+  final bool buffering;
+
+  @override
+  String toString() {
+    return 'AnimeVideoEvent.setBuffering(buffering: $buffering)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SetBufferingImpl &&
+            (identical(other.buffering, buffering) ||
+                other.buffering == buffering));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, buffering);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SetBufferingImplCopyWith<_$SetBufferingImpl> get copyWith =>
+      __$$SetBufferingImplCopyWithImpl<_$SetBufferingImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String endpoint) getVideo,
+    required TResult Function(bool showControl) showControl,
+    required TResult Function(double position) seekPosition,
+    required TResult Function(String mirror) changeResolution,
+    required TResult Function(String endpoint) changeEpisode,
+    required TResult Function(bool buffering) setBuffering,
+    required TResult Function(bool isPlay) playVideo,
+    required TResult Function(VideoModel video) addHistory,
+    required TResult Function(int position, int duration) setPosition,
+  }) {
+    return setBuffering(buffering);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String endpoint)? getVideo,
+    TResult? Function(bool showControl)? showControl,
+    TResult? Function(double position)? seekPosition,
+    TResult? Function(String mirror)? changeResolution,
+    TResult? Function(String endpoint)? changeEpisode,
+    TResult? Function(bool buffering)? setBuffering,
+    TResult? Function(bool isPlay)? playVideo,
+    TResult? Function(VideoModel video)? addHistory,
+    TResult? Function(int position, int duration)? setPosition,
+  }) {
+    return setBuffering?.call(buffering);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String endpoint)? getVideo,
+    TResult Function(bool showControl)? showControl,
+    TResult Function(double position)? seekPosition,
+    TResult Function(String mirror)? changeResolution,
+    TResult Function(String endpoint)? changeEpisode,
+    TResult Function(bool buffering)? setBuffering,
+    TResult Function(bool isPlay)? playVideo,
+    TResult Function(VideoModel video)? addHistory,
+    TResult Function(int position, int duration)? setPosition,
+    required TResult orElse(),
+  }) {
+    if (setBuffering != null) {
+      return setBuffering(buffering);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetVideo value) getVideo,
+    required TResult Function(_ShowControl value) showControl,
+    required TResult Function(_SeekPosition value) seekPosition,
+    required TResult Function(_ChangeResolution value) changeResolution,
+    required TResult Function(_ChangeEpisode value) changeEpisode,
+    required TResult Function(_SetBuffering value) setBuffering,
+    required TResult Function(_PlayVideo value) playVideo,
+    required TResult Function(_AddHistory value) addHistory,
+    required TResult Function(_SetPosition value) setPosition,
+  }) {
+    return setBuffering(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetVideo value)? getVideo,
+    TResult? Function(_ShowControl value)? showControl,
+    TResult? Function(_SeekPosition value)? seekPosition,
+    TResult? Function(_ChangeResolution value)? changeResolution,
+    TResult? Function(_ChangeEpisode value)? changeEpisode,
+    TResult? Function(_SetBuffering value)? setBuffering,
+    TResult? Function(_PlayVideo value)? playVideo,
+    TResult? Function(_AddHistory value)? addHistory,
+    TResult? Function(_SetPosition value)? setPosition,
+  }) {
+    return setBuffering?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetVideo value)? getVideo,
+    TResult Function(_ShowControl value)? showControl,
+    TResult Function(_SeekPosition value)? seekPosition,
+    TResult Function(_ChangeResolution value)? changeResolution,
+    TResult Function(_ChangeEpisode value)? changeEpisode,
+    TResult Function(_SetBuffering value)? setBuffering,
+    TResult Function(_PlayVideo value)? playVideo,
+    TResult Function(_AddHistory value)? addHistory,
+    TResult Function(_SetPosition value)? setPosition,
+    required TResult orElse(),
+  }) {
+    if (setBuffering != null) {
+      return setBuffering(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SetBuffering implements AnimeVideoEvent {
+  const factory _SetBuffering({required final bool buffering}) =
+      _$SetBufferingImpl;
+
+  bool get buffering;
+  @JsonKey(ignore: true)
+  _$$SetBufferingImplCopyWith<_$SetBufferingImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$PlayVideoImplCopyWith<$Res> {
+  factory _$$PlayVideoImplCopyWith(
+          _$PlayVideoImpl value, $Res Function(_$PlayVideoImpl) then) =
+      __$$PlayVideoImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool isPlay});
+}
+
+/// @nodoc
+class __$$PlayVideoImplCopyWithImpl<$Res>
+    extends _$AnimeVideoEventCopyWithImpl<$Res, _$PlayVideoImpl>
+    implements _$$PlayVideoImplCopyWith<$Res> {
+  __$$PlayVideoImplCopyWithImpl(
+      _$PlayVideoImpl _value, $Res Function(_$PlayVideoImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isPlay = null,
+  }) {
+    return _then(_$PlayVideoImpl(
+      isPlay: null == isPlay
+          ? _value.isPlay
+          : isPlay // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$PlayVideoImpl implements _PlayVideo {
+  const _$PlayVideoImpl({required this.isPlay});
+
+  @override
+  final bool isPlay;
+
+  @override
+  String toString() {
+    return 'AnimeVideoEvent.playVideo(isPlay: $isPlay)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PlayVideoImpl &&
+            (identical(other.isPlay, isPlay) || other.isPlay == isPlay));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, isPlay);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PlayVideoImplCopyWith<_$PlayVideoImpl> get copyWith =>
+      __$$PlayVideoImplCopyWithImpl<_$PlayVideoImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String endpoint) getVideo,
+    required TResult Function(bool showControl) showControl,
+    required TResult Function(double position) seekPosition,
+    required TResult Function(String mirror) changeResolution,
+    required TResult Function(String endpoint) changeEpisode,
+    required TResult Function(bool buffering) setBuffering,
+    required TResult Function(bool isPlay) playVideo,
+    required TResult Function(VideoModel video) addHistory,
+    required TResult Function(int position, int duration) setPosition,
+  }) {
+    return playVideo(isPlay);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String endpoint)? getVideo,
+    TResult? Function(bool showControl)? showControl,
+    TResult? Function(double position)? seekPosition,
+    TResult? Function(String mirror)? changeResolution,
+    TResult? Function(String endpoint)? changeEpisode,
+    TResult? Function(bool buffering)? setBuffering,
+    TResult? Function(bool isPlay)? playVideo,
+    TResult? Function(VideoModel video)? addHistory,
+    TResult? Function(int position, int duration)? setPosition,
+  }) {
+    return playVideo?.call(isPlay);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String endpoint)? getVideo,
+    TResult Function(bool showControl)? showControl,
+    TResult Function(double position)? seekPosition,
+    TResult Function(String mirror)? changeResolution,
+    TResult Function(String endpoint)? changeEpisode,
+    TResult Function(bool buffering)? setBuffering,
+    TResult Function(bool isPlay)? playVideo,
+    TResult Function(VideoModel video)? addHistory,
+    TResult Function(int position, int duration)? setPosition,
+    required TResult orElse(),
+  }) {
+    if (playVideo != null) {
+      return playVideo(isPlay);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetVideo value) getVideo,
+    required TResult Function(_ShowControl value) showControl,
+    required TResult Function(_SeekPosition value) seekPosition,
+    required TResult Function(_ChangeResolution value) changeResolution,
+    required TResult Function(_ChangeEpisode value) changeEpisode,
+    required TResult Function(_SetBuffering value) setBuffering,
+    required TResult Function(_PlayVideo value) playVideo,
+    required TResult Function(_AddHistory value) addHistory,
+    required TResult Function(_SetPosition value) setPosition,
+  }) {
+    return playVideo(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetVideo value)? getVideo,
+    TResult? Function(_ShowControl value)? showControl,
+    TResult? Function(_SeekPosition value)? seekPosition,
+    TResult? Function(_ChangeResolution value)? changeResolution,
+    TResult? Function(_ChangeEpisode value)? changeEpisode,
+    TResult? Function(_SetBuffering value)? setBuffering,
+    TResult? Function(_PlayVideo value)? playVideo,
+    TResult? Function(_AddHistory value)? addHistory,
+    TResult? Function(_SetPosition value)? setPosition,
+  }) {
+    return playVideo?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetVideo value)? getVideo,
+    TResult Function(_ShowControl value)? showControl,
+    TResult Function(_SeekPosition value)? seekPosition,
+    TResult Function(_ChangeResolution value)? changeResolution,
+    TResult Function(_ChangeEpisode value)? changeEpisode,
+    TResult Function(_SetBuffering value)? setBuffering,
+    TResult Function(_PlayVideo value)? playVideo,
+    TResult Function(_AddHistory value)? addHistory,
+    TResult Function(_SetPosition value)? setPosition,
+    required TResult orElse(),
+  }) {
+    if (playVideo != null) {
+      return playVideo(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _PlayVideo implements AnimeVideoEvent {
+  const factory _PlayVideo({required final bool isPlay}) = _$PlayVideoImpl;
+
+  bool get isPlay;
+  @JsonKey(ignore: true)
+  _$$PlayVideoImplCopyWith<_$PlayVideoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$AddHistoryImplCopyWith<$Res> {
+  factory _$$AddHistoryImplCopyWith(
+          _$AddHistoryImpl value, $Res Function(_$AddHistoryImpl) then) =
+      __$$AddHistoryImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({VideoModel video});
+
+  $VideoModelCopyWith<$Res> get video;
+}
+
+/// @nodoc
+class __$$AddHistoryImplCopyWithImpl<$Res>
+    extends _$AnimeVideoEventCopyWithImpl<$Res, _$AddHistoryImpl>
+    implements _$$AddHistoryImplCopyWith<$Res> {
+  __$$AddHistoryImplCopyWithImpl(
+      _$AddHistoryImpl _value, $Res Function(_$AddHistoryImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? video = null,
+  }) {
+    return _then(_$AddHistoryImpl(
+      video: null == video
+          ? _value.video
+          : video // ignore: cast_nullable_to_non_nullable
+              as VideoModel,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $VideoModelCopyWith<$Res> get video {
+    return $VideoModelCopyWith<$Res>(_value.video, (value) {
+      return _then(_value.copyWith(video: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$AddHistoryImpl implements _AddHistory {
+  const _$AddHistoryImpl({required this.video});
+
+  @override
+  final VideoModel video;
+
+  @override
+  String toString() {
+    return 'AnimeVideoEvent.addHistory(video: $video)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AddHistoryImpl &&
+            (identical(other.video, video) || other.video == video));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, video);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AddHistoryImplCopyWith<_$AddHistoryImpl> get copyWith =>
+      __$$AddHistoryImplCopyWithImpl<_$AddHistoryImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String endpoint) getVideo,
+    required TResult Function(bool showControl) showControl,
+    required TResult Function(double position) seekPosition,
+    required TResult Function(String mirror) changeResolution,
+    required TResult Function(String endpoint) changeEpisode,
+    required TResult Function(bool buffering) setBuffering,
+    required TResult Function(bool isPlay) playVideo,
+    required TResult Function(VideoModel video) addHistory,
+    required TResult Function(int position, int duration) setPosition,
+  }) {
+    return addHistory(video);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String endpoint)? getVideo,
+    TResult? Function(bool showControl)? showControl,
+    TResult? Function(double position)? seekPosition,
+    TResult? Function(String mirror)? changeResolution,
+    TResult? Function(String endpoint)? changeEpisode,
+    TResult? Function(bool buffering)? setBuffering,
+    TResult? Function(bool isPlay)? playVideo,
+    TResult? Function(VideoModel video)? addHistory,
+    TResult? Function(int position, int duration)? setPosition,
+  }) {
+    return addHistory?.call(video);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String endpoint)? getVideo,
+    TResult Function(bool showControl)? showControl,
+    TResult Function(double position)? seekPosition,
+    TResult Function(String mirror)? changeResolution,
+    TResult Function(String endpoint)? changeEpisode,
+    TResult Function(bool buffering)? setBuffering,
+    TResult Function(bool isPlay)? playVideo,
+    TResult Function(VideoModel video)? addHistory,
+    TResult Function(int position, int duration)? setPosition,
+    required TResult orElse(),
+  }) {
+    if (addHistory != null) {
+      return addHistory(video);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetVideo value) getVideo,
+    required TResult Function(_ShowControl value) showControl,
+    required TResult Function(_SeekPosition value) seekPosition,
+    required TResult Function(_ChangeResolution value) changeResolution,
+    required TResult Function(_ChangeEpisode value) changeEpisode,
+    required TResult Function(_SetBuffering value) setBuffering,
+    required TResult Function(_PlayVideo value) playVideo,
+    required TResult Function(_AddHistory value) addHistory,
+    required TResult Function(_SetPosition value) setPosition,
+  }) {
+    return addHistory(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetVideo value)? getVideo,
+    TResult? Function(_ShowControl value)? showControl,
+    TResult? Function(_SeekPosition value)? seekPosition,
+    TResult? Function(_ChangeResolution value)? changeResolution,
+    TResult? Function(_ChangeEpisode value)? changeEpisode,
+    TResult? Function(_SetBuffering value)? setBuffering,
+    TResult? Function(_PlayVideo value)? playVideo,
+    TResult? Function(_AddHistory value)? addHistory,
+    TResult? Function(_SetPosition value)? setPosition,
+  }) {
+    return addHistory?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetVideo value)? getVideo,
+    TResult Function(_ShowControl value)? showControl,
+    TResult Function(_SeekPosition value)? seekPosition,
+    TResult Function(_ChangeResolution value)? changeResolution,
+    TResult Function(_ChangeEpisode value)? changeEpisode,
+    TResult Function(_SetBuffering value)? setBuffering,
+    TResult Function(_PlayVideo value)? playVideo,
+    TResult Function(_AddHistory value)? addHistory,
+    TResult Function(_SetPosition value)? setPosition,
+    required TResult orElse(),
+  }) {
+    if (addHistory != null) {
+      return addHistory(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AddHistory implements AnimeVideoEvent {
+  const factory _AddHistory({required final VideoModel video}) =
+      _$AddHistoryImpl;
+
+  VideoModel get video;
+  @JsonKey(ignore: true)
+  _$$AddHistoryImplCopyWith<_$AddHistoryImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SetPositionImplCopyWith<$Res> {
+  factory _$$SetPositionImplCopyWith(
+          _$SetPositionImpl value, $Res Function(_$SetPositionImpl) then) =
+      __$$SetPositionImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int position, int duration});
+}
+
+/// @nodoc
+class __$$SetPositionImplCopyWithImpl<$Res>
+    extends _$AnimeVideoEventCopyWithImpl<$Res, _$SetPositionImpl>
+    implements _$$SetPositionImplCopyWith<$Res> {
+  __$$SetPositionImplCopyWithImpl(
+      _$SetPositionImpl _value, $Res Function(_$SetPositionImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? position = null,
+    Object? duration = null,
+  }) {
+    return _then(_$SetPositionImpl(
+      position: null == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as int,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SetPositionImpl implements _SetPosition {
+  const _$SetPositionImpl({required this.position, required this.duration});
+
+  @override
+  final int position;
+  @override
+  final int duration;
+
+  @override
+  String toString() {
+    return 'AnimeVideoEvent.setPosition(position: $position, duration: $duration)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SetPositionImpl &&
+            (identical(other.position, position) ||
+                other.position == position) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, position, duration);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SetPositionImplCopyWith<_$SetPositionImpl> get copyWith =>
+      __$$SetPositionImplCopyWithImpl<_$SetPositionImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String endpoint) getVideo,
+    required TResult Function(bool showControl) showControl,
+    required TResult Function(double position) seekPosition,
+    required TResult Function(String mirror) changeResolution,
+    required TResult Function(String endpoint) changeEpisode,
+    required TResult Function(bool buffering) setBuffering,
+    required TResult Function(bool isPlay) playVideo,
+    required TResult Function(VideoModel video) addHistory,
+    required TResult Function(int position, int duration) setPosition,
+  }) {
+    return setPosition(position, duration);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String endpoint)? getVideo,
+    TResult? Function(bool showControl)? showControl,
+    TResult? Function(double position)? seekPosition,
+    TResult? Function(String mirror)? changeResolution,
+    TResult? Function(String endpoint)? changeEpisode,
+    TResult? Function(bool buffering)? setBuffering,
+    TResult? Function(bool isPlay)? playVideo,
+    TResult? Function(VideoModel video)? addHistory,
+    TResult? Function(int position, int duration)? setPosition,
+  }) {
+    return setPosition?.call(position, duration);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String endpoint)? getVideo,
+    TResult Function(bool showControl)? showControl,
+    TResult Function(double position)? seekPosition,
+    TResult Function(String mirror)? changeResolution,
+    TResult Function(String endpoint)? changeEpisode,
+    TResult Function(bool buffering)? setBuffering,
+    TResult Function(bool isPlay)? playVideo,
+    TResult Function(VideoModel video)? addHistory,
+    TResult Function(int position, int duration)? setPosition,
+    required TResult orElse(),
+  }) {
+    if (setPosition != null) {
+      return setPosition(position, duration);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetVideo value) getVideo,
+    required TResult Function(_ShowControl value) showControl,
+    required TResult Function(_SeekPosition value) seekPosition,
+    required TResult Function(_ChangeResolution value) changeResolution,
+    required TResult Function(_ChangeEpisode value) changeEpisode,
+    required TResult Function(_SetBuffering value) setBuffering,
+    required TResult Function(_PlayVideo value) playVideo,
+    required TResult Function(_AddHistory value) addHistory,
+    required TResult Function(_SetPosition value) setPosition,
+  }) {
+    return setPosition(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetVideo value)? getVideo,
+    TResult? Function(_ShowControl value)? showControl,
+    TResult? Function(_SeekPosition value)? seekPosition,
+    TResult? Function(_ChangeResolution value)? changeResolution,
+    TResult? Function(_ChangeEpisode value)? changeEpisode,
+    TResult? Function(_SetBuffering value)? setBuffering,
+    TResult? Function(_PlayVideo value)? playVideo,
+    TResult? Function(_AddHistory value)? addHistory,
+    TResult? Function(_SetPosition value)? setPosition,
+  }) {
+    return setPosition?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetVideo value)? getVideo,
+    TResult Function(_ShowControl value)? showControl,
+    TResult Function(_SeekPosition value)? seekPosition,
+    TResult Function(_ChangeResolution value)? changeResolution,
+    TResult Function(_ChangeEpisode value)? changeEpisode,
+    TResult Function(_SetBuffering value)? setBuffering,
+    TResult Function(_PlayVideo value)? playVideo,
+    TResult Function(_AddHistory value)? addHistory,
+    TResult Function(_SetPosition value)? setPosition,
+    required TResult orElse(),
+  }) {
+    if (setPosition != null) {
+      return setPosition(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SetPosition implements AnimeVideoEvent {
+  const factory _SetPosition(
+      {required final int position,
+      required final int duration}) = _$SetPositionImpl;
+
+  int get position;
+  int get duration;
+  @JsonKey(ignore: true)
+  _$$SetPositionImplCopyWith<_$SetPositionImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$AnimeVideoState {
-  bool get isLoading => throw _privateConstructorUsedError;
-  bool get isBuffering => throw _privateConstructorUsedError;
-  bool get isShowControll => throw _privateConstructorUsedError;
-  bool get isPlaying => throw _privateConstructorUsedError;
-  bool get isBackward => throw _privateConstructorUsedError;
-  bool get isForward => throw _privateConstructorUsedError;
+  bool get initialize => throw _privateConstructorUsedError;
+  bool get error => throw _privateConstructorUsedError;
+  String get mirror => throw _privateConstructorUsedError;
+  bool get loading => throw _privateConstructorUsedError;
+  bool get buffering => throw _privateConstructorUsedError;
+  bool get showControll => throw _privateConstructorUsedError;
+  bool get playing => throw _privateConstructorUsedError;
+  bool get backward => throw _privateConstructorUsedError;
+  bool get forward => throw _privateConstructorUsedError;
   int get videoDuration => throw _privateConstructorUsedError;
   int get videoPosition => throw _privateConstructorUsedError;
-  int get sliderPosition => throw _privateConstructorUsedError;
+  double get sliderPosition => throw _privateConstructorUsedError;
   List<VideoModel> get videoList => throw _privateConstructorUsedError;
   List<EpisodeModel> get episodeList => throw _privateConstructorUsedError;
 
@@ -698,15 +1755,18 @@ abstract class $AnimeVideoStateCopyWith<$Res> {
       _$AnimeVideoStateCopyWithImpl<$Res, AnimeVideoState>;
   @useResult
   $Res call(
-      {bool isLoading,
-      bool isBuffering,
-      bool isShowControll,
-      bool isPlaying,
-      bool isBackward,
-      bool isForward,
+      {bool initialize,
+      bool error,
+      String mirror,
+      bool loading,
+      bool buffering,
+      bool showControll,
+      bool playing,
+      bool backward,
+      bool forward,
       int videoDuration,
       int videoPosition,
-      int sliderPosition,
+      double sliderPosition,
       List<VideoModel> videoList,
       List<EpisodeModel> episodeList});
 }
@@ -724,12 +1784,15 @@ class _$AnimeVideoStateCopyWithImpl<$Res, $Val extends AnimeVideoState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isLoading = null,
-    Object? isBuffering = null,
-    Object? isShowControll = null,
-    Object? isPlaying = null,
-    Object? isBackward = null,
-    Object? isForward = null,
+    Object? initialize = null,
+    Object? error = null,
+    Object? mirror = null,
+    Object? loading = null,
+    Object? buffering = null,
+    Object? showControll = null,
+    Object? playing = null,
+    Object? backward = null,
+    Object? forward = null,
     Object? videoDuration = null,
     Object? videoPosition = null,
     Object? sliderPosition = null,
@@ -737,29 +1800,41 @@ class _$AnimeVideoStateCopyWithImpl<$Res, $Val extends AnimeVideoState>
     Object? episodeList = null,
   }) {
     return _then(_value.copyWith(
-      isLoading: null == isLoading
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
+      initialize: null == initialize
+          ? _value.initialize
+          : initialize // ignore: cast_nullable_to_non_nullable
               as bool,
-      isBuffering: null == isBuffering
-          ? _value.isBuffering
-          : isBuffering // ignore: cast_nullable_to_non_nullable
+      error: null == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
               as bool,
-      isShowControll: null == isShowControll
-          ? _value.isShowControll
-          : isShowControll // ignore: cast_nullable_to_non_nullable
+      mirror: null == mirror
+          ? _value.mirror
+          : mirror // ignore: cast_nullable_to_non_nullable
+              as String,
+      loading: null == loading
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
               as bool,
-      isPlaying: null == isPlaying
-          ? _value.isPlaying
-          : isPlaying // ignore: cast_nullable_to_non_nullable
+      buffering: null == buffering
+          ? _value.buffering
+          : buffering // ignore: cast_nullable_to_non_nullable
               as bool,
-      isBackward: null == isBackward
-          ? _value.isBackward
-          : isBackward // ignore: cast_nullable_to_non_nullable
+      showControll: null == showControll
+          ? _value.showControll
+          : showControll // ignore: cast_nullable_to_non_nullable
               as bool,
-      isForward: null == isForward
-          ? _value.isForward
-          : isForward // ignore: cast_nullable_to_non_nullable
+      playing: null == playing
+          ? _value.playing
+          : playing // ignore: cast_nullable_to_non_nullable
+              as bool,
+      backward: null == backward
+          ? _value.backward
+          : backward // ignore: cast_nullable_to_non_nullable
+              as bool,
+      forward: null == forward
+          ? _value.forward
+          : forward // ignore: cast_nullable_to_non_nullable
               as bool,
       videoDuration: null == videoDuration
           ? _value.videoDuration
@@ -772,7 +1847,7 @@ class _$AnimeVideoStateCopyWithImpl<$Res, $Val extends AnimeVideoState>
       sliderPosition: null == sliderPosition
           ? _value.sliderPosition
           : sliderPosition // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       videoList: null == videoList
           ? _value.videoList
           : videoList // ignore: cast_nullable_to_non_nullable
@@ -794,15 +1869,18 @@ abstract class _$$AnimeVideoStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {bool isLoading,
-      bool isBuffering,
-      bool isShowControll,
-      bool isPlaying,
-      bool isBackward,
-      bool isForward,
+      {bool initialize,
+      bool error,
+      String mirror,
+      bool loading,
+      bool buffering,
+      bool showControll,
+      bool playing,
+      bool backward,
+      bool forward,
       int videoDuration,
       int videoPosition,
-      int sliderPosition,
+      double sliderPosition,
       List<VideoModel> videoList,
       List<EpisodeModel> episodeList});
 }
@@ -818,12 +1896,15 @@ class __$$AnimeVideoStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isLoading = null,
-    Object? isBuffering = null,
-    Object? isShowControll = null,
-    Object? isPlaying = null,
-    Object? isBackward = null,
-    Object? isForward = null,
+    Object? initialize = null,
+    Object? error = null,
+    Object? mirror = null,
+    Object? loading = null,
+    Object? buffering = null,
+    Object? showControll = null,
+    Object? playing = null,
+    Object? backward = null,
+    Object? forward = null,
     Object? videoDuration = null,
     Object? videoPosition = null,
     Object? sliderPosition = null,
@@ -831,29 +1912,41 @@ class __$$AnimeVideoStateImplCopyWithImpl<$Res>
     Object? episodeList = null,
   }) {
     return _then(_$AnimeVideoStateImpl(
-      isLoading: null == isLoading
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
+      initialize: null == initialize
+          ? _value.initialize
+          : initialize // ignore: cast_nullable_to_non_nullable
               as bool,
-      isBuffering: null == isBuffering
-          ? _value.isBuffering
-          : isBuffering // ignore: cast_nullable_to_non_nullable
+      error: null == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
               as bool,
-      isShowControll: null == isShowControll
-          ? _value.isShowControll
-          : isShowControll // ignore: cast_nullable_to_non_nullable
+      mirror: null == mirror
+          ? _value.mirror
+          : mirror // ignore: cast_nullable_to_non_nullable
+              as String,
+      loading: null == loading
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
               as bool,
-      isPlaying: null == isPlaying
-          ? _value.isPlaying
-          : isPlaying // ignore: cast_nullable_to_non_nullable
+      buffering: null == buffering
+          ? _value.buffering
+          : buffering // ignore: cast_nullable_to_non_nullable
               as bool,
-      isBackward: null == isBackward
-          ? _value.isBackward
-          : isBackward // ignore: cast_nullable_to_non_nullable
+      showControll: null == showControll
+          ? _value.showControll
+          : showControll // ignore: cast_nullable_to_non_nullable
               as bool,
-      isForward: null == isForward
-          ? _value.isForward
-          : isForward // ignore: cast_nullable_to_non_nullable
+      playing: null == playing
+          ? _value.playing
+          : playing // ignore: cast_nullable_to_non_nullable
+              as bool,
+      backward: null == backward
+          ? _value.backward
+          : backward // ignore: cast_nullable_to_non_nullable
+              as bool,
+      forward: null == forward
+          ? _value.forward
+          : forward // ignore: cast_nullable_to_non_nullable
               as bool,
       videoDuration: null == videoDuration
           ? _value.videoDuration
@@ -866,7 +1959,7 @@ class __$$AnimeVideoStateImplCopyWithImpl<$Res>
       sliderPosition: null == sliderPosition
           ? _value.sliderPosition
           : sliderPosition // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       videoList: null == videoList
           ? _value._videoList
           : videoList // ignore: cast_nullable_to_non_nullable
@@ -883,12 +1976,15 @@ class __$$AnimeVideoStateImplCopyWithImpl<$Res>
 
 class _$AnimeVideoStateImpl extends _AnimeVideoState {
   const _$AnimeVideoStateImpl(
-      {required this.isLoading,
-      required this.isBuffering,
-      required this.isShowControll,
-      required this.isPlaying,
-      required this.isBackward,
-      required this.isForward,
+      {required this.initialize,
+      required this.error,
+      required this.mirror,
+      required this.loading,
+      required this.buffering,
+      required this.showControll,
+      required this.playing,
+      required this.backward,
+      required this.forward,
       required this.videoDuration,
       required this.videoPosition,
       required this.sliderPosition,
@@ -899,23 +1995,29 @@ class _$AnimeVideoStateImpl extends _AnimeVideoState {
         super._();
 
   @override
-  final bool isLoading;
+  final bool initialize;
   @override
-  final bool isBuffering;
+  final bool error;
   @override
-  final bool isShowControll;
+  final String mirror;
   @override
-  final bool isPlaying;
+  final bool loading;
   @override
-  final bool isBackward;
+  final bool buffering;
   @override
-  final bool isForward;
+  final bool showControll;
+  @override
+  final bool playing;
+  @override
+  final bool backward;
+  @override
+  final bool forward;
   @override
   final int videoDuration;
   @override
   final int videoPosition;
   @override
-  final int sliderPosition;
+  final double sliderPosition;
   final List<VideoModel> _videoList;
   @override
   List<VideoModel> get videoList {
@@ -934,7 +2036,7 @@ class _$AnimeVideoStateImpl extends _AnimeVideoState {
 
   @override
   String toString() {
-    return 'AnimeVideoState(isLoading: $isLoading, isBuffering: $isBuffering, isShowControll: $isShowControll, isPlaying: $isPlaying, isBackward: $isBackward, isForward: $isForward, videoDuration: $videoDuration, videoPosition: $videoPosition, sliderPosition: $sliderPosition, videoList: $videoList, episodeList: $episodeList)';
+    return 'AnimeVideoState(initialize: $initialize, error: $error, mirror: $mirror, loading: $loading, buffering: $buffering, showControll: $showControll, playing: $playing, backward: $backward, forward: $forward, videoDuration: $videoDuration, videoPosition: $videoPosition, sliderPosition: $sliderPosition, videoList: $videoList, episodeList: $episodeList)';
   }
 
   @override
@@ -942,18 +2044,19 @@ class _$AnimeVideoStateImpl extends _AnimeVideoState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AnimeVideoStateImpl &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
-            (identical(other.isBuffering, isBuffering) ||
-                other.isBuffering == isBuffering) &&
-            (identical(other.isShowControll, isShowControll) ||
-                other.isShowControll == isShowControll) &&
-            (identical(other.isPlaying, isPlaying) ||
-                other.isPlaying == isPlaying) &&
-            (identical(other.isBackward, isBackward) ||
-                other.isBackward == isBackward) &&
-            (identical(other.isForward, isForward) ||
-                other.isForward == isForward) &&
+            (identical(other.initialize, initialize) ||
+                other.initialize == initialize) &&
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.mirror, mirror) || other.mirror == mirror) &&
+            (identical(other.loading, loading) || other.loading == loading) &&
+            (identical(other.buffering, buffering) ||
+                other.buffering == buffering) &&
+            (identical(other.showControll, showControll) ||
+                other.showControll == showControll) &&
+            (identical(other.playing, playing) || other.playing == playing) &&
+            (identical(other.backward, backward) ||
+                other.backward == backward) &&
+            (identical(other.forward, forward) || other.forward == forward) &&
             (identical(other.videoDuration, videoDuration) ||
                 other.videoDuration == videoDuration) &&
             (identical(other.videoPosition, videoPosition) ||
@@ -969,12 +2072,15 @@ class _$AnimeVideoStateImpl extends _AnimeVideoState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      isLoading,
-      isBuffering,
-      isShowControll,
-      isPlaying,
-      isBackward,
-      isForward,
+      initialize,
+      error,
+      mirror,
+      loading,
+      buffering,
+      showControll,
+      playing,
+      backward,
+      forward,
       videoDuration,
       videoPosition,
       sliderPosition,
@@ -991,37 +2097,46 @@ class _$AnimeVideoStateImpl extends _AnimeVideoState {
 
 abstract class _AnimeVideoState extends AnimeVideoState {
   const factory _AnimeVideoState(
-      {required final bool isLoading,
-      required final bool isBuffering,
-      required final bool isShowControll,
-      required final bool isPlaying,
-      required final bool isBackward,
-      required final bool isForward,
+      {required final bool initialize,
+      required final bool error,
+      required final String mirror,
+      required final bool loading,
+      required final bool buffering,
+      required final bool showControll,
+      required final bool playing,
+      required final bool backward,
+      required final bool forward,
       required final int videoDuration,
       required final int videoPosition,
-      required final int sliderPosition,
+      required final double sliderPosition,
       required final List<VideoModel> videoList,
       required final List<EpisodeModel> episodeList}) = _$AnimeVideoStateImpl;
   const _AnimeVideoState._() : super._();
 
   @override
-  bool get isLoading;
+  bool get initialize;
   @override
-  bool get isBuffering;
+  bool get error;
   @override
-  bool get isShowControll;
+  String get mirror;
   @override
-  bool get isPlaying;
+  bool get loading;
   @override
-  bool get isBackward;
+  bool get buffering;
   @override
-  bool get isForward;
+  bool get showControll;
+  @override
+  bool get playing;
+  @override
+  bool get backward;
+  @override
+  bool get forward;
   @override
   int get videoDuration;
   @override
   int get videoPosition;
   @override
-  int get sliderPosition;
+  double get sliderPosition;
   @override
   List<VideoModel> get videoList;
   @override
