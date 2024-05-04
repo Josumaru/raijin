@@ -1728,9 +1728,11 @@ abstract class _SetPosition implements AnimeVideoEvent {
 
 /// @nodoc
 mixin _$AnimeVideoState {
+  String get mirror => throw _privateConstructorUsedError;
+  String get resolution => throw _privateConstructorUsedError;
+  String get videoEndpoint => throw _privateConstructorUsedError;
   bool get initialize => throw _privateConstructorUsedError;
   bool get error => throw _privateConstructorUsedError;
-  String get mirror => throw _privateConstructorUsedError;
   bool get loading => throw _privateConstructorUsedError;
   bool get buffering => throw _privateConstructorUsedError;
   bool get showControll => throw _privateConstructorUsedError;
@@ -1755,9 +1757,11 @@ abstract class $AnimeVideoStateCopyWith<$Res> {
       _$AnimeVideoStateCopyWithImpl<$Res, AnimeVideoState>;
   @useResult
   $Res call(
-      {bool initialize,
+      {String mirror,
+      String resolution,
+      String videoEndpoint,
+      bool initialize,
       bool error,
-      String mirror,
       bool loading,
       bool buffering,
       bool showControll,
@@ -1784,9 +1788,11 @@ class _$AnimeVideoStateCopyWithImpl<$Res, $Val extends AnimeVideoState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? mirror = null,
+    Object? resolution = null,
+    Object? videoEndpoint = null,
     Object? initialize = null,
     Object? error = null,
-    Object? mirror = null,
     Object? loading = null,
     Object? buffering = null,
     Object? showControll = null,
@@ -1800,6 +1806,18 @@ class _$AnimeVideoStateCopyWithImpl<$Res, $Val extends AnimeVideoState>
     Object? episodeList = null,
   }) {
     return _then(_value.copyWith(
+      mirror: null == mirror
+          ? _value.mirror
+          : mirror // ignore: cast_nullable_to_non_nullable
+              as String,
+      resolution: null == resolution
+          ? _value.resolution
+          : resolution // ignore: cast_nullable_to_non_nullable
+              as String,
+      videoEndpoint: null == videoEndpoint
+          ? _value.videoEndpoint
+          : videoEndpoint // ignore: cast_nullable_to_non_nullable
+              as String,
       initialize: null == initialize
           ? _value.initialize
           : initialize // ignore: cast_nullable_to_non_nullable
@@ -1808,10 +1826,6 @@ class _$AnimeVideoStateCopyWithImpl<$Res, $Val extends AnimeVideoState>
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as bool,
-      mirror: null == mirror
-          ? _value.mirror
-          : mirror // ignore: cast_nullable_to_non_nullable
-              as String,
       loading: null == loading
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
@@ -1869,9 +1883,11 @@ abstract class _$$AnimeVideoStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {bool initialize,
+      {String mirror,
+      String resolution,
+      String videoEndpoint,
+      bool initialize,
       bool error,
-      String mirror,
       bool loading,
       bool buffering,
       bool showControll,
@@ -1896,9 +1912,11 @@ class __$$AnimeVideoStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? mirror = null,
+    Object? resolution = null,
+    Object? videoEndpoint = null,
     Object? initialize = null,
     Object? error = null,
-    Object? mirror = null,
     Object? loading = null,
     Object? buffering = null,
     Object? showControll = null,
@@ -1912,6 +1930,18 @@ class __$$AnimeVideoStateImplCopyWithImpl<$Res>
     Object? episodeList = null,
   }) {
     return _then(_$AnimeVideoStateImpl(
+      mirror: null == mirror
+          ? _value.mirror
+          : mirror // ignore: cast_nullable_to_non_nullable
+              as String,
+      resolution: null == resolution
+          ? _value.resolution
+          : resolution // ignore: cast_nullable_to_non_nullable
+              as String,
+      videoEndpoint: null == videoEndpoint
+          ? _value.videoEndpoint
+          : videoEndpoint // ignore: cast_nullable_to_non_nullable
+              as String,
       initialize: null == initialize
           ? _value.initialize
           : initialize // ignore: cast_nullable_to_non_nullable
@@ -1920,10 +1950,6 @@ class __$$AnimeVideoStateImplCopyWithImpl<$Res>
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as bool,
-      mirror: null == mirror
-          ? _value.mirror
-          : mirror // ignore: cast_nullable_to_non_nullable
-              as String,
       loading: null == loading
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
@@ -1976,9 +2002,11 @@ class __$$AnimeVideoStateImplCopyWithImpl<$Res>
 
 class _$AnimeVideoStateImpl extends _AnimeVideoState {
   const _$AnimeVideoStateImpl(
-      {required this.initialize,
+      {required this.mirror,
+      required this.resolution,
+      required this.videoEndpoint,
+      required this.initialize,
       required this.error,
-      required this.mirror,
       required this.loading,
       required this.buffering,
       required this.showControll,
@@ -1995,11 +2023,15 @@ class _$AnimeVideoStateImpl extends _AnimeVideoState {
         super._();
 
   @override
+  final String mirror;
+  @override
+  final String resolution;
+  @override
+  final String videoEndpoint;
+  @override
   final bool initialize;
   @override
   final bool error;
-  @override
-  final String mirror;
   @override
   final bool loading;
   @override
@@ -2036,7 +2068,7 @@ class _$AnimeVideoStateImpl extends _AnimeVideoState {
 
   @override
   String toString() {
-    return 'AnimeVideoState(initialize: $initialize, error: $error, mirror: $mirror, loading: $loading, buffering: $buffering, showControll: $showControll, playing: $playing, backward: $backward, forward: $forward, videoDuration: $videoDuration, videoPosition: $videoPosition, sliderPosition: $sliderPosition, videoList: $videoList, episodeList: $episodeList)';
+    return 'AnimeVideoState(mirror: $mirror, resolution: $resolution, videoEndpoint: $videoEndpoint, initialize: $initialize, error: $error, loading: $loading, buffering: $buffering, showControll: $showControll, playing: $playing, backward: $backward, forward: $forward, videoDuration: $videoDuration, videoPosition: $videoPosition, sliderPosition: $sliderPosition, videoList: $videoList, episodeList: $episodeList)';
   }
 
   @override
@@ -2044,10 +2076,14 @@ class _$AnimeVideoStateImpl extends _AnimeVideoState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AnimeVideoStateImpl &&
+            (identical(other.mirror, mirror) || other.mirror == mirror) &&
+            (identical(other.resolution, resolution) ||
+                other.resolution == resolution) &&
+            (identical(other.videoEndpoint, videoEndpoint) ||
+                other.videoEndpoint == videoEndpoint) &&
             (identical(other.initialize, initialize) ||
                 other.initialize == initialize) &&
             (identical(other.error, error) || other.error == error) &&
-            (identical(other.mirror, mirror) || other.mirror == mirror) &&
             (identical(other.loading, loading) || other.loading == loading) &&
             (identical(other.buffering, buffering) ||
                 other.buffering == buffering) &&
@@ -2072,9 +2108,11 @@ class _$AnimeVideoStateImpl extends _AnimeVideoState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      mirror,
+      resolution,
+      videoEndpoint,
       initialize,
       error,
-      mirror,
       loading,
       buffering,
       showControll,
@@ -2097,9 +2135,11 @@ class _$AnimeVideoStateImpl extends _AnimeVideoState {
 
 abstract class _AnimeVideoState extends AnimeVideoState {
   const factory _AnimeVideoState(
-      {required final bool initialize,
+      {required final String mirror,
+      required final String resolution,
+      required final String videoEndpoint,
+      required final bool initialize,
       required final bool error,
-      required final String mirror,
       required final bool loading,
       required final bool buffering,
       required final bool showControll,
@@ -2114,11 +2154,15 @@ abstract class _AnimeVideoState extends AnimeVideoState {
   const _AnimeVideoState._() : super._();
 
   @override
+  String get mirror;
+  @override
+  String get resolution;
+  @override
+  String get videoEndpoint;
+  @override
   bool get initialize;
   @override
   bool get error;
-  @override
-  String get mirror;
   @override
   bool get loading;
   @override

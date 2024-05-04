@@ -32,7 +32,7 @@ Color backgroundColor({required BuildContext context}) =>
     Theme.of(context).colorScheme.background;
 Color onBackgroundColor({required BuildContext context}) =>
     Theme.of(context).colorScheme.onBackground;
-Color errorColo({required BuildContext context}) =>
+Color errorColor({required BuildContext context}) =>
     Theme.of(context).colorScheme.error;
 Color onErrorColor({required BuildContext context}) =>
     Theme.of(context).colorScheme.onError;

@@ -32,20 +32,34 @@ class AnimeVideoBloc extends Bloc<AnimeVideoEvent, AnimeVideoState> {
             _showControll(showControll: value.showControl, emit: emit),
         seekPosition: (value) =>
             _seekPosition(positon: value.position, emit: emit),
-        changeResolution: (value) => () {},
+        changeResolution: (value) => _changeResolution(
+          endpoint: value.mirror,
+          emit: emit,
+        ),
         changeEpisode: (value) => () {},
         playVideo: (value) => _playVideo(play: value.isPlay, emit: emit),
         addHistory: (value) => () {},
         setPosition: (value) => _setPosition(
             position: value.position, duration: value.duration, emit: emit),
-          setBuffering: (value) => _setBuffering(buffering: value.buffering, emit: emit),
+        setBuffering: (value) =>
+            _setBuffering(buffering: value.buffering, emit: emit),
       );
     });
   }
 
+  _changeResolution({required String endpoint, required Emitter emit}) {
+    String resolution = state.resolution;
+    for(int i = 0;i < state.videoList.length; i++){
+      if(endpoint == state.videoList[i].endpoint){
+
+      }
+    }
+
+    emit(state.copyWith(resolution: resolution));
+  }
+
   _setBuffering({required bool buffering, required Emitter emit}) {
     emit(state.copyWith(buffering: buffering));
-
   }
 
   _showControll({required bool showControll, required Emitter emit}) {
@@ -69,15 +83,29 @@ class AnimeVideoBloc extends Bloc<AnimeVideoEvent, AnimeVideoState> {
       loading: true,
     ));
     final data = await _animeGetVideoUseCase(endpoint: endpoint);
+
     data.fold(
-      (l) => emit(state.copyWith(error: true)),
-      (r) => emit(state.copyWith(
-        videoList: r,
-        loading: false,
-        buffering: true,
-        mirror: r.first.mirror,
-        initialize: true,
-      )),
+      (l) {
+        emit(state.copyWith(error: true));
+      },
+      (r) {
+        String resolution = state.resolution;
+        String endpoint = r.first.endpoint;
+        for (int i = 0; i < r.length; i++) {
+          if (r[i].quality == resolution) {
+            endpoint = r[i].endpoint;
+          }
+        }
+        emit(
+          state.copyWith(
+            videoList: r,
+            loading: false,
+            buffering: true,
+            videoEndpoint: endpoint,
+            initialize: true,
+          ),
+        );
+      },
     );
   }
 

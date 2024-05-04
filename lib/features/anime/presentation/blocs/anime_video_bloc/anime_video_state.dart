@@ -4,9 +4,11 @@ part of 'anime_video_bloc.dart';
 class AnimeVideoState with _$AnimeVideoState {
   const AnimeVideoState._();
   const factory AnimeVideoState({
+    required String mirror,
+    required String resolution,
+    required String videoEndpoint,
     required bool initialize,
     required bool error,
-    required String mirror,
     required bool loading,
     required bool buffering,
     required bool showControll,
@@ -38,6 +40,8 @@ class AnimeVideoState with _$AnimeVideoState {
       playing: false,
       sliderPosition: 0,
       showControll: false,
+      resolution: '',
+      videoEndpoint: '720p',
     );
   }
 }
