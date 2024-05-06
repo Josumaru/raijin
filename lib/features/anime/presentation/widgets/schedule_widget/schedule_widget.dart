@@ -51,9 +51,9 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                     children: List.generate(
                       7,
                       (index) {
-                        final currentDate = DateTime.now();
-                        final date = currentDate.add(Duration(days: index));
-                        String currentDay = DateFormat('EEEE').format(date);
+                        final DateTime currentDate = DateTime.now();
+                        final DateTime date = currentDate.add(Duration(days: index));
+                        final String currentDay = DateFormat('EEEE').format(date);
                         return Padding(
                           padding: kMainPadding,
                           child: InkWell(
@@ -64,7 +64,7 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                                   .select(day: currentDay);
                               context.read<bloc.AnimeScheduleBloc>().add(
                                   bloc.AnimeScheduleEvent.animeGetSchedule(
-                                      day: currentDay));
+                                      day: currentDay),);
                             },
                             child: BlocBuilder<cubit.AnimeScheduleCubit,
                                 cubit.AnimeScheduleState>(

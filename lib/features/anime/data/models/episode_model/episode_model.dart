@@ -9,7 +9,7 @@ abstract class EpisodeModel with _$EpisodeModel {
     required int episode,
     required String title,
     required String date,
-    String? poster,
+    String? thumbnail,
   }) = _EpisodeModel;
 
   factory EpisodeModel.fromJson(Map<String, dynamic> json) => _$EpisodeModelFromJson(json);

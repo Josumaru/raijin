@@ -17,6 +17,7 @@ class TAppTheme {
     appBarTheme: const AppBarTheme(
       elevation: 0,
     ),
+    dividerColor: Colors.transparent,
     colorScheme: ColorScheme.fromSeed(seedColor: kMainAccentColor).copyWith(
       background: kMainLightBackgroundColor,
       onBackground: kMainLightOnBackgroundColor,
@@ -44,6 +45,7 @@ class TAppTheme {
     appBarTheme: const AppBarTheme(
       elevation: 0,
     ),
+    dividerColor: Colors.transparent,
     colorScheme: ColorScheme.fromSeed(seedColor: kMainAccentColor).copyWith(
       background: kMainDarkBackgroundColor,
       onBackground: kMainDarkOnBackgroundColor,

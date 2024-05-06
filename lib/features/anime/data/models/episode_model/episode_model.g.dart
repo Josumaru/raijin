@@ -12,7 +12,7 @@ _$EpisodeModelImpl _$$EpisodeModelImplFromJson(Map<String, dynamic> json) =>
       episode: json['episode'] as int,
       title: json['title'] as String,
       date: json['date'] as String,
-      poster: json['poster'] as String?,
+      thumbnail: json['thumbnail'] as String?,
     );
 
 Map<String, dynamic> _$$EpisodeModelImplToJson(_$EpisodeModelImpl instance) =>
@@ -21,5 +21,5 @@ Map<String, dynamic> _$$EpisodeModelImplToJson(_$EpisodeModelImpl instance) =>
       'episode': instance.episode,
       'title': instance.title,
       'date': instance.date,
-      'poster': instance.poster,
+      'thumbnail': instance.thumbnail,
     };

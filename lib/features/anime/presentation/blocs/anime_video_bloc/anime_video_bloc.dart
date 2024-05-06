@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:raijin/core/errors/failure.dart';
 import 'package:raijin/core/services/injection_container.dart';
 import 'package:raijin/core/usecases/toast_usecase/toas_use_case.dart';
+import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/data/models/episode_model/episode_model.dart';
 import 'package:raijin/features/anime/data/models/video_model/video_model.dart';
 import 'package:raijin/features/anime/domain/usecases/anime_get_video_use_case.dart';
@@ -25,37 +26,67 @@ class AnimeVideoBloc extends Bloc<AnimeVideoEvent, AnimeVideoState> {
         _animeGetVideoUseCase = animeGetVideoUseCase,
         _controller = controller,
         super(AnimeVideoState.started()) {
-    on<AnimeVideoEvent>((event, emit) async {
-      await event.map(
-        getVideo: (value) => _getVideo(endpoint: value.endpoint, emit: emit),
-        showControl: (value) =>
-            _showControll(showControll: value.showControl, emit: emit),
-        seekPosition: (value) =>
-            _seekPosition(positon: value.position, emit: emit),
-        changeResolution: (value) => _changeResolution(
-          endpoint: value.mirror,
-          emit: emit,
-        ),
-        changeEpisode: (value) => () {},
-        playVideo: (value) => _playVideo(play: value.isPlay, emit: emit),
-        addHistory: (value) => () {},
-        setPosition: (value) => _setPosition(
-            position: value.position, duration: value.duration, emit: emit),
-        setBuffering: (value) =>
-            _setBuffering(buffering: value.buffering, emit: emit),
-      );
-    });
+    on<AnimeVideoEvent>(
+      (event, emit) async {
+        await event.map(
+          getVideo: (value) => _getVideo(
+            endpoint: value.endpoint,
+            animeModel: value.animeModel,
+            emit: emit,
+          ),
+          showControll: (value) => _showControll(
+            showControll: value.showControl,
+            emit: emit,
+          ),
+          seekPosition: (value) => _seekPosition(
+            positon: value.position,
+            emit: emit,
+          ),
+          setControllStatus: (value) => _setControllStatus(
+            quality: value.quality,
+            playbackSpeed: value.playbackSpeed,
+            emit: emit,
+          ),
+          changeEpisode: (value) => () {},
+          playVideo: (value) => _playVideo(
+            play: value.isPlay,
+            emit: emit,
+          ),
+          addHistory: (value) => () {},
+          setPosition: (value) => _setPosition(
+            position: value.position,
+            duration: value.duration,
+            emit: emit,
+          ),
+          setBuffering: (value) => _setBuffering(
+            buffering: value.buffering,
+            emit: emit,
+          ),
+        );
+      },
+    );
   }
 
-  _changeResolution({required String endpoint, required Emitter emit}) {
-    String resolution = state.resolution;
-    for(int i = 0;i < state.videoList.length; i++){
-      if(endpoint == state.videoList[i].endpoint){
-
+  _setControllStatus({
+    String? quality,
+    double? playbackSpeed,
+    required Emitter emit,
+  }) {
+    if (quality != null) {
+      String endpoint = state.endpoint;
+      for (int i = 0; i < state.videoList.length; i++) {
+        final VideoModel video = state.videoList[i];
+        if (quality == video.quality) {
+          endpoint = video.endpoint;
+        }
       }
+      emit(state.copyWith(
+        quality: quality,
+        endpoint: endpoint,
+      ));
+    } else if (playbackSpeed != null) {
+      emit(state.copyWith(playbackSpeed: playbackSpeed));
     }
-
-    emit(state.copyWith(resolution: resolution));
   }
 
   _setBuffering({required bool buffering, required Emitter emit}) {
@@ -78,21 +109,28 @@ class AnimeVideoBloc extends Bloc<AnimeVideoEvent, AnimeVideoState> {
     emit(state.copyWith(videoPosition: position, videoDuration: duration));
   }
 
-  _getVideo({required String endpoint, required Emitter emit}) async {
+  _getVideo({
+    required String endpoint,
+    required Emitter emit,
+    required AnimeModel animeModel,
+  }) async {
     emit(state.copyWith(
       loading: true,
     ));
-    final data = await _animeGetVideoUseCase(endpoint: endpoint);
+    final data =
+        await _animeGetVideoUseCase(endpoint: endpoint, animeModel: animeModel);
 
     data.fold(
       (l) {
         emit(state.copyWith(error: true));
       },
       (r) {
-        String resolution = state.resolution;
+        String quality = state.quality;
         String endpoint = r.first.endpoint;
+        int mid = r.length ~/ 2;
+        quality = r[mid].quality;
         for (int i = 0; i < r.length; i++) {
-          if (r[i].quality == resolution) {
+          if (r[i].quality == quality) {
             endpoint = r[i].endpoint;
           }
         }
@@ -101,7 +139,8 @@ class AnimeVideoBloc extends Bloc<AnimeVideoEvent, AnimeVideoState> {
             videoList: r,
             loading: false,
             buffering: true,
-            videoEndpoint: endpoint,
+            endpoint: endpoint,
+            quality: quality,
             initialize: true,
           ),
         );
@@ -124,7 +163,7 @@ class AnimeVideoBloc extends Bloc<AnimeVideoEvent, AnimeVideoState> {
   //   _toastUseCase(params: '$position');
   // }
 
-  // _changeResolution(String mirror) {
+  // _setControllStatus(String mirror) {
   //   emit(state.copyWith());
   //   _toastUseCase(params: mirror);
   // }

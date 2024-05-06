@@ -21,6 +21,9 @@ mixin _$VideoModel {
   String get endpoint => throw _privateConstructorUsedError;
   String get poster => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
+  String get synopsis => throw _privateConstructorUsedError;
+  String get thumbnail => throw _privateConstructorUsedError;
+  List<String> get genre => throw _privateConstructorUsedError;
   List<EpisodeModel> get anotherEpisode => throw _privateConstructorUsedError;
   AnimeModel? get anime => throw _privateConstructorUsedError;
   String? get prevEpisode => throw _privateConstructorUsedError;
@@ -46,6 +49,9 @@ abstract class $VideoModelCopyWith<$Res> {
       String endpoint,
       String poster,
       String title,
+      String synopsis,
+      String thumbnail,
+      List<String> genre,
       List<EpisodeModel> anotherEpisode,
       AnimeModel? anime,
       String? prevEpisode,
@@ -75,6 +81,9 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
     Object? endpoint = null,
     Object? poster = null,
     Object? title = null,
+    Object? synopsis = null,
+    Object? thumbnail = null,
+    Object? genre = null,
     Object? anotherEpisode = null,
     Object? anime = freezed,
     Object? prevEpisode = freezed,
@@ -104,6 +113,18 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      synopsis: null == synopsis
+          ? _value.synopsis
+          : synopsis // ignore: cast_nullable_to_non_nullable
+              as String,
+      thumbnail: null == thumbnail
+          ? _value.thumbnail
+          : thumbnail // ignore: cast_nullable_to_non_nullable
+              as String,
+      genre: null == genre
+          ? _value.genre
+          : genre // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       anotherEpisode: null == anotherEpisode
           ? _value.anotherEpisode
           : anotherEpisode // ignore: cast_nullable_to_non_nullable
@@ -162,6 +183,9 @@ abstract class _$$VideoModelImplCopyWith<$Res>
       String endpoint,
       String poster,
       String title,
+      String synopsis,
+      String thumbnail,
+      List<String> genre,
       List<EpisodeModel> anotherEpisode,
       AnimeModel? anime,
       String? prevEpisode,
@@ -190,6 +214,9 @@ class __$$VideoModelImplCopyWithImpl<$Res>
     Object? endpoint = null,
     Object? poster = null,
     Object? title = null,
+    Object? synopsis = null,
+    Object? thumbnail = null,
+    Object? genre = null,
     Object? anotherEpisode = null,
     Object? anime = freezed,
     Object? prevEpisode = freezed,
@@ -219,6 +246,18 @@ class __$$VideoModelImplCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      synopsis: null == synopsis
+          ? _value.synopsis
+          : synopsis // ignore: cast_nullable_to_non_nullable
+              as String,
+      thumbnail: null == thumbnail
+          ? _value.thumbnail
+          : thumbnail // ignore: cast_nullable_to_non_nullable
+              as String,
+      genre: null == genre
+          ? _value._genre
+          : genre // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       anotherEpisode: null == anotherEpisode
           ? _value._anotherEpisode
           : anotherEpisode // ignore: cast_nullable_to_non_nullable
@@ -260,6 +299,9 @@ class _$VideoModelImpl implements _VideoModel {
       required this.endpoint,
       required this.poster,
       required this.title,
+      required this.synopsis,
+      required this.thumbnail,
+      required final List<String> genre,
       required final List<EpisodeModel> anotherEpisode,
       this.anime,
       this.prevEpisode,
@@ -267,7 +309,8 @@ class _$VideoModelImpl implements _VideoModel {
       this.position,
       this.duration,
       this.date})
-      : _anotherEpisode = anotherEpisode;
+      : _genre = genre,
+        _anotherEpisode = anotherEpisode;
 
   @override
   final String quality;
@@ -279,6 +322,18 @@ class _$VideoModelImpl implements _VideoModel {
   final String poster;
   @override
   final String title;
+  @override
+  final String synopsis;
+  @override
+  final String thumbnail;
+  final List<String> _genre;
+  @override
+  List<String> get genre {
+    if (_genre is EqualUnmodifiableListView) return _genre;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_genre);
+  }
+
   final List<EpisodeModel> _anotherEpisode;
   @override
   List<EpisodeModel> get anotherEpisode {
@@ -302,7 +357,7 @@ class _$VideoModelImpl implements _VideoModel {
 
   @override
   String toString() {
-    return 'VideoModel(quality: $quality, mirror: $mirror, endpoint: $endpoint, poster: $poster, title: $title, anotherEpisode: $anotherEpisode, anime: $anime, prevEpisode: $prevEpisode, nextEpisode: $nextEpisode, position: $position, duration: $duration, date: $date)';
+    return 'VideoModel(quality: $quality, mirror: $mirror, endpoint: $endpoint, poster: $poster, title: $title, synopsis: $synopsis, thumbnail: $thumbnail, genre: $genre, anotherEpisode: $anotherEpisode, anime: $anime, prevEpisode: $prevEpisode, nextEpisode: $nextEpisode, position: $position, duration: $duration, date: $date)';
   }
 
   @override
@@ -316,6 +371,11 @@ class _$VideoModelImpl implements _VideoModel {
                 other.endpoint == endpoint) &&
             (identical(other.poster, poster) || other.poster == poster) &&
             (identical(other.title, title) || other.title == title) &&
+            (identical(other.synopsis, synopsis) ||
+                other.synopsis == synopsis) &&
+            (identical(other.thumbnail, thumbnail) ||
+                other.thumbnail == thumbnail) &&
+            const DeepCollectionEquality().equals(other._genre, _genre) &&
             const DeepCollectionEquality()
                 .equals(other._anotherEpisode, _anotherEpisode) &&
             (identical(other.anime, anime) || other.anime == anime) &&
@@ -338,6 +398,9 @@ class _$VideoModelImpl implements _VideoModel {
       endpoint,
       poster,
       title,
+      synopsis,
+      thumbnail,
+      const DeepCollectionEquality().hash(_genre),
       const DeepCollectionEquality().hash(_anotherEpisode),
       anime,
       prevEpisode,
@@ -360,6 +423,9 @@ abstract class _VideoModel implements VideoModel {
       required final String endpoint,
       required final String poster,
       required final String title,
+      required final String synopsis,
+      required final String thumbnail,
+      required final List<String> genre,
       required final List<EpisodeModel> anotherEpisode,
       final AnimeModel? anime,
       final String? prevEpisode,
@@ -378,6 +444,12 @@ abstract class _VideoModel implements VideoModel {
   String get poster;
   @override
   String get title;
+  @override
+  String get synopsis;
+  @override
+  String get thumbnail;
+  @override
+  List<String> get genre;
   @override
   List<EpisodeModel> get anotherEpisode;
   @override

@@ -29,8 +29,8 @@ class TTextTheme {
 
     // Headline
     headlineLarge: const TextStyle().copyWith(fontSize: 18.0, fontWeight: FontWeight.bold, color: kPrimaryColor),
-    headlineMedium: const TextStyle().copyWith(fontSize: 14.0, fontWeight: FontWeight.w600, color: kPrimaryColor),
-    headlineSmall: const TextStyle().copyWith(fontSize: 12.0, fontWeight: FontWeight.w300, color: kPrimaryColor),
+    headlineMedium: const TextStyle().copyWith(fontSize: 14.0, fontWeight: FontWeight.bold, color: kPrimaryColor),
+    headlineSmall: const TextStyle().copyWith(fontSize: 12.0, fontWeight: FontWeight.bold, color: kPrimaryColor),
     
     //Body
     bodyLarge: const TextStyle().copyWith(fontSize: 14.0, fontWeight: FontWeight.w600, color: kMainDarkTextColor),

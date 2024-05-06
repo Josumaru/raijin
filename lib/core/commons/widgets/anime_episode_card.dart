@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:raijin/core/constants/border_radius.dart';
 import 'package:raijin/core/constants/colors.dart';
+import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/data/models/episode_model/episode_model.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_video_bloc/anime_video_bloc.dart';
 import 'package:raijin/features/anime/presentation/pages/video_page.dart';
@@ -22,7 +23,17 @@ class AnimeEpisodeCard extends StatelessWidget {
     return InkWell(
       borderRadius: kMainBorderRadius,
       onTap: () {
-        _play(endpoint: episodeModel.endpoint, context: context);
+        AnimeModel animeModel = AnimeModel(
+          endpoint: episodeModel.endpoint,
+          poster: poster,
+          title: episodeModel.title,
+        );
+
+        _play(
+          endpoint: episodeModel.endpoint,
+          animeModel: animeModel,
+          context: context,
+        );
       },
       child: Container(
         decoration: BoxDecoration(
@@ -112,10 +123,12 @@ class AnimeEpisodeCard extends StatelessWidget {
     );
   }
 
-  _play({required String endpoint, required BuildContext context}) {
-    context
-        .read<AnimeVideoBloc>()
-        .add(AnimeVideoEvent.getVideo(endpoint: endpoint));
+  _play(
+      {required String endpoint,
+      required AnimeModel animeModel,
+      required BuildContext context}) {
+    context.read<AnimeVideoBloc>().add(
+        AnimeVideoEvent.getVideo(endpoint: endpoint, animeModel: animeModel));
     PersistentNavBarNavigator.pushNewScreenWithRouteSettings(
       context,
       screen: const VideoPage(),

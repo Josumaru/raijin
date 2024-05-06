@@ -16,7 +16,7 @@ class TrailerWidget extends StatelessWidget {
     final YoutubePlayerController controller = YoutubePlayerController(
       initialVideoId: videoId ?? "",
       flags: const YoutubePlayerFlags(
-        autoPlay: true,
+        autoPlay: false,
         mute: false,
       ),
     );

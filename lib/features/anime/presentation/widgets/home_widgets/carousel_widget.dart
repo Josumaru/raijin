@@ -82,7 +82,10 @@ class _CarouselLoadedState extends State<CarouselLoaded> {
             return InkWell(
               borderRadius: kMainBorderRadius,
               onTap: () {
-                _play(endpoint: animeModel[index].endpoint);
+                _play(
+                  endpoint: animeModel[index].endpoint,
+                  animeModel: animeModel[index],
+                );
               },
               child: Padding(
                 padding: kHorizontalPadding,
@@ -195,10 +198,9 @@ class _CarouselLoadedState extends State<CarouselLoaded> {
     );
   }
 
-  _play({required String endpoint}) {
-    context
-        .read<AnimeVideoBloc>()
-        .add(AnimeVideoEvent.getVideo(endpoint: endpoint));
+  _play({required String endpoint, required AnimeModel animeModel}) {
+    context.read<AnimeVideoBloc>().add(
+        AnimeVideoEvent.getVideo(endpoint: endpoint, animeModel: animeModel));
     PersistentNavBarNavigator.pushNewScreenWithRouteSettings(context,
         screen: const VideoPage(),
         settings: const RouteSettings(name: '/video'),

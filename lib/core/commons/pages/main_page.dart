@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:raijin/core/constants/colors.dart';
-import 'package:raijin/core/constants/sizes.dart';
 import 'package:raijin/features/anime/presentation/pages/schedule_page.dart';
 import 'package:raijin/features/anime/presentation/pages/discover_page.dart';
 import 'package:raijin/features/anime/presentation/pages/home_page.dart';
@@ -16,7 +15,6 @@ class MainPage extends StatelessWidget {
     bool isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
     return PersistentTabView(
-      navBarHeight: heightMediaQuery(context: context) * 0.075,
       context,
       confineInSafeArea: true,
       backgroundColor: backgroundColor(context: context),

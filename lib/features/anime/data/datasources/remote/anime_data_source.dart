@@ -12,7 +12,7 @@ abstract class AnimeRemoteDataSource {
     required int page,
   });
   Future<AnimeModel> animeDetail({required String endpoint});
-  Future<List<VideoModel>> animeVideo({required String endpoint});
+  Future<List<VideoModel>> animeVideo({required String endpoint, required AnimeModel animeModel});
   Future<List<ScheduleModel>> animeSchedule({required String day});
   Future<List<AnimeModel>> animeSearch({required String query});
 }

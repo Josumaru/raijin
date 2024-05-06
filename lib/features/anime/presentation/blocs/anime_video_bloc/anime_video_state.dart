@@ -5,8 +5,8 @@ class AnimeVideoState with _$AnimeVideoState {
   const AnimeVideoState._();
   const factory AnimeVideoState({
     required String mirror,
-    required String resolution,
-    required String videoEndpoint,
+    required String quality,
+    required String endpoint,
     required bool initialize,
     required bool error,
     required bool loading,
@@ -15,6 +15,7 @@ class AnimeVideoState with _$AnimeVideoState {
     required bool playing,
     required bool backward,
     required bool forward,
+    required double playbackSpeed,
     required int videoDuration,
     required int videoPosition,
     required double sliderPosition,
@@ -40,8 +41,9 @@ class AnimeVideoState with _$AnimeVideoState {
       playing: false,
       sliderPosition: 0,
       showControll: false,
-      resolution: '',
-      videoEndpoint: '720p',
+      quality: '',
+      endpoint: '',
+      playbackSpeed: 1,
     );
   }
 }

@@ -260,9 +260,11 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
   }
 
   @override
-  Future<List<VideoModel>> animeVideo({required String endpoint}) async {
+  Future<List<VideoModel>> animeVideo(
+      {required String endpoint, required AnimeModel animeModel}) async {
     List<VideoModel> mirrorList = [];
     List<EpisodeModel> episodeList = [];
+    List<String> genre = [];
 
     int getEpisode(String title) {
       final reqExp = RegExp(r'Episode (\d+)');
@@ -291,19 +293,21 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
       String date = element.getElementsByClassName('date').first.text;
       String endpoint =
           element.getElementsByTagName('div > a').first.attributes['href']!;
-      String poster = element
+      String thumbnail = element
           .getElementsByClassName('thumbnailrighteps')
           .first
           .getElementsByTagName('a > img')
           .first
           .attributes['src']!;
-      episodeList.add(EpisodeModel(
-        endpoint: endpoint,
-        episode: episode,
-        title: title,
-        date: date,
-        poster: poster,
-      ));
+      episodeList.add(
+        EpisodeModel(
+          endpoint: endpoint,
+          episode: episode,
+          title: title,
+          date: date,
+          thumbnail: thumbnail,
+        ),
+      );
     }
 
     List<Element> navigationEpisode = responseBody
@@ -319,6 +323,15 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
         .first
         .getElementsByTagName('ul > li');
 
+    final Element bottomInfo = responseBody.getElementsByClassName('areainfo').first;
+    final String synopsis = bottomInfo.getElementsByClassName('desc').first.text.trim();
+    final String poster = bottomInfo.getElementsByClassName('thumb').first.getElementsByTagName('img').first.attributes['src']!;
+  
+
+   for (final element in bottomInfo.getElementsByTagName('div > a')) {
+    genre.add(element.text.trim());
+  }
+
     for (final element in downloadElement) {
       String serverQuality = element.getElementsByTagName('strong').first.text;
       for (final server in element.getElementsByTagName('> span > a')) {
@@ -333,11 +346,15 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
               quality: serverQuality,
               mirror: mirror,
               endpoint: 'https:${mirrorAttributes.attributes['data-src-url']!}',
-              poster: 'https:${mirrorAttributes.attributes['poster']!}',
+              poster: poster,
               anotherEpisode: episodeList,
               nextEpisode: nextEpisode,
               prevEpisode: prevEpisode,
               title: title,
+              anime: animeModel,
+              genre: genre,
+              synopsis: synopsis,
+              thumbnail: 'https:${mirrorAttributes.attributes['poster']!}'
             ),
           );
         }

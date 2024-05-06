@@ -24,7 +24,7 @@ mixin _$EpisodeModel {
   int get episode => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get date => throw _privateConstructorUsedError;
-  String? get poster => throw _privateConstructorUsedError;
+  String? get thumbnail => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +43,7 @@ abstract class $EpisodeModelCopyWith<$Res> {
       int episode,
       String title,
       String date,
-      String? poster});
+      String? thumbnail});
 }
 
 /// @nodoc
@@ -63,7 +63,7 @@ class _$EpisodeModelCopyWithImpl<$Res, $Val extends EpisodeModel>
     Object? episode = null,
     Object? title = null,
     Object? date = null,
-    Object? poster = freezed,
+    Object? thumbnail = freezed,
   }) {
     return _then(_value.copyWith(
       endpoint: null == endpoint
@@ -82,9 +82,9 @@ class _$EpisodeModelCopyWithImpl<$Res, $Val extends EpisodeModel>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as String,
-      poster: freezed == poster
-          ? _value.poster
-          : poster // ignore: cast_nullable_to_non_nullable
+      thumbnail: freezed == thumbnail
+          ? _value.thumbnail
+          : thumbnail // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -103,7 +103,7 @@ abstract class _$$EpisodeModelImplCopyWith<$Res>
       int episode,
       String title,
       String date,
-      String? poster});
+      String? thumbnail});
 }
 
 /// @nodoc
@@ -121,7 +121,7 @@ class __$$EpisodeModelImplCopyWithImpl<$Res>
     Object? episode = null,
     Object? title = null,
     Object? date = null,
-    Object? poster = freezed,
+    Object? thumbnail = freezed,
   }) {
     return _then(_$EpisodeModelImpl(
       endpoint: null == endpoint
@@ -140,9 +140,9 @@ class __$$EpisodeModelImplCopyWithImpl<$Res>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as String,
-      poster: freezed == poster
-          ? _value.poster
-          : poster // ignore: cast_nullable_to_non_nullable
+      thumbnail: freezed == thumbnail
+          ? _value.thumbnail
+          : thumbnail // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -156,7 +156,7 @@ class _$EpisodeModelImpl implements _EpisodeModel {
       required this.episode,
       required this.title,
       required this.date,
-      this.poster});
+      this.thumbnail});
 
   factory _$EpisodeModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$EpisodeModelImplFromJson(json);
@@ -170,11 +170,11 @@ class _$EpisodeModelImpl implements _EpisodeModel {
   @override
   final String date;
   @override
-  final String? poster;
+  final String? thumbnail;
 
   @override
   String toString() {
-    return 'EpisodeModel(endpoint: $endpoint, episode: $episode, title: $title, date: $date, poster: $poster)';
+    return 'EpisodeModel(endpoint: $endpoint, episode: $episode, title: $title, date: $date, thumbnail: $thumbnail)';
   }
 
   @override
@@ -187,13 +187,14 @@ class _$EpisodeModelImpl implements _EpisodeModel {
             (identical(other.episode, episode) || other.episode == episode) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.date, date) || other.date == date) &&
-            (identical(other.poster, poster) || other.poster == poster));
+            (identical(other.thumbnail, thumbnail) ||
+                other.thumbnail == thumbnail));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, endpoint, episode, title, date, poster);
+      Object.hash(runtimeType, endpoint, episode, title, date, thumbnail);
 
   @JsonKey(ignore: true)
   @override
@@ -215,7 +216,7 @@ abstract class _EpisodeModel implements EpisodeModel {
       required final int episode,
       required final String title,
       required final String date,
-      final String? poster}) = _$EpisodeModelImpl;
+      final String? thumbnail}) = _$EpisodeModelImpl;
 
   factory _EpisodeModel.fromJson(Map<String, dynamic> json) =
       _$EpisodeModelImpl.fromJson;
@@ -229,7 +230,7 @@ abstract class _EpisodeModel implements EpisodeModel {
   @override
   String get date;
   @override
-  String? get poster;
+  String? get thumbnail;
   @override
   @JsonKey(ignore: true)
   _$$EpisodeModelImplCopyWith<_$EpisodeModelImpl> get copyWith =>
