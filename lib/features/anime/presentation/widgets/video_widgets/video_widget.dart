@@ -4,18 +4,15 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:raijin/core/commons/widgets/anime_video_description_button.dart';
 import 'package:raijin/core/commons/widgets/anime_video_icon_button.dart';
+import 'package:raijin/core/usecases/download_usecase/download_use_case.dart';
 import 'package:raijin/core/usecases/more_usecase/more_use_case.dart';
 import 'package:raijin/core/usecases/url_launcher_use_case/url_launcher_use_case.dart';
 import 'package:raijin/features/anime/data/models/video_model/video_model.dart';
-import 'package:raijin/features/anime/presentation/blocs/anime_more_bloc/anime_more_bloc.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:iconsax/iconsax.dart';
@@ -405,298 +402,15 @@ class VideoWidget extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Positioned(
-                              bottom: 0,
-                              left: 0,
-                              child: Column(
-                                crossAxisAlignment: kCrossAxisAlignmentStart(),
-                                children: [
-                                  AnimatedContainer(
-                                    duration: const Duration(seconds: 1),
-                                    width: widthMediaQuery(context: context),
-                                    child: Padding(
-                                      padding: landscape
-                                          ? kHorizontalPadding
-                                          : kBottomPadding,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            kMainAxisAligmentCenter(),
-                                        crossAxisAlignment:
-                                            kCrossAxisAlignmentCenter(),
-                                        children: [
-                                          SizedBox(
-                                            width: 50,
-                                            child: Center(
-                                              child: Text(
-                                                '${(position ~/ 60).toString().padLeft(2, '0')}:${(position % 60).toString().padLeft(2, '0')}',
-                                                style: TextStyle(
-                                                  color: Colors.white
-                                                      .withOpacity(0.8),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Stack(
-                                              children: [
-                                                SliderTheme(
-                                                  data: SliderTheme.of(context)
-                                                      .copyWith(
-                                                    trackHeight: 3,
-                                                    overlayShape:
-                                                        const RoundSliderOverlayShape(
-                                                      overlayRadius: 0,
-                                                    ),
-                                                    thumbShape:
-                                                        const RoundSliderThumbShape(
-                                                      elevation: 0,
-                                                      enabledThumbRadius: 5,
-                                                      disabledThumbRadius: 3,
-                                                    ),
-                                                    activeTrackColor:
-                                                        primaryColor(
-                                                      context: context,
-                                                    ),
-                                                    inactiveTrackColor: Colors
-                                                        .white
-                                                        .withOpacity(0.5),
-                                                    thumbColor: primaryColor(
-                                                      context: context,
-                                                    ),
-                                                  ),
-                                                  child: Slider(
-                                                    value: sliderPosition,
-                                                    onChanged: (value) {
-                                                      bloc.add(
-                                                        AnimeVideoEvent
-                                                            .setPosition(
-                                                          position:
-                                                              (value * duration)
-                                                                  .round(),
-                                                          duration: duration,
-                                                        ),
-                                                      );
-                                                    },
-                                                    onChangeEnd: (value) {
-                                                      controller.seekTo(
-                                                        Duration(
-                                                            seconds: (value *
-                                                                    duration)
-                                                                .round()),
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 50,
-                                            child: Center(
-                                              child: Text(
-                                                () {
-                                                  final int hours =
-                                                      (((duration - position) ~/
-                                                                  60) /
-                                                              60)
-                                                          .floor();
-                                                  final String seconds =
-                                                      ((duration - position) %
-                                                              60)
-                                                          .toString()
-                                                          .padLeft(2, '0');
-                                                  int minutes =
-                                                      ((duration - position) ~/
-                                                          60);
-                                                  if (minutes > 60) {
-                                                    minutes =
-                                                        (minutes % 60).floor();
-                                                  }
-                                                  return '-${hours > 0 ? '${hours.toString()}:' : ''}${minutes.toString().padLeft(2, '0')}:$seconds';
-                                                }(),
-                                                style: TextStyle(
-                                                  color: Colors.white
-                                                      .withOpacity(0.8),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          () {
-                                            if (!landscape) {
-                                              return AnimeVideoIconButton(
-                                                icon: Iconsax.maximize_circle,
-                                                callback: setOrientation,
-                                              );
-                                            }
-                                            return const SizedBox();
-                                          }(),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  () {
-                                    if (landscape) {
-                                      return Stack(
-                                        children: [
-                                          SizedBox(
-                                            height: 65,
-                                            width: widthMediaQuery(
-                                                context: context),
-                                            child: Padding(
-                                              padding: kHorizontalPadding,
-                                              child: Row(
-                                                children: [
-                                                  AnimeVideoIconButton(
-                                                    text: 'Share',
-                                                    icon: Iconsax.send_2,
-                                                    callback: () {
-                                                      final String encoded =
-                                                          Uri.encodeComponent(
-                                                              state.endpoint);
-                                                      UrlLauncherUseCase().call(
-                                                          params:
-                                                              'whatsapp://send?text=$encoded');
-                                                    },
-                                                  ),
-                                                  AnimeVideoIconButton(
-                                                    text: 'Open',
-                                                    icon: Iconsax.maximize_2,
-                                                    callback: () {
-                                                      UrlLauncherUseCase().call(
-                                                        params: state
-                                                            .videoList
-                                                            .first
-                                                            .anime!
-                                                            .endpoint,
-                                                      );
-                                                    },
-                                                  ),
-                                                  AnimeVideoIconButton(
-                                                    text: 'Download',
-                                                    icon: Iconsax.direct_down,
-                                                    callback: () {
-                                                      UrlLauncherUseCase().call(
-                                                          params:
-                                                              state.endpoint);
-                                                    },
-                                                  ),
-                                                  AnimeVideoIconButton(
-                                                    text: '+90 S',
-                                                    icon: Iconsax.forward,
-                                                    callback: () {
-                                                      controller.seekTo(
-                                                        Duration(
-                                                          seconds:
-                                                              position + 88,
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                  const Spacer(),
-                                                  AnimeVideoIconButton(
-                                                    text: () {
-                                                      if (state.videoList.first
-                                                              .nextEpisode ==
-                                                          '#') {
-                                                        return 'Play Episode ${state.videoList.first.prevEpisode!.replaceAll('/', '').split('').last}';
-                                                      } else {
-                                                        return 'Play Episode ${state.videoList.first.nextEpisode!.replaceAll('/', '').split('').last}';
-                                                      }
-                                                    }(),
-                                                    icon: () {
-                                                      if (state.videoList.first
-                                                              .nextEpisode ==
-                                                          '#') {
-                                                        return Iconsax.previous;
-                                                      }
-                                                      return Iconsax.previous;
-                                                    }(),
-                                                    callback: setOrientation,
-                                                  ),
-                                                  AnimeVideoIconButton(
-                                                    icon: Iconsax.maximize_4,
-                                                    callback: setOrientation,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          // Stack(
-                                          //   children: [
-                                          //     SizedBox(
-                                          //       height: 10,
-                                          //       width: widthMediaQuery(
-                                          //           context: context),
-                                          //       child: SliderTheme(
-                                          //         data: SliderTheme.of(context)
-                                          //             .copyWith(
-                                          //           trackHeight: 20,
-                                          //           overlayShape:
-                                          //               const RoundSliderOverlayShape(
-                                          //             overlayRadius: 0,
-                                          //           ),
-                                          //           thumbShape:
-                                          //               const RoundSliderThumbShape(
-                                          //             elevation: 0,
-                                          //             enabledThumbRadius: 0,
-                                          //             disabledThumbRadius: 0,
-                                          //           ),
-                                          //           activeTrackColor:
-                                          //               Colors.transparent,
-                                          //           inactiveTrackColor:
-                                          //               Colors.transparent,
-                                          //           thumbColor: Colors.transparent,
-                                          //         ),
-                                          //         child: Slider(
-                                          //           value: 0,
-                                          //           onChanged: (value) {
-                                          //             bloc.add(
-                                          //               AnimeVideoEvent.setPosition(
-                                          //                 position:
-                                          //                     (value * duration)
-                                          //                         .round(),
-                                          //                 duration: duration,
-                                          //               ),
-                                          //             );
-                                          //           },
-                                          //           onChangeEnd: (value) {
-                                          //             controller.seekTo(
-                                          //               Duration(
-                                          //                   seconds:
-                                          //                       (value * duration)
-                                          //                           .round()),
-                                          //             );
-                                          //           },
-                                          //         ),
-                                          //       ),
-                                          //     ),
-                                          //     Container(
-                                          //       height: 3,
-                                          //       width: widthMediaQuery(
-                                          //           context: context),
-                                          //       decoration: const BoxDecoration(
-                                          //         color: Colors.white60,
-                                          //       ),
-                                          //     ),
-                                          //     Container(
-                                          //       height: 3,
-                                          //       width: widthMediaQuery(
-                                          //               context: context) *
-                                          //           sliderPosition,
-                                          //       decoration: BoxDecoration(
-                                          //         color: primaryColor(
-                                          //             context: context),
-                                          //       ),
-                                          //     ),
-                                          //   ],
-                                          // ),
-                                        ],
-                                      );
-                                    }
-                                    return const SizedBox();
-                                  }(),
-                                ],
-                              ),
+                            _buildBottomControll(
+                              context,
+                              landscape,
+                              position,
+                              sliderPosition,
+                              bloc,
+                              duration,
+                              setOrientation,
+                              state,
                             ),
                             Positioned(
                               child: Padding(
@@ -933,7 +647,13 @@ class VideoWidget extends StatelessWidget {
                         icon: Iconsax.document_download,
                         text: 'Download',
                         callback: () {
-                          UrlLauncherUseCase().call(params: state.endpoint);
+                          // UrlLauncherUseCase().call(params: state.endpoint);
+                          final DownloadParams params = DownloadParams(
+                            fileName: '${state.videoList.first.title} (${state.quality})',
+                            url: state.endpoint,
+                            path: state.videoList.first.anime!.title
+                          );
+                          DownloadUseCase().call(params: params);
                         },
                       ),
                       AnimeVideoDescriptionButton(
@@ -1151,6 +871,271 @@ class VideoWidget extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Positioned _buildBottomControll(
+      BuildContext context,
+      bool landscape,
+      int position,
+      double sliderPosition,
+      AnimeVideoBloc bloc,
+      int duration,
+      void Function() setOrientation,
+      AnimeVideoState state) {
+    return Positioned(
+      bottom: 0,
+      left: 0,
+      child: Column(
+        crossAxisAlignment: kCrossAxisAlignmentStart(),
+        children: [
+          AnimatedContainer(
+            duration: const Duration(seconds: 1),
+            width: widthMediaQuery(context: context),
+            child: Padding(
+              padding: landscape ? kHorizontalPadding : kBottomPadding,
+              child: Row(
+                mainAxisAlignment: kMainAxisAligmentCenter(),
+                crossAxisAlignment: kCrossAxisAlignmentCenter(),
+                children: [
+                  SizedBox(
+                    width: 50,
+                    child: Center(
+                      child: Text(
+                        '${(position ~/ 60).toString().padLeft(2, '0')}:${(position % 60).toString().padLeft(2, '0')}',
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.8),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        SliderTheme(
+                          data: SliderTheme.of(context).copyWith(
+                            trackHeight: 3,
+                            overlayShape: const RoundSliderOverlayShape(
+                              overlayRadius: 0,
+                            ),
+                            thumbShape: const RoundSliderThumbShape(
+                              elevation: 0,
+                              enabledThumbRadius: 5,
+                              disabledThumbRadius: 3,
+                            ),
+                            activeTrackColor: primaryColor(
+                              context: context,
+                            ),
+                            inactiveTrackColor: Colors.white.withOpacity(0.5),
+                            thumbColor: primaryColor(
+                              context: context,
+                            ),
+                          ),
+                          child: Slider(
+                            value: sliderPosition,
+                            onChanged: (value) {
+                              bloc.add(
+                                AnimeVideoEvent.setPosition(
+                                  position: (value * duration).round(),
+                                  duration: duration,
+                                ),
+                              );
+                            },
+                            onChangeEnd: (value) {
+                              controller.seekTo(
+                                Duration(seconds: (value * duration).round()),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: 50,
+                    child: Center(
+                      child: Text(
+                        () {
+                          final int hours =
+                              (((duration - position) ~/ 60) / 60).floor();
+                          final String seconds = ((duration - position) % 60)
+                              .toString()
+                              .padLeft(2, '0');
+                          int minutes = ((duration - position) ~/ 60);
+                          if (minutes > 60) {
+                            minutes = (minutes % 60).floor();
+                          }
+                          return '-${hours > 0 ? '${hours.toString()}:' : ''}${minutes.toString().padLeft(2, '0')}:$seconds';
+                        }(),
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.8),
+                        ),
+                      ),
+                    ),
+                  ),
+                  () {
+                    if (!landscape) {
+                      return AnimeVideoIconButton(
+                        icon: Iconsax.maximize_circle,
+                        callback: setOrientation,
+                      );
+                    }
+                    return const SizedBox();
+                  }(),
+                ],
+              ),
+            ),
+          ),
+          () {
+            if (landscape) {
+              return Stack(
+                children: [
+                  SizedBox(
+                    height: 65,
+                    width: widthMediaQuery(context: context),
+                    child: Padding(
+                      padding: kHorizontalPadding,
+                      child: Row(
+                        children: [
+                          AnimeVideoIconButton(
+                            text: 'Share',
+                            icon: Iconsax.send_2,
+                            callback: () {
+                              final String encoded =
+                                  Uri.encodeComponent(state.endpoint);
+                              UrlLauncherUseCase().call(
+                                params: 'whatsapp://send?text=$encoded',
+                              );
+                            },
+                          ),
+                          AnimeVideoIconButton(
+                            text: 'Open',
+                            icon: Iconsax.maximize_2,
+                            callback: () {
+                              UrlLauncherUseCase().call(
+                                params: state.videoList.first.anime!.endpoint,
+                              );
+                            },
+                          ),
+                          AnimeVideoIconButton(
+                            text: 'Download',
+                            icon: Iconsax.direct_down,
+                            callback: () {
+                              UrlLauncherUseCase().call(params: state.endpoint);
+                            },
+                          ),
+                          AnimeVideoIconButton(
+                            text: '+90 S',
+                            icon: Iconsax.forward,
+                            callback: () {
+                              controller.seekTo(
+                                Duration(
+                                  seconds: position + 88,
+                                ),
+                              );
+                            },
+                          ),
+                          const Spacer(),
+                          AnimeVideoIconButton(
+                            text: () {
+                              if (state.videoList.first.nextEpisode == '#') {
+                                return 'Play Episode ${state.videoList.first.prevEpisode!.replaceAll('/', '').split('').last}';
+                              } else {
+                                return 'Play Episode ${state.videoList.first.nextEpisode!.replaceAll('/', '').split('').last}';
+                              }
+                            }(),
+                            icon: () {
+                              if (state.videoList.first.nextEpisode == '#') {
+                                return Iconsax.previous;
+                              }
+                              return Iconsax.previous;
+                            }(),
+                            callback: setOrientation,
+                          ),
+                          AnimeVideoIconButton(
+                            icon: Iconsax.maximize_4,
+                            callback: setOrientation,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Stack(
+                  //   children: [
+                  //     SizedBox(
+                  //       height: 10,
+                  //       width: widthMediaQuery(
+                  //           context: context),
+                  //       child: SliderTheme(
+                  //         data: SliderTheme.of(context)
+                  //             .copyWith(
+                  //           trackHeight: 20,
+                  //           overlayShape:
+                  //               const RoundSliderOverlayShape(
+                  //             overlayRadius: 0,
+                  //           ),
+                  //           thumbShape:
+                  //               const RoundSliderThumbShape(
+                  //             elevation: 0,
+                  //             enabledThumbRadius: 0,
+                  //             disabledThumbRadius: 0,
+                  //           ),
+                  //           activeTrackColor:
+                  //               Colors.transparent,
+                  //           inactiveTrackColor:
+                  //               Colors.transparent,
+                  //           thumbColor: Colors.transparent,
+                  //         ),
+                  //         child: Slider(
+                  //           value: 0,
+                  //           onChanged: (value) {
+                  //             bloc.add(
+                  //               AnimeVideoEvent.setPosition(
+                  //                 position:
+                  //                     (value * duration)
+                  //                         .round(),
+                  //                 duration: duration,
+                  //               ),
+                  //             );
+                  //           },
+                  //           onChangeEnd: (value) {
+                  //             controller.seekTo(
+                  //               Duration(
+                  //                   seconds:
+                  //                       (value * duration)
+                  //                           .round()),
+                  //             );
+                  //           },
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     Container(
+                  //       height: 3,
+                  //       width: widthMediaQuery(
+                  //           context: context),
+                  //       decoration: const BoxDecoration(
+                  //         color: Colors.white60,
+                  //       ),
+                  //     ),
+                  //     Container(
+                  //       height: 3,
+                  //       width: widthMediaQuery(
+                  //               context: context) *
+                  //           sliderPosition,
+                  //       decoration: BoxDecoration(
+                  //         color: primaryColor(
+                  //             context: context),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                ],
+              );
+            }
+            return const SizedBox();
+          }(),
+        ],
       ),
     );
   }

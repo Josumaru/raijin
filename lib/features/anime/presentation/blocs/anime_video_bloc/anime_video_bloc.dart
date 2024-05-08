@@ -1,8 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:dartz/dartz.dart';
-import 'package:raijin/core/errors/failure.dart';
-import 'package:raijin/core/services/injection_container.dart';
 import 'package:raijin/core/usecases/toast_usecase/toas_use_case.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/data/models/episode_model/episode_model.dart';

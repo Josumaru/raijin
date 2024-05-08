@@ -17,7 +17,6 @@ import 'package:raijin/features/anime/presentation/blocs/anime_schedule_bloc/ani
 import 'package:raijin/features/anime/presentation/cubits/anime_schedule_cubit/anime_schedule_cubit.dart'
     as cubit;
 import 'package:raijin/features/anime/presentation/pages/detail_page.dart';
-import 'package:raijin/features/anime/presentation/widgets/video_widgets/video_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ScheduleWidget extends StatefulWidget {
