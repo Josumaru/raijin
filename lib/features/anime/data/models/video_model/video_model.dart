@@ -11,17 +11,15 @@ class VideoModel with _$VideoModel {
     required String quality,
     required String mirror,
     required String endpoint,
+    required String baseUrl,
     required String poster,
     required String title,
     required String synopsis,
     required String thumbnail,
     required List<String> genre,
     required List<EpisodeModel> anotherEpisode,
-    AnimeModel? anime,
     String? prevEpisode,
     String? nextEpisode,
-    int? position,
-    int? duration,
     DateTime? date,
   }) = _VideoModel;
 }

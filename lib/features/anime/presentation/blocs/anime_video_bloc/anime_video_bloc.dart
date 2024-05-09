@@ -26,128 +26,151 @@ class AnimeVideoBloc extends Bloc<AnimeVideoEvent, AnimeVideoState> {
     on<AnimeVideoEvent>(
       (event, emit) async {
         await event.map(
-          getVideo: (value) => _getVideo(
-            endpoint: value.endpoint,
-            animeModel: value.animeModel,
-            emit: emit,
-          ),
-          showControll: (value) => _showControll(
-            showControll: value.showControl,
-            emit: emit,
-          ),
-          seekPosition: (value) => _seekPosition(
-            positon: value.position,
-            emit: emit,
-          ),
-          setControllStatus: (value) => _setControllStatus(
-            quality: value.quality,
-            playbackSpeed: value.playbackSpeed,
-            emit: emit,
-          ),
-          changeEpisode: (value) => () {},
-          playVideo: (value) => _playVideo(
-            play: value.isPlay,
-            emit: emit,
-          ),
-          addHistory: (value) => () {},
-          setPosition: (value) => _setPosition(
-            position: value.position,
-            duration: value.duration,
-            emit: emit,
-          ),
-          setBuffering: (value) => _setBuffering(
-            buffering: value.buffering,
-            emit: emit,
-          ),
+          getVideo: (value) => _getVideo(emit: emit, endpoint: value.endpoint),
         );
+        // await event.map(
+        //   getVideo: (value) => _getVideo(
+        //     endpoint: value.endpoint,
+        //     animeModel: value.animeModel,
+        //     emit: emit,
+        //   ),
+        //   showControll: (value) => _showControll(
+        //     showControll: value.showControl,
+        //     emit: emit,
+        //   ),
+        //   seekPosition: (value) => _seekPosition(
+        //     positon: value.position,
+        //     emit: emit,
+        //   ),
+        //   setControllStatus: (value) => _setControllStatus(
+        //     quality: value.quality,
+        //     playbackSpeed: value.playbackSpeed,
+        //     emit: emit,
+        //   ),
+        //   changeEpisode: (value) => () {},
+        //   playVideo: (value) => _playVideo(
+        //     play: value.isPlay,
+        //     emit: emit,
+        //   ),
+        //   addHistory: (value) => () {},
+        //   setPosition: (value) => _setPosition(
+        //     position: value.position,
+        //     duration: value.duration,
+        //     emit: emit,
+        //   ),
+        //   setBuffering: (value) => _setBuffering(
+        //     buffering: value.buffering,
+        //     emit: emit,
+        //   ),
+        // );
       },
     );
-  }
-
-  _setControllStatus({
-    String? quality,
-    double? playbackSpeed,
-    required Emitter emit,
-  }) {
-    if (quality != null) {
-      String endpoint = state.endpoint;
-      for (int i = 0; i < state.videoList.length; i++) {
-        final VideoModel video = state.videoList[i];
-        if (quality == video.quality) {
-          endpoint = video.endpoint;
-        }
-      }
-      emit(state.copyWith(
-        quality: quality,
-        endpoint: endpoint,
-      ));
-    } else if (playbackSpeed != null) {
-      emit(state.copyWith(playbackSpeed: playbackSpeed));
-    }
-  }
-
-  _setBuffering({required bool buffering, required Emitter emit}) {
-    emit(state.copyWith(buffering: buffering));
-  }
-
-  _showControll({required bool showControll, required Emitter emit}) {
-    emit(state.copyWith(showControll: showControll));
-  }
-
-  _seekPosition({required double positon, required Emitter emit}) {
-    emit(state.copyWith(sliderPosition: positon));
-  }
-
-  _setPosition({
-    required int position,
-    required int duration,
-    required Emitter emit,
-  }) {
-    emit(state.copyWith(videoPosition: position, videoDuration: duration));
   }
 
   _getVideo({
     required String endpoint,
     required Emitter emit,
-    required AnimeModel animeModel,
   }) async {
-    emit(state.copyWith(
-      loading: true,
-    ));
-    final data =
-        await _animeGetVideoUseCase(endpoint: endpoint, animeModel: animeModel);
+    emit(state.copyWith(loading: true));
+    final data = await _animeGetVideoUseCase(endpoint: endpoint);
 
     data.fold(
       (l) {
         emit(state.copyWith(error: true));
       },
       (r) {
-        String quality = state.quality;
-        String endpoint = r.first.endpoint;
-        int mid = r.length ~/ 2;
-        quality = r[mid].quality;
-        for (int i = 0; i < r.length; i++) {
-          if (r[i].quality == quality) {
-            endpoint = r[i].endpoint;
-          }
-        }
-        emit(
-          state.copyWith(
-            videoList: r,
-            loading: false,
-            buffering: true,
-            endpoint: endpoint,
-            quality: quality,
-            initialize: true,
-          ),
-        );
+        emit(state.copyWith(
+          loading: false,
+          videoList: r,
+        ));
       },
     );
   }
 
-  Future<void> _playVideo({required bool play, required Emitter emit}) async {
-    emit(state.copyWith(playing: !play, initialize: false));
-  }
+  // _setControllStatus({
+  //   String? quality,
+  //   double? playbackSpeed,
+  //   required Emitter emit,
+  // }) {
+  //   if (quality != null) {
+  //     String endpoint = state.endpoint;
+  //     for (int i = 0; i < state.videoList.length; i++) {
+  //       final VideoModel video = state.videoList[i];
+  //       if (quality == video.quality) {
+  //         endpoint = video.endpoint;
+  //       }
+  //     }
+  //     emit(state.copyWith(
+  //       quality: quality,
+  //       endpoint: endpoint,
+  //     ));
+  //   } else if (playbackSpeed != null) {
+  //     emit(state.copyWith(playbackSpeed: playbackSpeed));
+  //   }
+  // }
+
+  // _setBuffering({required bool buffering, required Emitter emit}) {
+  //   emit(state.copyWith(buffering: buffering));
+  // }
+
+  // _showControll({required bool showControll, required Emitter emit}) {
+  //   emit(state.copyWith(showControll: showControll));
+  // }
+
+  // _seekPosition({required double positon, required Emitter emit}) {
+  //   emit(state.copyWith(sliderPosition: positon));
+  // }
+
+  // _setPosition({
+  //   required int position,
+  //   required int duration,
+  //   required Emitter emit,
+  // }) {
+  //   emit(state.copyWith(videoPosition: position, videoDuration: duration));
+  // }
+
+  // _getVideo({
+  //   required String endpoint,
+  //   required Emitter emit,
+  //   required AnimeModel animeModel,
+  // }) async {
+  //   emit(state.copyWith(
+  //     loading: true,
+  //   ));
+  //   final data =
+  //       await _animeGetVideoUseCase(endpoint: endpoint, animeModel: animeModel);
+
+  //   data.fold(
+  //     (l) {
+  //       emit(state.copyWith(error: true));
+  //     },
+  //     (r) {
+  //       String quality = state.quality;
+  //       String endpoint = r.first.endpoint;
+  //       int mid = r.length ~/ 2;
+  //       quality = r[mid].quality;
+  //       for (int i = 0; i < r.length; i++) {
+  //         if (r[i].quality == quality) {
+  //           endpoint = r[i].endpoint;
+  //         }
+  //       }
+  //       emit(
+  //         state.copyWith(
+  //           videoList: r,
+  //           loading: false,
+  //           buffering: true,
+  //           endpoint: endpoint,
+  //           quality: quality,
+  //           initialize: true,
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
+
+  // Future<void> _playVideo({required bool play, required Emitter emit}) async {
+  //   emit(state.copyWith(playing: !play, initialize: false));
+  // }
 
   // _showControl(bool isShow) {
   //   emit(state.copyWith(

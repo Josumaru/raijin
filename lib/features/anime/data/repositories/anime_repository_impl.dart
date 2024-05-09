@@ -63,14 +63,15 @@ class AnimeRepositoryImpl implements AnimeRepository {
   @override
   Future<Either<Failure<String>, List<VideoModel>>> animeGetVideo({
     required String endpoint,
-    required AnimeModel animeModel,
   }) async {
     try {
-      final List<VideoModel> r =
-          await animeRemoteDataSource.animeVideo(endpoint: endpoint, animeModel: animeModel);
+      final List<VideoModel> r = await animeRemoteDataSource.animeVideo(
+        endpoint: endpoint,
+      );
       if (r.isEmpty) {
         return Left(
-            const Failure.serverError(message: 'Kraken Server not Available'));
+          const Failure.serverError(message: 'Kraken Server not Available'),
+        );
       }
       return Right(r);
     } catch (e) {

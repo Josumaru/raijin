@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -11,18 +13,51 @@ class DownloadUseCase extends UseCase<void, DownloadParams> {
   Future call({required params}) async {
     final status = await Permission.storage.request();
 
-    ToastUseCase(fToast: sl<FToast>()).call(params: status.toString());
     if (status.isGranted) {
       final baseStorage = await getExternalStorageDirectory();
-      await FlutterDownloader.enqueue(
-        url: params!.url,
-        savedDir: '${baseStorage!.path}/${params.path}',
-        allowCellular: true,
-        openFileFromNotification: true,
-        showNotification: true,
-        fileName: params.fileName,
-      );
+      final String url = params!.url;
+      final String fileName = params.fileName;
+      final String path =
+          '${baseStorage!.path}/${params.fileName.split('Episode').first.trim()}';
+      final existingTask = await FlutterDownloader.loadTasks();
+      final bool isQueue = existingTask!
+          .any((task) => task.filename == fileName && task.progress < 100);
+      final bool isDownloaded = existingTask
+          .any((task) => task.filename == fileName && task.progress == 100);
+      print(existingTask[0].filename == fileName);
+      if (isQueue) {
+        ToastUseCase(fToast: sl<FToast>())
+            .call(params: 'In Progress ${params.fileName} ');
+      } else if (isDownloaded) {
+        // FlutterDownloader.open(taskId: taskId);
+        ToastUseCase(fToast: sl<FToast>())
+            .call(params: '${params.fileName} Already Downloaded');
+      } else {
+        final folder = Directory(path);
+
+        if (!(await folder.exists())) {
+          await folder.create(recursive: true);
+        }
+        _download(url: url, path: path, fileName: fileName);
+        ToastUseCase(fToast: sl<FToast>())
+            .call(params: 'Dowloading ${params.fileName}');
+      }
     }
+  }
+
+  void _download({
+    required String url,
+    required String path,
+    required String fileName,
+  }) async {
+    await FlutterDownloader.enqueue(
+      url: url,
+      savedDir: path,
+      allowCellular: true,
+      openFileFromNotification: true,
+      showNotification: true,
+      fileName: fileName,
+    );
   }
 }
 
@@ -30,9 +65,7 @@ class DownloadParams {
   const DownloadParams({
     required this.fileName,
     required this.url,
-    required this.path,
   });
   final String fileName;
   final String url;
-  final String path;
 }

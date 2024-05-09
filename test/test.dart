@@ -113,3 +113,12 @@
 //   }
 //   print(mirrorList.first.genre);
 // }
+
+
+
+late String? a;
+
+void main() {
+  print(a??='');
+
+}

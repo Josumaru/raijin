@@ -260,8 +260,7 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
   }
 
   @override
-  Future<List<VideoModel>> animeVideo(
-      {required String endpoint, required AnimeModel animeModel}) async {
+  Future<List<VideoModel>> animeVideo({required String endpoint}) async {
     List<VideoModel> mirrorList = [];
     List<EpisodeModel> episodeList = [];
     List<String> genre = [];
@@ -323,14 +322,20 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
         .first
         .getElementsByTagName('ul > li');
 
-    final Element bottomInfo = responseBody.getElementsByClassName('areainfo').first;
-    final String synopsis = bottomInfo.getElementsByClassName('desc').first.text.trim();
-    final String poster = bottomInfo.getElementsByClassName('thumb').first.getElementsByTagName('img').first.attributes['src']!;
-  
+    final Element bottomInfo =
+        responseBody.getElementsByClassName('areainfo').first;
+    final String synopsis =
+        bottomInfo.getElementsByClassName('desc').first.text.trim();
+    final String poster = bottomInfo
+        .getElementsByClassName('thumb')
+        .first
+        .getElementsByTagName('img')
+        .first
+        .attributes['src']!;
 
-   for (final element in bottomInfo.getElementsByTagName('div > a')) {
-    genre.add(element.text.trim());
-  }
+    for (final element in bottomInfo.getElementsByTagName('div > a')) {
+      genre.add(element.text.trim());
+    }
 
     for (final element in downloadElement) {
       String serverQuality = element.getElementsByTagName('strong').first.text;
@@ -351,10 +356,10 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
               nextEpisode: nextEpisode,
               prevEpisode: prevEpisode,
               title: title,
-              anime: animeModel,
               genre: genre,
               synopsis: synopsis,
-              thumbnail: 'https:${mirrorAttributes.attributes['poster']!}'
+              thumbnail: 'https:${mirrorAttributes.attributes['poster']!}',
+              baseUrl: endpoint,
             ),
           );
         }

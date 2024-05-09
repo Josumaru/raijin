@@ -19,17 +19,15 @@ mixin _$VideoModel {
   String get quality => throw _privateConstructorUsedError;
   String get mirror => throw _privateConstructorUsedError;
   String get endpoint => throw _privateConstructorUsedError;
+  String get baseUrl => throw _privateConstructorUsedError;
   String get poster => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get synopsis => throw _privateConstructorUsedError;
   String get thumbnail => throw _privateConstructorUsedError;
   List<String> get genre => throw _privateConstructorUsedError;
   List<EpisodeModel> get anotherEpisode => throw _privateConstructorUsedError;
-  AnimeModel? get anime => throw _privateConstructorUsedError;
   String? get prevEpisode => throw _privateConstructorUsedError;
   String? get nextEpisode => throw _privateConstructorUsedError;
-  int? get position => throw _privateConstructorUsedError;
-  int? get duration => throw _privateConstructorUsedError;
   DateTime? get date => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -47,20 +45,16 @@ abstract class $VideoModelCopyWith<$Res> {
       {String quality,
       String mirror,
       String endpoint,
+      String baseUrl,
       String poster,
       String title,
       String synopsis,
       String thumbnail,
       List<String> genre,
       List<EpisodeModel> anotherEpisode,
-      AnimeModel? anime,
       String? prevEpisode,
       String? nextEpisode,
-      int? position,
-      int? duration,
       DateTime? date});
-
-  $AnimeModelCopyWith<$Res>? get anime;
 }
 
 /// @nodoc
@@ -79,17 +73,15 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
     Object? quality = null,
     Object? mirror = null,
     Object? endpoint = null,
+    Object? baseUrl = null,
     Object? poster = null,
     Object? title = null,
     Object? synopsis = null,
     Object? thumbnail = null,
     Object? genre = null,
     Object? anotherEpisode = null,
-    Object? anime = freezed,
     Object? prevEpisode = freezed,
     Object? nextEpisode = freezed,
-    Object? position = freezed,
-    Object? duration = freezed,
     Object? date = freezed,
   }) {
     return _then(_value.copyWith(
@@ -104,6 +96,10 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
       endpoint: null == endpoint
           ? _value.endpoint
           : endpoint // ignore: cast_nullable_to_non_nullable
+              as String,
+      baseUrl: null == baseUrl
+          ? _value.baseUrl
+          : baseUrl // ignore: cast_nullable_to_non_nullable
               as String,
       poster: null == poster
           ? _value.poster
@@ -129,10 +125,6 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
           ? _value.anotherEpisode
           : anotherEpisode // ignore: cast_nullable_to_non_nullable
               as List<EpisodeModel>,
-      anime: freezed == anime
-          ? _value.anime
-          : anime // ignore: cast_nullable_to_non_nullable
-              as AnimeModel?,
       prevEpisode: freezed == prevEpisode
           ? _value.prevEpisode
           : prevEpisode // ignore: cast_nullable_to_non_nullable
@@ -141,31 +133,11 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
           ? _value.nextEpisode
           : nextEpisode // ignore: cast_nullable_to_non_nullable
               as String?,
-      position: freezed == position
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as int?,
-      duration: freezed == duration
-          ? _value.duration
-          : duration // ignore: cast_nullable_to_non_nullable
-              as int?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AnimeModelCopyWith<$Res>? get anime {
-    if (_value.anime == null) {
-      return null;
-    }
-
-    return $AnimeModelCopyWith<$Res>(_value.anime!, (value) {
-      return _then(_value.copyWith(anime: value) as $Val);
-    });
   }
 }
 
@@ -181,21 +153,16 @@ abstract class _$$VideoModelImplCopyWith<$Res>
       {String quality,
       String mirror,
       String endpoint,
+      String baseUrl,
       String poster,
       String title,
       String synopsis,
       String thumbnail,
       List<String> genre,
       List<EpisodeModel> anotherEpisode,
-      AnimeModel? anime,
       String? prevEpisode,
       String? nextEpisode,
-      int? position,
-      int? duration,
       DateTime? date});
-
-  @override
-  $AnimeModelCopyWith<$Res>? get anime;
 }
 
 /// @nodoc
@@ -212,17 +179,15 @@ class __$$VideoModelImplCopyWithImpl<$Res>
     Object? quality = null,
     Object? mirror = null,
     Object? endpoint = null,
+    Object? baseUrl = null,
     Object? poster = null,
     Object? title = null,
     Object? synopsis = null,
     Object? thumbnail = null,
     Object? genre = null,
     Object? anotherEpisode = null,
-    Object? anime = freezed,
     Object? prevEpisode = freezed,
     Object? nextEpisode = freezed,
-    Object? position = freezed,
-    Object? duration = freezed,
     Object? date = freezed,
   }) {
     return _then(_$VideoModelImpl(
@@ -237,6 +202,10 @@ class __$$VideoModelImplCopyWithImpl<$Res>
       endpoint: null == endpoint
           ? _value.endpoint
           : endpoint // ignore: cast_nullable_to_non_nullable
+              as String,
+      baseUrl: null == baseUrl
+          ? _value.baseUrl
+          : baseUrl // ignore: cast_nullable_to_non_nullable
               as String,
       poster: null == poster
           ? _value.poster
@@ -262,10 +231,6 @@ class __$$VideoModelImplCopyWithImpl<$Res>
           ? _value._anotherEpisode
           : anotherEpisode // ignore: cast_nullable_to_non_nullable
               as List<EpisodeModel>,
-      anime: freezed == anime
-          ? _value.anime
-          : anime // ignore: cast_nullable_to_non_nullable
-              as AnimeModel?,
       prevEpisode: freezed == prevEpisode
           ? _value.prevEpisode
           : prevEpisode // ignore: cast_nullable_to_non_nullable
@@ -274,14 +239,6 @@ class __$$VideoModelImplCopyWithImpl<$Res>
           ? _value.nextEpisode
           : nextEpisode // ignore: cast_nullable_to_non_nullable
               as String?,
-      position: freezed == position
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as int?,
-      duration: freezed == duration
-          ? _value.duration
-          : duration // ignore: cast_nullable_to_non_nullable
-              as int?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -297,17 +254,15 @@ class _$VideoModelImpl implements _VideoModel {
       {required this.quality,
       required this.mirror,
       required this.endpoint,
+      required this.baseUrl,
       required this.poster,
       required this.title,
       required this.synopsis,
       required this.thumbnail,
       required final List<String> genre,
       required final List<EpisodeModel> anotherEpisode,
-      this.anime,
       this.prevEpisode,
       this.nextEpisode,
-      this.position,
-      this.duration,
       this.date})
       : _genre = genre,
         _anotherEpisode = anotherEpisode;
@@ -318,6 +273,8 @@ class _$VideoModelImpl implements _VideoModel {
   final String mirror;
   @override
   final String endpoint;
+  @override
+  final String baseUrl;
   @override
   final String poster;
   @override
@@ -343,21 +300,15 @@ class _$VideoModelImpl implements _VideoModel {
   }
 
   @override
-  final AnimeModel? anime;
-  @override
   final String? prevEpisode;
   @override
   final String? nextEpisode;
-  @override
-  final int? position;
-  @override
-  final int? duration;
   @override
   final DateTime? date;
 
   @override
   String toString() {
-    return 'VideoModel(quality: $quality, mirror: $mirror, endpoint: $endpoint, poster: $poster, title: $title, synopsis: $synopsis, thumbnail: $thumbnail, genre: $genre, anotherEpisode: $anotherEpisode, anime: $anime, prevEpisode: $prevEpisode, nextEpisode: $nextEpisode, position: $position, duration: $duration, date: $date)';
+    return 'VideoModel(quality: $quality, mirror: $mirror, endpoint: $endpoint, baseUrl: $baseUrl, poster: $poster, title: $title, synopsis: $synopsis, thumbnail: $thumbnail, genre: $genre, anotherEpisode: $anotherEpisode, prevEpisode: $prevEpisode, nextEpisode: $nextEpisode, date: $date)';
   }
 
   @override
@@ -369,6 +320,7 @@ class _$VideoModelImpl implements _VideoModel {
             (identical(other.mirror, mirror) || other.mirror == mirror) &&
             (identical(other.endpoint, endpoint) ||
                 other.endpoint == endpoint) &&
+            (identical(other.baseUrl, baseUrl) || other.baseUrl == baseUrl) &&
             (identical(other.poster, poster) || other.poster == poster) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.synopsis, synopsis) ||
@@ -378,15 +330,10 @@ class _$VideoModelImpl implements _VideoModel {
             const DeepCollectionEquality().equals(other._genre, _genre) &&
             const DeepCollectionEquality()
                 .equals(other._anotherEpisode, _anotherEpisode) &&
-            (identical(other.anime, anime) || other.anime == anime) &&
             (identical(other.prevEpisode, prevEpisode) ||
                 other.prevEpisode == prevEpisode) &&
             (identical(other.nextEpisode, nextEpisode) ||
                 other.nextEpisode == nextEpisode) &&
-            (identical(other.position, position) ||
-                other.position == position) &&
-            (identical(other.duration, duration) ||
-                other.duration == duration) &&
             (identical(other.date, date) || other.date == date));
   }
 
@@ -396,17 +343,15 @@ class _$VideoModelImpl implements _VideoModel {
       quality,
       mirror,
       endpoint,
+      baseUrl,
       poster,
       title,
       synopsis,
       thumbnail,
       const DeepCollectionEquality().hash(_genre),
       const DeepCollectionEquality().hash(_anotherEpisode),
-      anime,
       prevEpisode,
       nextEpisode,
-      position,
-      duration,
       date);
 
   @JsonKey(ignore: true)
@@ -421,17 +366,15 @@ abstract class _VideoModel implements VideoModel {
       {required final String quality,
       required final String mirror,
       required final String endpoint,
+      required final String baseUrl,
       required final String poster,
       required final String title,
       required final String synopsis,
       required final String thumbnail,
       required final List<String> genre,
       required final List<EpisodeModel> anotherEpisode,
-      final AnimeModel? anime,
       final String? prevEpisode,
       final String? nextEpisode,
-      final int? position,
-      final int? duration,
       final DateTime? date}) = _$VideoModelImpl;
 
   @override
@@ -440,6 +383,8 @@ abstract class _VideoModel implements VideoModel {
   String get mirror;
   @override
   String get endpoint;
+  @override
+  String get baseUrl;
   @override
   String get poster;
   @override
@@ -453,15 +398,9 @@ abstract class _VideoModel implements VideoModel {
   @override
   List<EpisodeModel> get anotherEpisode;
   @override
-  AnimeModel? get anime;
-  @override
   String? get prevEpisode;
   @override
   String? get nextEpisode;
-  @override
-  int? get position;
-  @override
-  int? get duration;
   @override
   DateTime? get date;
   @override

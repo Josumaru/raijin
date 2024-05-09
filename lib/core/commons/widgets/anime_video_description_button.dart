@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/core/constants/border_radius.dart';
 import 'package:raijin/core/constants/colors.dart';
 import 'package:raijin/core/constants/padding.dart';
@@ -27,6 +28,8 @@ class AnimeVideoDescriptionButton extends StatelessWidget {
           onTap: _callback,
           borderRadius: kMainBorderRadius,
           child: Column(
+            mainAxisAlignment: kMainAxisAligmentCenter(),
+            crossAxisAlignment: kCrossAxisAlignmentCenter(),
             children: [
               Icon(
                 _icon,
