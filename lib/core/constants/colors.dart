@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 const Color kMainDarkBackgroundColor = Color.fromARGB(255, 19, 24, 26);
 const Color kMainDarkOnBackgroundColor = Color.fromARGB(255, 255, 255, 255);
 const Color kMainDarkTextColor = Color.fromARGB(255, 255, 255, 255);
-const Color kMainDarkSurfaceColor = kMainAccentColor;
-const Color kMainDarkOnSurfaceColor = kMainAccentColor;
-const Color kMainDarkOnDarkSurfaceColor = kMainAccentColor;
+const Color kMainDarkSurfaceColor = kPrimaryColor;
+const Color kMainDarkOnSurfaceColor = kPrimaryColor;
+const Color kMainDarkOnDarkSurfaceColor = kPrimaryColor;
 const Color kMainDarkError = kMainDangerColor;
 const Color kMainDarkOnError = kMainDarkTextColor;
 
@@ -14,15 +14,17 @@ const Color kMainDarkOnError = kMainDarkTextColor;
 const Color kMainLightBackgroundColor = Color.fromARGB(255, 255, 255, 255);
 const Color kMainLightOnBackgroundColor = Color.fromARGB(255, 0, 0, 0);
 const Color kMainLightTextColor = Color.fromARGB(255, 0, 0, 0);
-const Color kMainLightSurfaceColor = kMainAccentColor;
-const Color kMainLightOnSurfaceColor = kMainAccentColor;
-const Color kMainLightOnDarkSurfaceColor = kMainAccentColor;
+const Color kMainLightSurfaceColor = kPrimaryColor;
+const Color kMainLightOnSurfaceColor = kPrimaryColor;
+const Color kMainLightOnDarkSurfaceColor = kPrimaryColor;
 const Color kMainLightError = kMainDangerColor;
 const Color kMainLightOnError = kMainDarkTextColor;
 
 // Global
-const Color kMainAccentColor = Color(0xffef4444);
+// const Color kMainAccentColor = Color.fromARGB(255, 231, 119, 119);
 const Color kPrimaryColor = Color(0xffef4444);
+// const Color kMainAccentColor = Color(0xff275ad2);
+// const Color kPrimaryColor = Color(0xff275ad2);
 
 const Color kMainBorderColor = Color.fromARGB(255, 160, 160, 160);
 const Color kMainDangerColor = Color.fromARGB(255, 235, 71, 59);

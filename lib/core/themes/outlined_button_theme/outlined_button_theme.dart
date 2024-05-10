@@ -9,8 +9,8 @@ class TOutlinedButtonTheme {
       elevation: 0,
       foregroundColor: kMainDarkBackgroundColor,
       side: const BorderSide(color: kPrimaryColor),
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       textStyle: const TextStyle(color: kMainDarkBackgroundColor, fontSize: 16, fontWeight: FontWeight.w500)
     ),
   );
@@ -21,8 +21,8 @@ class TOutlinedButtonTheme {
       elevation: 0,
       foregroundColor: kMainLightBackgroundColor,
       side: const BorderSide(color: kPrimaryColor),
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       textStyle: const TextStyle(color: kMainDarkBackgroundColor, fontSize: 16, fontWeight: FontWeight.w500)
     ),
   );

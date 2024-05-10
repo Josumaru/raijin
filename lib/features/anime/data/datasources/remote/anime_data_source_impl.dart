@@ -338,7 +338,8 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
     }
 
     for (final element in downloadElement) {
-      String serverQuality = element.getElementsByTagName('strong').first.text;
+      String serverQuality =
+          element.getElementsByTagName('strong').first.text.trim();
       for (final server in element.getElementsByTagName('> span > a')) {
         String mirror = server.text.trim().toLowerCase();
         if (mirror.contains('kraken')) {

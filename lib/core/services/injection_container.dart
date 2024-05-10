@@ -17,6 +17,7 @@ import 'package:raijin/features/anime/domain/usecases/anime_get_use_case.dart';
 import 'package:raijin/features/anime/domain/usecases/anime_get_video_use_case.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_complete_bloc/anime_complete_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime_detail_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_history_bloc/anime_history_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_more_bloc/anime_more_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_movie_bloc/anime_movie_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_new_bloc/anime_bloc.dart';
@@ -83,10 +84,12 @@ Future<void> init() async {
   sl.registerFactory<AnimeDetailBloc>(
     () => AnimeDetailBloc(animeGetDetailUseCase: sl()),
   );
-
   sl.registerFactory(
     () => AnimeVideoBloc(
-        animeGetVideoUseCase: sl(), toastUseCase: sl(), controller: sl()),
+      animeGetVideoUseCase: sl(),
+      toastUseCase: sl(),
+      controller: sl(),
+    ),
   );
   sl.registerFactory(
     () => AnimeScheduleBloc(animeGetScheduleUseCase: sl(), toastUseCase: sl()),
@@ -101,6 +104,9 @@ Future<void> init() async {
     () => AnimeMovieBloc(
       animeGetMovieUseCase: sl(),
     ),
+  );
+  sl.registerFactory<AnimeHistoryBloc>(
+    () => AnimeHistoryBloc(),
   );
 
   // Datasource

@@ -56,7 +56,7 @@ class DownloadUseCase extends UseCase<void, DownloadParams> {
       allowCellular: true,
       openFileFromNotification: true,
       showNotification: true,
-      fileName: fileName,
+      fileName: '$fileName.mkv',
     );
   }
 }

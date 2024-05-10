@@ -12,7 +12,7 @@ class AnimeEpisodeCardShimmer extends StatelessWidget {
       highlightColor: onBackgroundColor(context: context).withOpacity(0.3),
       child: Container(
         decoration: BoxDecoration(
-          color: kMainAccentColor.withOpacity(0.1),
+          color: primaryColor(context: context).withOpacity(0.1),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(

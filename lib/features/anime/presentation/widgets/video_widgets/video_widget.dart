@@ -14,6 +14,7 @@ import 'package:raijin/core/usecases/more_usecase/more_use_case.dart';
 import 'package:raijin/core/usecases/url_launcher_use_case/url_launcher_use_case.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/data/models/video_model/video_model.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_history_bloc/anime_history_bloc.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:iconsax/iconsax.dart';
@@ -40,11 +41,13 @@ class _VideoWidgetState extends State<VideoWidget> {
   late AnimeVideoBloc _bloc;
   late VideoPlayerController _controller;
   late Timer _timer;
+  late Timer _historyTimer;
   late double _devicesWidth;
   late double? _width;
   late double? _height;
   late double _sliderPosition;
   late double _playbackSpeed;
+  late bool _firstInstance;
   late bool _initialized;
   late bool _loading;
   late bool _landscape;
@@ -54,9 +57,11 @@ class _VideoWidgetState extends State<VideoWidget> {
   late bool _complete;
   late bool _shifting;
   late int _showControlDuration;
+  late int _addHistoryDuration;
   late int _duration;
   late int _position;
   late String _quality;
+  late String _title;
   late String _endpoint;
   late String _poster;
   late String _navigation;
@@ -68,6 +73,7 @@ class _VideoWidgetState extends State<VideoWidget> {
     _duration = 0;
     _position = 0;
     _showControlDuration = 3;
+    _addHistoryDuration = 5;
     _playbackSpeed = 1.0;
     _sliderPosition = _duration / _position;
     _loading = true;
@@ -77,7 +83,10 @@ class _VideoWidgetState extends State<VideoWidget> {
     _buffering = false;
     _complete = false;
     _shifting = false;
+    _firstInstance = true;
     _quality = '720p';
+    _poster = '';
+    _title = 'Raijin Anime';
     super.initState();
   }
 
@@ -140,7 +149,9 @@ class _VideoWidgetState extends State<VideoWidget> {
                 // }
                 return Column(
                   children: [
-                    _loading ? _buildLoading() : _buildLoaded(state),
+                    _loading && !_shifting
+                        ? _buildLoading()
+                        : _buildLoaded(state),
                   ],
                 );
               },
@@ -170,6 +181,37 @@ class _VideoWidgetState extends State<VideoWidget> {
     });
   }
 
+  // Add History to firestore
+  void _addAnimeHistory({required AnimeVideoState state}) {
+    const seconds = Duration(seconds: 1);
+    _historyTimer = Timer.periodic(seconds, (timer) {
+      if(_addHistoryDuration == 0) {
+        context.read<AnimeHistoryBloc>().add(
+          AnimeHistoryEvent.addAnimeHistory(
+            video: VideoModel(
+              quality: _quality,
+              mirror: state.videoList.first.mirror,
+              endpoint: _endpoint,
+              baseUrl: state.videoList.first.baseUrl,
+              poster: _poster,
+              title: _title,
+              synopsis: state.videoList.first.synopsis,
+              thumbnail: state.videoList.first.thumbnail,
+              genre: state.videoList.first.genre,
+              anotherEpisode: state.videoList.first.anotherEpisode,
+            ),
+          ),
+        );
+      }
+      else if(_addHistoryDuration > 0) {
+        _addHistoryDuration--;
+      } else {
+        _historyTimer.cancel();
+      }
+    });
+    
+  }
+
   // Build the controll
   _buildVideoControll() {
     return BlocBuilder<AnimeVideoBloc, AnimeVideoState>(
@@ -181,7 +223,9 @@ class _VideoWidgetState extends State<VideoWidget> {
         if (_loading) {
           return const SizedBox();
         } else {
-          _poster = state.videoList.first.thumbnail;
+          if (_poster == '') {
+            _poster = state.videoList.first.thumbnail;
+          }
 
           void play() {
             // when initialize and loading state become false, then play video based on playing state
@@ -212,13 +256,31 @@ class _VideoWidgetState extends State<VideoWidget> {
               child: AspectRatio(
                 aspectRatio: 16 / 9,
                 child: () {
-                  if (!_initialized && !_loading && !_shifting) {
+                  if (!_initialized && !_loading || _shifting) {
                     return Stack(
                       children: [
                         Center(
                           child: CachedNetworkImage(imageUrl: _poster),
                         ),
-                        const Positioned.fill(child: LoadingWidget())
+                        const Positioned.fill(child: LoadingWidget()),
+                        Positioned.fill(
+                          child: () {
+                            if (_shifting) {
+                              return ClipRRect(
+                                child: BackdropFilter(
+                                  filter: ImageFilter.blur(
+                                    sigmaX: 20,
+                                    sigmaY: 20,
+                                  ),
+                                  child: const Center(
+                                    child: LoadingWidget(),
+                                  ),
+                                ),
+                              );
+                            }
+                            return const SizedBox();
+                          }(),
+                        ),
                       ],
                     );
                   } else {
@@ -718,7 +780,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                             quality,
                             style: TextStyle(
                               color: () {
-                                if (_quality.trim() == quality.trim()) {
+                                if (_quality == quality) {
                                   return primaryColor(
                                     context: context,
                                   );
@@ -818,21 +880,53 @@ class _VideoWidgetState extends State<VideoWidget> {
     return BlocBuilder<AnimeVideoBloc, AnimeVideoState>(
       bloc: BlocProvider.of<AnimeVideoBloc>(context),
       builder: (context, state) {
-        final bool loading = state.loading;
-        if (loading) {
+        if (_firstInstance) {
+          if (_loading != state.loading) {
+            WidgetsBinding.instance.addPostFrameCallback((_) async {
+              setState(() {
+                _loading = state.loading;
+              });
+            });
+          }
+        }
+        if (_loading && !_shifting) {
           return const SizedBox();
         } else {
-          // setState(() {
-          //   _loading = false;
-          // });
-          if (!_initialized) {
-            final uri = Uri.parse(state.videoList.first.endpoint);
+          if (!_initialized && _title != state.videoList.first.title) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              FToast().showToast(child: Text(state.videoList.first.title));
+            });
+            _title = state.videoList.first.title;
+            // initialize the endpoint
+            _endpoint = state.videoList.first.endpoint;
+            // change quality based on state
+            for (var element in state.videoList) {
+              print(
+                  '${element.quality} == $_quality => ${element.quality == _quality}');
+              if (element.quality == _quality) {
+                _endpoint = element.endpoint;
+                // break;
+              }
+            }
+            if (_shifting) {
+              _controller.dispose();
+            }
+            final uri = Uri.parse(_endpoint);
             _controller = VideoPlayerController.contentUri(uri)
               ..initialize().then(
                 (value) {
                   _controller.play();
-                  _initialized = true;
-                  _loading = false;
+                  WidgetsBinding.instance.addPostFrameCallback((_) async {
+                    setState(() {
+                      _initialized = true;
+                      _firstInstance = false;
+                      _buffering = false;
+                      _shifting = false;
+                      _shifting = false;
+                      _loading = false;
+                      _playing = true;
+                    });
+                  });
                   _controller.addListener(
                     () {
                       _duration = _controller.value.duration.inSeconds;
@@ -843,16 +937,16 @@ class _VideoWidgetState extends State<VideoWidget> {
                       if (_showControlDuration == 0 && _showControll == true) {
                         _hideControll(false);
                       }
+                      if (_position % 5 == 0) {
+                        _addAnimeHistory(state: state);
+                      }
                       setState(() {});
                     },
                   );
                   _autoHideControl();
                 },
               );
-            // WidgetsBinding.instance.addPostFrameCallback((_) {
-            // });
           }
-
           return SizedBox(
             width: _width,
             height: _height,
@@ -982,7 +1076,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                         _downloadVideo(
                           title: state.videoList.first.title,
                           quality: _quality,
-                          endpoint: state.videoList.first.endpoint,
+                          endpoint: _endpoint,
                         );
                       },
                     ),
@@ -1204,10 +1298,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                                                                 index]
                                                             .title,
                                                         quality: _quality,
-                                                        endpoint:
-                                                            anotherEpisode[
-                                                                    index]
-                                                                .endpoint,
+                                                        endpoint: _endpoint,
                                                       );
                                                     },
                                                   ),
@@ -1221,16 +1312,10 @@ class _VideoWidgetState extends State<VideoWidget> {
                                   );
                                 },
                                 onTap: () {
-                                  _controller.pause();
-                                  setState(() {
-                                    _buffering = true;
-                                    _initialized = false;
-                                    _shifting = true;
-                                  });
-                                  _bloc.add(
-                                    AnimeVideoEvent.getVideo(
-                                      endpoint: anotherEpisode[index].endpoint,
-                                    ),
+                                  _changeEpisode(
+                                    endpoint: anotherEpisode[index].endpoint,
+                                    title: anotherEpisode[index].title,
+                                    thumbnail: anotherEpisode[index].thumbnail!,
                                   );
                                 },
                                 splashColor: primaryColor(
@@ -1269,6 +1354,7 @@ class _VideoWidgetState extends State<VideoWidget> {
       _buffering = true;
       _initialized = false;
       _shifting = true;
+      _poster = thumbnail;
     });
     _bloc.add(
       AnimeVideoEvent.getVideo(

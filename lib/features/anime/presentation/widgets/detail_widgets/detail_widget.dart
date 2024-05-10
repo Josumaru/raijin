@@ -140,7 +140,9 @@ class _DetailWidgetState extends State<DetailWidget> {
                         splashBorderRadius: kMainBorderRadius,
                         dividerColor:
                             Theme.of(context).primaryColor.withOpacity(0),
-                        labelStyle: const TextStyle(color: kMainAccentColor),
+                        labelStyle: TextStyle(
+                          color: primaryColor(context: context),
+                        ),
                         tabs: const [
                           Tab(
                             child: Text('Overview'),
@@ -339,7 +341,6 @@ _buildOverview(AnimeModel animeModel, BuildContext context) {
           padding: kAllPadding,
           child: TrailerWidget(url: animeModel.trailer!),
         ),
-        
         Padding(
           padding: kAllPadding,
           child: OutlinedButton(

@@ -297,7 +297,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                        color: kMainAccentColor.withOpacity(0.2),
+                        color: primaryColor(context: context).withOpacity(0.2),
                       ),
                       child: const CupertinoActivityIndicator(),
                     ),

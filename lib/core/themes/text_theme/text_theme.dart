@@ -10,9 +10,9 @@ class TTextTheme {
     headlineSmall: const TextStyle().copyWith(fontSize: 12.0, fontWeight: FontWeight.bold, color: kPrimaryColor),
     
     //Body
-    bodyLarge: const TextStyle().copyWith(fontSize: 14.0, fontWeight: FontWeight.w600, color: kMainLightTextColor),
-    bodyMedium: const TextStyle().copyWith(fontSize: 14.0, fontWeight: FontWeight.normal, color: kMainLightTextColor),
-    bodySmall: const TextStyle().copyWith(fontSize: 14.0, fontWeight: FontWeight.w400, color: kMainLightTextColor.withOpacity(0.5)),
+    bodyLarge: const TextStyle().copyWith(fontSize: 16.0, fontWeight: FontWeight.w600, color: kMainLightTextColor),
+    bodyMedium: const TextStyle().copyWith(fontSize: 16.0, fontWeight: FontWeight.normal, color: kMainLightTextColor),
+    bodySmall: const TextStyle().copyWith(fontSize: 16.0, fontWeight: FontWeight.w400, color: kMainLightTextColor.withOpacity(0.5)),
 
     // Title
     titleLarge: const TextStyle().copyWith(fontSize: 16.0, fontWeight: FontWeight.w600, color: kMainLightTextColor),
@@ -33,9 +33,9 @@ class TTextTheme {
     headlineSmall: const TextStyle().copyWith(fontSize: 12.0, fontWeight: FontWeight.bold, color: kPrimaryColor),
     
     //Body
-    bodyLarge: const TextStyle().copyWith(fontSize: 14.0, fontWeight: FontWeight.w600, color: kMainDarkTextColor),
-    bodyMedium: const TextStyle().copyWith(fontSize: 14.0, fontWeight: FontWeight.normal, color: kMainDarkTextColor),
-    bodySmall: const TextStyle().copyWith(fontSize: 14.0, fontWeight: FontWeight.w400, color: kMainDarkTextColor.withOpacity(0.5)),
+    bodyLarge: const TextStyle().copyWith(fontSize: 16.0, fontWeight: FontWeight.w600, color: kMainDarkTextColor),
+    bodyMedium: const TextStyle().copyWith(fontSize: 16.0, fontWeight: FontWeight.normal, color: kMainDarkTextColor),
+    bodySmall: const TextStyle().copyWith(fontSize: 16.0, fontWeight: FontWeight.w400, color: kMainDarkTextColor.withOpacity(0.5)),
 
     // Title
     titleLarge: const TextStyle().copyWith(fontSize: 16.0, fontWeight: FontWeight.w600, color: kMainDarkTextColor),

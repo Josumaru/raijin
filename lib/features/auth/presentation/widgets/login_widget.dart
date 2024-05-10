@@ -66,12 +66,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
-                    const Text(
+                    Text(
                       'back,',
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        color: kMainAccentColor,
+                        color: primaryColor(context: context),
                       ),
                     ),
                   ],

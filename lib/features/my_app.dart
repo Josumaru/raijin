@@ -9,6 +9,7 @@ import 'package:raijin/core/services/injection_container.dart';
 import 'package:raijin/core/themes/theme.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_complete_bloc/anime_complete_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime_detail_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_history_bloc/anime_history_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_more_bloc/anime_more_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_movie_bloc/anime_movie_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_new_bloc/anime_bloc.dart';
@@ -94,8 +95,6 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
         ),
-        BlocProvider(create: (context) => sl<AnimeDetailBloc>()),
-        BlocProvider(create: (context) => sl<AnimeVideoBloc>()),
         BlocProvider(
           create: (context) => sl<AnimeScheduleBloc>()
             ..add(
@@ -110,7 +109,6 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => sl<AnimeSearchBloc>(),
         ),
-        BlocProvider<AnimeMoreBloc>(create: (context) => sl<AnimeMoreBloc>()),
         BlocProvider<AnimeMovieBloc>(
           create: (context) => sl<AnimeMovieBloc>()
             ..add(
@@ -122,7 +120,11 @@ class _MyAppState extends State<MyApp> {
                 page: 1,
               ),
             ),
-        )
+        ),
+        BlocProvider<AnimeMoreBloc>(create: (context) => sl<AnimeMoreBloc>()),
+        BlocProvider(create: (context) => sl<AnimeDetailBloc>()),
+        BlocProvider(create: (context) => sl<AnimeVideoBloc>()),
+        BlocProvider(create: (context)=> sl<AnimeHistoryBloc>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
