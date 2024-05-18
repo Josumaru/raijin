@@ -2,7 +2,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:raijin/core/commons/widgets/toast_widget.dart';
 import 'package:raijin/core/usecases/use_case.dart';
 
-class ToastUseCase extends UseCase {
+class ToastUseCase extends UseCase<void, String> {
   ToastUseCase({required this.fToast});
   final FToast fToast;
 
@@ -11,10 +11,10 @@ class ToastUseCase extends UseCase {
     fToast.removeCustomToast();
     fToast.showToast(
       child: ToastWidget(
-        message: params,
+        message: params!,
       ),
       gravity: ToastGravity.BOTTOM,
-      toastDuration: const Duration(seconds: 2),
+      toastDuration: const Duration(seconds: 8),
     );
   }
 }

@@ -42,7 +42,7 @@ class MainPage extends StatelessWidget {
       _buildNavBarItem(
           context: context, title: 'Discover', icon: Iconsax.discover),
       _buildNavBarItem(
-          context: context, title: 'Me', icon: Iconsax.user_octagon),
+          context: context, title: 'Me', icon: Iconsax.user_octagon,),
     ];
   }
 
@@ -69,3 +69,4 @@ class MainPage extends StatelessWidget {
     ];
   }
 }
+      

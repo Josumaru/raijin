@@ -2,17 +2,17 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:raijin/core/commons/widgets/anime_video_description_button.dart';
 import 'package:raijin/core/commons/widgets/anime_video_icon_button.dart';
-import 'package:raijin/core/services/injection_container.dart';
+import 'package:raijin/core/constants/constants.dart';
 import 'package:raijin/core/usecases/download_usecase/download_use_case.dart';
 import 'package:raijin/core/usecases/more_usecase/more_use_case.dart';
 import 'package:raijin/core/usecases/url_launcher_use_case/url_launcher_use_case.dart';
-import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/data/models/video_model/video_model.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_history_bloc/anime_history_bloc.dart';
 import 'package:video_player/video_player.dart';
@@ -62,7 +62,7 @@ class _VideoWidgetState extends State<VideoWidget> {
   late int _position;
   late String _quality;
   late String _title;
-  late String _endpoint;
+  late String _videoEndpoint;
   late String _poster;
   late String _navigation;
   late Orientation _orientation;
@@ -73,7 +73,7 @@ class _VideoWidgetState extends State<VideoWidget> {
     _duration = 0;
     _position = 0;
     _showControlDuration = 3;
-    _addHistoryDuration = 5;
+    _addHistoryDuration = 10;
     _playbackSpeed = 1.0;
     _sliderPosition = _duration / _position;
     _loading = true;
@@ -143,15 +143,15 @@ class _VideoWidgetState extends State<VideoWidget> {
             BlocBuilder<AnimeVideoBloc, AnimeVideoState>(
               bloc: BlocProvider.of<AnimeVideoBloc>(context),
               builder: (context, state) {
-                // _loading = state.loading;
-                // if (state.initialize) {
-                //   FToast().showToast(child: const Text('Loading mas'));
-                // }
                 return Column(
                   children: [
-                    _loading && !_shifting
-                        ? _buildLoading()
-                        : _buildLoaded(state),
+                    () {
+                      if (_loading && !_shifting) {
+                        return _buildLoading();
+                      } else {
+                        return _buildLoaded(state);
+                      }
+                    }()
                   ],
                 );
               },
@@ -184,32 +184,38 @@ class _VideoWidgetState extends State<VideoWidget> {
   // Add History to firestore
   void _addAnimeHistory({required AnimeVideoState state}) {
     const seconds = Duration(seconds: 1);
+    _addHistoryDuration = 10;
     _historyTimer = Timer.periodic(seconds, (timer) {
-      if(_addHistoryDuration == 0) {
-        context.read<AnimeHistoryBloc>().add(
-          AnimeHistoryEvent.addAnimeHistory(
-            video: VideoModel(
-              quality: _quality,
-              mirror: state.videoList.first.mirror,
-              endpoint: _endpoint,
-              baseUrl: state.videoList.first.baseUrl,
-              poster: _poster,
-              title: _title,
-              synopsis: state.videoList.first.synopsis,
-              thumbnail: state.videoList.first.thumbnail,
-              genre: state.videoList.first.genre,
-              anotherEpisode: state.videoList.first.anotherEpisode,
-            ),
-          ),
-        );
-      }
-      else if(_addHistoryDuration > 0) {
+      if (_addHistoryDuration == 0) {
+        if (!_shifting && !_buffering && _playing) {
+          context.read<AnimeHistoryBloc>().add(
+                AnimeHistoryEvent.addAnimeHistory(
+                  video: VideoModel(
+                    quality: _quality,
+                    mirror: state.videoList.first.mirror,
+                    endpoint: state.videoList.first.endpoint.split(kAnimeEndpoint).first.replaceAll('/', ''),
+                    baseUrl: state.videoList.first.baseUrl,
+                    poster: _poster,
+                    title: _title,
+                    synopsis: state.videoList.first.synopsis,
+                    thumbnail: state.videoList.first.thumbnail,
+                    genre: state.videoList.first.genre,
+                    anotherEpisode: state.videoList.first.anotherEpisode,
+                    duration: _duration,
+                    position: _position,
+                    videoEndpoint: _videoEndpoint,
+                    timestamp: FieldValue.serverTimestamp(),
+                  ),
+                ),
+              );
+        }
+        _addHistoryDuration = 10;
+      } else if (_addHistoryDuration > 0) {
         _addHistoryDuration--;
       } else {
         _historyTimer.cancel();
       }
     });
-    
   }
 
   // Build the controll
@@ -230,14 +236,16 @@ class _VideoWidgetState extends State<VideoWidget> {
           void play() {
             // when initialize and loading state become false, then play video based on playing state
             if (_initialized) {
+              if (!_playing) {
+                _controller.play();
+                _addAnimeHistory(state: state);
+                Wakelock.enable();
+              } else {
+                _controller.pause();
+                _historyTimer.cancel();
+                Wakelock.disable();
+              }
               setState(() {
-                if (!_playing) {
-                  _controller.play();
-                  Wakelock.enable();
-                } else {
-                  _controller.pause();
-                  Wakelock.disable();
-                }
                 _playing = !_playing;
               });
             }
@@ -737,15 +745,15 @@ class _VideoWidgetState extends State<VideoWidget> {
                 delegate: SliverChildBuilderDelegate(
                   childCount: videoList.length,
                   (context, index) {
-                    final String endpoint = videoList[index].endpoint;
+                    final String videoEndpoint = videoList[index].videoEndpoint;
                     final String quality = videoList[index].quality;
                     return InkWell(
                       onTap: () async {
                         if (_quality != quality) {
                           _quality = quality;
                           Navigator.of(context).pop();
-                          final uri = Uri.parse(endpoint);
-                          if (!(endpoint == _controller.dataSource)) {
+                          final uri = Uri.parse(videoEndpoint);
+                          if (!(videoEndpoint == _controller.dataSource)) {
                             VideoPlayerController newController =
                                 VideoPlayerController.contentUri(uri);
                             await newController.initialize().then((value) {
@@ -893,29 +901,25 @@ class _VideoWidgetState extends State<VideoWidget> {
           return const SizedBox();
         } else {
           if (!_initialized && _title != state.videoList.first.title) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              FToast().showToast(child: Text(state.videoList.first.title));
-            });
             _title = state.videoList.first.title;
             // initialize the endpoint
-            _endpoint = state.videoList.first.endpoint;
+            _videoEndpoint = state.videoList.first.videoEndpoint;
             // change quality based on state
             for (var element in state.videoList) {
-              print(
-                  '${element.quality} == $_quality => ${element.quality == _quality}');
               if (element.quality == _quality) {
-                _endpoint = element.endpoint;
+                _videoEndpoint = element.videoEndpoint;
                 // break;
               }
             }
             if (_shifting) {
               _controller.dispose();
             }
-            final uri = Uri.parse(_endpoint);
+            final uri = Uri.parse(_videoEndpoint);
             _controller = VideoPlayerController.contentUri(uri)
               ..initialize().then(
                 (value) {
                   _controller.play();
+                  _addAnimeHistory(state: state);
                   WidgetsBinding.instance.addPostFrameCallback((_) async {
                     setState(() {
                       _initialized = true;
@@ -934,11 +938,9 @@ class _VideoWidgetState extends State<VideoWidget> {
                       _buffering = _controller.value.isBuffering;
                       _complete = _controller.value.isCompleted;
                       _sliderPosition = _position / _duration;
+                      _complete = _controller.value.isCompleted;
                       if (_showControlDuration == 0 && _showControll == true) {
                         _hideControll(false);
-                      }
-                      if (_position % 5 == 0) {
-                        _addAnimeHistory(state: state);
                       }
                       setState(() {});
                     },
@@ -1068,6 +1070,7 @@ class _VideoWidgetState extends State<VideoWidget> {
               crossAxisAlignment: kCrossAxisAlignmentStart(),
               children: [
                 Row(
+                  mainAxisAlignment: kMainAxisAligmentSpaceEvenly(),
                   children: [
                     AnimeVideoDescriptionButton(
                       icon: Iconsax.directbox_receive,
@@ -1076,7 +1079,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                         _downloadVideo(
                           title: state.videoList.first.title,
                           quality: _quality,
-                          endpoint: _endpoint,
+                          endpoint: _videoEndpoint,
                         );
                       },
                     ),
@@ -1298,7 +1301,8 @@ class _VideoWidgetState extends State<VideoWidget> {
                                                                 index]
                                                             .title,
                                                         quality: _quality,
-                                                        endpoint: _endpoint,
+                                                        endpoint:
+                                                            _videoEndpoint,
                                                       );
                                                     },
                                                   ),
@@ -1316,7 +1320,9 @@ class _VideoWidgetState extends State<VideoWidget> {
                                     endpoint: anotherEpisode[index].endpoint,
                                     title: anotherEpisode[index].title,
                                     thumbnail: anotherEpisode[index].thumbnail!,
+                                    baseUrl: state.videoList.first.baseUrl,
                                   );
+                                  _historyTimer.cancel();
                                 },
                                 splashColor: primaryColor(
                                   context: context,
@@ -1348,6 +1354,7 @@ class _VideoWidgetState extends State<VideoWidget> {
     required String endpoint,
     required String title,
     required String thumbnail,
+    required String baseUrl,
   }) {
     _controller.pause();
     setState(() {
@@ -1359,6 +1366,7 @@ class _VideoWidgetState extends State<VideoWidget> {
     _bloc.add(
       AnimeVideoEvent.getVideo(
         endpoint: endpoint,
+        baseUrl: baseUrl,
       ),
     );
   }

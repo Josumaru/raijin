@@ -20,6 +20,7 @@ abstract class AnimeRepository {
   });
   Future<Either<Failure<String>, List<VideoModel>>> animeGetVideo({
     required String endpoint,
+    required String baseUrl,
   });
   Future<Either<Failure<String>, List<ScheduleModel>>> animeGetSchedule({
     required String day,

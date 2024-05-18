@@ -20,8 +20,10 @@ class AnimeVideoDescriptionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double width = widthMediaQuery(context: context) / 3 - kPadding;
     return SizedBox(
-      width: widthMediaQuery(context: context) / 3,
+      width: width,
+      height: width,
       child: Padding(
         padding: kVerticalPadding,
         child: InkWell(

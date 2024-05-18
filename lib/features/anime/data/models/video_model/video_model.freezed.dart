@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$VideoModel {
   String get quality => throw _privateConstructorUsedError;
   String get mirror => throw _privateConstructorUsedError;
+  String get videoEndpoint => throw _privateConstructorUsedError;
   String get endpoint => throw _privateConstructorUsedError;
   String get baseUrl => throw _privateConstructorUsedError;
   String get poster => throw _privateConstructorUsedError;
@@ -30,7 +31,7 @@ mixin _$VideoModel {
   String? get nextEpisode => throw _privateConstructorUsedError;
   int? get position => throw _privateConstructorUsedError;
   int? get duration => throw _privateConstructorUsedError;
-  DateTime? get date => throw _privateConstructorUsedError;
+  FieldValue? get timestamp => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $VideoModelCopyWith<VideoModel> get copyWith =>
@@ -46,6 +47,7 @@ abstract class $VideoModelCopyWith<$Res> {
   $Res call(
       {String quality,
       String mirror,
+      String videoEndpoint,
       String endpoint,
       String baseUrl,
       String poster,
@@ -58,7 +60,7 @@ abstract class $VideoModelCopyWith<$Res> {
       String? nextEpisode,
       int? position,
       int? duration,
-      DateTime? date});
+      FieldValue? timestamp});
 }
 
 /// @nodoc
@@ -76,6 +78,7 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
   $Res call({
     Object? quality = null,
     Object? mirror = null,
+    Object? videoEndpoint = null,
     Object? endpoint = null,
     Object? baseUrl = null,
     Object? poster = null,
@@ -88,7 +91,7 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
     Object? nextEpisode = freezed,
     Object? position = freezed,
     Object? duration = freezed,
-    Object? date = freezed,
+    Object? timestamp = freezed,
   }) {
     return _then(_value.copyWith(
       quality: null == quality
@@ -98,6 +101,10 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
       mirror: null == mirror
           ? _value.mirror
           : mirror // ignore: cast_nullable_to_non_nullable
+              as String,
+      videoEndpoint: null == videoEndpoint
+          ? _value.videoEndpoint
+          : videoEndpoint // ignore: cast_nullable_to_non_nullable
               as String,
       endpoint: null == endpoint
           ? _value.endpoint
@@ -147,10 +154,10 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as int?,
-      date: freezed == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      timestamp: freezed == timestamp
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as FieldValue?,
     ) as $Val);
   }
 }
@@ -166,6 +173,7 @@ abstract class _$$VideoModelImplCopyWith<$Res>
   $Res call(
       {String quality,
       String mirror,
+      String videoEndpoint,
       String endpoint,
       String baseUrl,
       String poster,
@@ -178,7 +186,7 @@ abstract class _$$VideoModelImplCopyWith<$Res>
       String? nextEpisode,
       int? position,
       int? duration,
-      DateTime? date});
+      FieldValue? timestamp});
 }
 
 /// @nodoc
@@ -194,6 +202,7 @@ class __$$VideoModelImplCopyWithImpl<$Res>
   $Res call({
     Object? quality = null,
     Object? mirror = null,
+    Object? videoEndpoint = null,
     Object? endpoint = null,
     Object? baseUrl = null,
     Object? poster = null,
@@ -206,7 +215,7 @@ class __$$VideoModelImplCopyWithImpl<$Res>
     Object? nextEpisode = freezed,
     Object? position = freezed,
     Object? duration = freezed,
-    Object? date = freezed,
+    Object? timestamp = freezed,
   }) {
     return _then(_$VideoModelImpl(
       quality: null == quality
@@ -216,6 +225,10 @@ class __$$VideoModelImplCopyWithImpl<$Res>
       mirror: null == mirror
           ? _value.mirror
           : mirror // ignore: cast_nullable_to_non_nullable
+              as String,
+      videoEndpoint: null == videoEndpoint
+          ? _value.videoEndpoint
+          : videoEndpoint // ignore: cast_nullable_to_non_nullable
               as String,
       endpoint: null == endpoint
           ? _value.endpoint
@@ -265,10 +278,10 @@ class __$$VideoModelImplCopyWithImpl<$Res>
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as int?,
-      date: freezed == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      timestamp: freezed == timestamp
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as FieldValue?,
     ));
   }
 }
@@ -276,9 +289,10 @@ class __$$VideoModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$VideoModelImpl extends _VideoModel {
-  _$VideoModelImpl(
+  const _$VideoModelImpl(
       {required this.quality,
       required this.mirror,
+      required this.videoEndpoint,
       required this.endpoint,
       required this.baseUrl,
       required this.poster,
@@ -291,7 +305,7 @@ class _$VideoModelImpl extends _VideoModel {
       this.nextEpisode,
       this.position,
       this.duration,
-      this.date})
+      this.timestamp})
       : _genre = genre,
         _anotherEpisode = anotherEpisode,
         super._();
@@ -300,6 +314,8 @@ class _$VideoModelImpl extends _VideoModel {
   final String quality;
   @override
   final String mirror;
+  @override
+  final String videoEndpoint;
   @override
   final String endpoint;
   @override
@@ -337,11 +353,11 @@ class _$VideoModelImpl extends _VideoModel {
   @override
   final int? duration;
   @override
-  final DateTime? date;
+  final FieldValue? timestamp;
 
   @override
   String toString() {
-    return 'VideoModel(quality: $quality, mirror: $mirror, endpoint: $endpoint, baseUrl: $baseUrl, poster: $poster, title: $title, synopsis: $synopsis, thumbnail: $thumbnail, genre: $genre, anotherEpisode: $anotherEpisode, prevEpisode: $prevEpisode, nextEpisode: $nextEpisode, position: $position, duration: $duration, date: $date)';
+    return 'VideoModel(quality: $quality, mirror: $mirror, videoEndpoint: $videoEndpoint, endpoint: $endpoint, baseUrl: $baseUrl, poster: $poster, title: $title, synopsis: $synopsis, thumbnail: $thumbnail, genre: $genre, anotherEpisode: $anotherEpisode, prevEpisode: $prevEpisode, nextEpisode: $nextEpisode, position: $position, duration: $duration, timestamp: $timestamp)';
   }
 
   @override
@@ -351,6 +367,8 @@ class _$VideoModelImpl extends _VideoModel {
             other is _$VideoModelImpl &&
             (identical(other.quality, quality) || other.quality == quality) &&
             (identical(other.mirror, mirror) || other.mirror == mirror) &&
+            (identical(other.videoEndpoint, videoEndpoint) ||
+                other.videoEndpoint == videoEndpoint) &&
             (identical(other.endpoint, endpoint) ||
                 other.endpoint == endpoint) &&
             (identical(other.baseUrl, baseUrl) || other.baseUrl == baseUrl) &&
@@ -371,7 +389,8 @@ class _$VideoModelImpl extends _VideoModel {
                 other.position == position) &&
             (identical(other.duration, duration) ||
                 other.duration == duration) &&
-            (identical(other.date, date) || other.date == date));
+            (identical(other.timestamp, timestamp) ||
+                other.timestamp == timestamp));
   }
 
   @override
@@ -379,6 +398,7 @@ class _$VideoModelImpl extends _VideoModel {
       runtimeType,
       quality,
       mirror,
+      videoEndpoint,
       endpoint,
       baseUrl,
       poster,
@@ -391,7 +411,7 @@ class _$VideoModelImpl extends _VideoModel {
       nextEpisode,
       position,
       duration,
-      date);
+      timestamp);
 
   @JsonKey(ignore: true)
   @override
@@ -401,9 +421,10 @@ class _$VideoModelImpl extends _VideoModel {
 }
 
 abstract class _VideoModel extends VideoModel {
-  factory _VideoModel(
+  const factory _VideoModel(
       {required final String quality,
       required final String mirror,
+      required final String videoEndpoint,
       required final String endpoint,
       required final String baseUrl,
       required final String poster,
@@ -416,13 +437,15 @@ abstract class _VideoModel extends VideoModel {
       final String? nextEpisode,
       final int? position,
       final int? duration,
-      final DateTime? date}) = _$VideoModelImpl;
-  _VideoModel._() : super._();
+      final FieldValue? timestamp}) = _$VideoModelImpl;
+  const _VideoModel._() : super._();
 
   @override
   String get quality;
   @override
   String get mirror;
+  @override
+  String get videoEndpoint;
   @override
   String get endpoint;
   @override
@@ -448,7 +471,7 @@ abstract class _VideoModel extends VideoModel {
   @override
   int? get duration;
   @override
-  DateTime? get date;
+  FieldValue? get timestamp;
   @override
   @JsonKey(ignore: true)
   _$$VideoModelImplCopyWith<_$VideoModelImpl> get copyWith =>

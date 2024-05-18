@@ -24,7 +24,7 @@ class DownloadUseCase extends UseCase<void, DownloadParams> {
           .any((task) => task.filename == fileName && task.progress < 100);
       final bool isDownloaded = existingTask
           .any((task) => task.filename == fileName && task.progress == 100);
-      print(existingTask[0].filename == fileName);
+
       if (isQueue) {
         ToastUseCase(fToast: sl<FToast>())
             .call(params: 'In Progress ${params.fileName} ');

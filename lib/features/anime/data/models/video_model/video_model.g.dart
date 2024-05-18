@@ -9,6 +9,7 @@ part of 'video_model.dart';
 VideoModel _$VideoModelFromJson(Map<String, dynamic> json) => VideoModel(
       quality: json['quality'] as String,
       mirror: json['mirror'] as String,
+      videoEndpoint: json['videoEndpoint'] as String,
       endpoint: json['endpoint'] as String,
       baseUrl: json['baseUrl'] as String,
       poster: json['poster'] as String,
@@ -23,14 +24,15 @@ VideoModel _$VideoModelFromJson(Map<String, dynamic> json) => VideoModel(
       nextEpisode: json['nextEpisode'] as String?,
       position: json['position'] as int?,
       duration: json['duration'] as int?,
-      date:
-          json['date'] == null ? null : DateTime.parse(json['date'] as String),
+      timestamp: _$JsonConverterFromJson<Object, FieldValue?>(
+          json['timestamp'], const ServerTimeStampConverter().fromJson),
     );
 
 Map<String, dynamic> _$VideoModelToJson(VideoModel instance) =>
     <String, dynamic>{
       'quality': instance.quality,
       'mirror': instance.mirror,
+      'videoEndpoint': instance.videoEndpoint,
       'endpoint': instance.endpoint,
       'baseUrl': instance.baseUrl,
       'poster': instance.poster,
@@ -43,5 +45,11 @@ Map<String, dynamic> _$VideoModelToJson(VideoModel instance) =>
       'nextEpisode': instance.nextEpisode,
       'position': instance.position,
       'duration': instance.duration,
-      'date': instance.date?.toIso8601String(),
+      'timestamp': const ServerTimeStampConverter().toJson(instance.timestamp),
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);

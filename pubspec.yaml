@@ -108,11 +108,11 @@ flutter:
   fonts:
     - family : Outfit
       fonts:
-        - asset: assets/fonts/Outfit-Light.ttf
+        - asset: assets/fonts/SF-Pro-Display-Light.otf
           weight: 300
-        - asset: assets/fonts/Outfit-Regular.ttf
+        - asset: assets/fonts/SF-Pro-Display-Regular.otf
           weight: 400
-        - asset: assets/fonts/Outfit-Bold.ttf
+        - asset: assets/fonts/SF-Pro-Display-Bold.otf
           weight: 700
   # fonts:
   #   - family: Schyler

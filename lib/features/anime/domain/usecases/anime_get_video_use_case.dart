@@ -12,7 +12,8 @@ class AnimeGetVideoUseCase {
 
   Future<Either<Failure<String>, List<VideoModel>>> call({
     required String endpoint,
+    required String baseUrl,
   }) async {
-    return await _animeRepository.animeGetVideo(endpoint: endpoint);
+    return await _animeRepository.animeGetVideo(endpoint: endpoint, baseUrl: baseUrl);
   }
 }

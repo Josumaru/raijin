@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,6 +19,7 @@ import 'package:raijin/features/anime/domain/usecases/anime_get_video_use_case.d
 import 'package:raijin/features/anime/presentation/blocs/anime_complete_bloc/anime_complete_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime_detail_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_history_bloc/anime_history_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_bookmark_bloc/anime_bookmark_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_more_bloc/anime_more_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_movie_bloc/anime_movie_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_new_bloc/anime_bloc.dart';
@@ -42,6 +44,10 @@ Future<void> init() async {
   // FirebaseAuth
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   sl.registerSingleton(firebaseAuth);
+
+  // Firestore
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  sl.registerSingleton(firestore);
 
   // Dio
   final Dio dio = Dio();
@@ -106,8 +112,9 @@ Future<void> init() async {
     ),
   );
   sl.registerFactory<AnimeHistoryBloc>(
-    () => AnimeHistoryBloc(),
+    () => AnimeHistoryBloc(firestore: sl(), user: sl()),
   );
+  sl.registerFactory<AnimeBookmarkBloc>(() => AnimeBookmarkBloc(firestore: sl()),);
 
   // Datasource
   sl.registerSingleton<AuthRemoteDataSource>(

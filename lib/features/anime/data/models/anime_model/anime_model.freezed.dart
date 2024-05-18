@@ -14,10 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-AnimeModel _$AnimeModelFromJson(Map<String, dynamic> json) {
-  return _AnimeModel.fromJson(json);
-}
-
 /// @nodoc
 mixin _$AnimeModel {
   String get title => throw _privateConstructorUsedError;
@@ -41,7 +37,6 @@ mixin _$AnimeModel {
   List<EpisodeModel>? get episodeList => throw _privateConstructorUsedError;
   int? get totalEpisode => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $AnimeModelCopyWith<AnimeModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -344,8 +339,8 @@ class __$$AnimeModelImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$AnimeModelImpl implements _AnimeModel {
+
+class _$AnimeModelImpl extends _AnimeModel {
   const _$AnimeModelImpl(
       {required this.title,
       required this.endpoint,
@@ -368,10 +363,8 @@ class _$AnimeModelImpl implements _AnimeModel {
       final List<EpisodeModel>? episodeList,
       this.totalEpisode})
       : _genre = genre,
-        _episodeList = episodeList;
-
-  factory _$AnimeModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$AnimeModelImplFromJson(json);
+        _episodeList = episodeList,
+        super._();
 
   @override
   final String title;
@@ -470,7 +463,6 @@ class _$AnimeModelImpl implements _AnimeModel {
                 other.totalEpisode == totalEpisode));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -501,16 +493,9 @@ class _$AnimeModelImpl implements _AnimeModel {
   @pragma('vm:prefer-inline')
   _$$AnimeModelImplCopyWith<_$AnimeModelImpl> get copyWith =>
       __$$AnimeModelImplCopyWithImpl<_$AnimeModelImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$AnimeModelImplToJson(
-      this,
-    );
-  }
 }
 
-abstract class _AnimeModel implements AnimeModel {
+abstract class _AnimeModel extends AnimeModel {
   const factory _AnimeModel(
       {required final String title,
       required final String endpoint,
@@ -532,9 +517,7 @@ abstract class _AnimeModel implements AnimeModel {
       final String? trailer,
       final List<EpisodeModel>? episodeList,
       final int? totalEpisode}) = _$AnimeModelImpl;
-
-  factory _AnimeModel.fromJson(Map<String, dynamic> json) =
-      _$AnimeModelImpl.fromJson;
+  const _AnimeModel._() : super._();
 
   @override
   String get title;

@@ -17,19 +17,20 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AnimeVideoEvent {
   String get endpoint => throw _privateConstructorUsedError;
+  String get baseUrl => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String endpoint) getVideo,
+    required TResult Function(String endpoint, String baseUrl) getVideo,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String endpoint)? getVideo,
+    TResult? Function(String endpoint, String baseUrl)? getVideo,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String endpoint)? getVideo,
+    TResult Function(String endpoint, String baseUrl)? getVideo,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -61,7 +62,7 @@ abstract class $AnimeVideoEventCopyWith<$Res> {
           AnimeVideoEvent value, $Res Function(AnimeVideoEvent) then) =
       _$AnimeVideoEventCopyWithImpl<$Res, AnimeVideoEvent>;
   @useResult
-  $Res call({String endpoint});
+  $Res call({String endpoint, String baseUrl});
 }
 
 /// @nodoc
@@ -78,11 +79,16 @@ class _$AnimeVideoEventCopyWithImpl<$Res, $Val extends AnimeVideoEvent>
   @override
   $Res call({
     Object? endpoint = null,
+    Object? baseUrl = null,
   }) {
     return _then(_value.copyWith(
       endpoint: null == endpoint
           ? _value.endpoint
           : endpoint // ignore: cast_nullable_to_non_nullable
+              as String,
+      baseUrl: null == baseUrl
+          ? _value.baseUrl
+          : baseUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -96,7 +102,7 @@ abstract class _$$GetVideoImplCopyWith<$Res>
       __$$GetVideoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String endpoint});
+  $Res call({String endpoint, String baseUrl});
 }
 
 /// @nodoc
@@ -111,11 +117,16 @@ class __$$GetVideoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? endpoint = null,
+    Object? baseUrl = null,
   }) {
     return _then(_$GetVideoImpl(
       endpoint: null == endpoint
           ? _value.endpoint
           : endpoint // ignore: cast_nullable_to_non_nullable
+              as String,
+      baseUrl: null == baseUrl
+          ? _value.baseUrl
+          : baseUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -124,14 +135,16 @@ class __$$GetVideoImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$GetVideoImpl implements _GetVideo {
-  const _$GetVideoImpl({required this.endpoint});
+  const _$GetVideoImpl({required this.endpoint, required this.baseUrl});
 
   @override
   final String endpoint;
+  @override
+  final String baseUrl;
 
   @override
   String toString() {
-    return 'AnimeVideoEvent.getVideo(endpoint: $endpoint)';
+    return 'AnimeVideoEvent.getVideo(endpoint: $endpoint, baseUrl: $baseUrl)';
   }
 
   @override
@@ -140,11 +153,12 @@ class _$GetVideoImpl implements _GetVideo {
         (other.runtimeType == runtimeType &&
             other is _$GetVideoImpl &&
             (identical(other.endpoint, endpoint) ||
-                other.endpoint == endpoint));
+                other.endpoint == endpoint) &&
+            (identical(other.baseUrl, baseUrl) || other.baseUrl == baseUrl));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, endpoint);
+  int get hashCode => Object.hash(runtimeType, endpoint, baseUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -155,27 +169,27 @@ class _$GetVideoImpl implements _GetVideo {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String endpoint) getVideo,
+    required TResult Function(String endpoint, String baseUrl) getVideo,
   }) {
-    return getVideo(endpoint);
+    return getVideo(endpoint, baseUrl);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String endpoint)? getVideo,
+    TResult? Function(String endpoint, String baseUrl)? getVideo,
   }) {
-    return getVideo?.call(endpoint);
+    return getVideo?.call(endpoint, baseUrl);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String endpoint)? getVideo,
+    TResult Function(String endpoint, String baseUrl)? getVideo,
     required TResult orElse(),
   }) {
     if (getVideo != null) {
-      return getVideo(endpoint);
+      return getVideo(endpoint, baseUrl);
     }
     return orElse();
   }
@@ -210,10 +224,14 @@ class _$GetVideoImpl implements _GetVideo {
 }
 
 abstract class _GetVideo implements AnimeVideoEvent {
-  const factory _GetVideo({required final String endpoint}) = _$GetVideoImpl;
+  const factory _GetVideo(
+      {required final String endpoint,
+      required final String baseUrl}) = _$GetVideoImpl;
 
   @override
   String get endpoint;
+  @override
+  String get baseUrl;
   @override
   @JsonKey(ignore: true)
   _$$GetVideoImplCopyWith<_$GetVideoImpl> get copyWith =>

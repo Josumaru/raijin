@@ -26,7 +26,7 @@ class AnimeVideoBloc extends Bloc<AnimeVideoEvent, AnimeVideoState> {
     on<AnimeVideoEvent>(
       (event, emit) async {
         await event.map(
-          getVideo: (value) => _getVideo(emit: emit, endpoint: value.endpoint),
+          getVideo: (value) => _getVideo(emit: emit, endpoint: value.endpoint, baseUrl: value.baseUrl),
         );
         // await event.map(
         //   getVideo: (value) => _getVideo(
@@ -70,9 +70,10 @@ class AnimeVideoBloc extends Bloc<AnimeVideoEvent, AnimeVideoState> {
   _getVideo({
     required String endpoint,
     required Emitter emit,
+    required String baseUrl,
   }) async {
     emit(state.copyWith(loading: true));
-    final data = await _animeGetVideoUseCase(endpoint: endpoint);
+    final data = await _animeGetVideoUseCase(endpoint: endpoint, baseUrl: baseUrl);
 
     data.fold(
       (l) {

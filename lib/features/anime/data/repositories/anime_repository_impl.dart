@@ -63,10 +63,12 @@ class AnimeRepositoryImpl implements AnimeRepository {
   @override
   Future<Either<Failure<String>, List<VideoModel>>> animeGetVideo({
     required String endpoint,
+    required String baseUrl,
   }) async {
     try {
       final List<VideoModel> r = await animeRemoteDataSource.animeVideo(
         endpoint: endpoint,
+        baseUrl: baseUrl,
       );
       if (r.isEmpty) {
         return Left(

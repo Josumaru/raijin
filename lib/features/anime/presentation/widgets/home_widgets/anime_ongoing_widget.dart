@@ -13,7 +13,9 @@ import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_ongoing_bloc/anime_ongoing_bloc.dart';
 
 class AnimeOngoingWidget extends StatelessWidget {
-  const AnimeOngoingWidget({super.key});
+  const AnimeOngoingWidget({super.key, String? title}) : _title = title;
+
+  final String? _title;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +58,7 @@ class AnimeOngoingWidget extends StatelessWidget {
             crossAxisAlignment: kCrossAxisAlignmentCenter(),
             children: [
               Text(
-                'Airing Anime',
+                _title ?? 'Airing Anime',
                 style: headlineLarge(context: context).copyWith(
                   color: onBackgroundColor(context: context),
                 ),
@@ -71,7 +73,7 @@ class AnimeOngoingWidget extends StatelessWidget {
                   padding: kLeftPadding,
                   child: Row(
                     children: [
-                     Text(
+                      Text(
                         'View All',
                         style: bodySmall(context: context),
                       ),

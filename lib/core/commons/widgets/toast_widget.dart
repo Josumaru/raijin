@@ -12,7 +12,7 @@ class ToastWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: toastMainMargin,
-      padding: toastPadding,
+      padding: kAllPadding,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         color: onBackgroundColor(context: context).withOpacity(0.9),

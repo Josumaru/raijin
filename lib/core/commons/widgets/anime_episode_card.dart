@@ -127,8 +127,8 @@ class AnimeEpisodeCard extends StatelessWidget {
       {required String endpoint,
       required AnimeModel animeModel,
       required BuildContext context}) {
-    context.read<AnimeVideoBloc>().add(
-        AnimeVideoEvent.getVideo(endpoint: endpoint));
+    context.read<AnimeVideoBloc>().add(AnimeVideoEvent.getVideo(
+        endpoint: endpoint, baseUrl: animeModel.endpoint));
     PersistentNavBarNavigator.pushNewScreenWithRouteSettings(
       context,
       screen: const VideoPage(),

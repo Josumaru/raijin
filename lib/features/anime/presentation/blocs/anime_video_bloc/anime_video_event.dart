@@ -2,7 +2,7 @@ part of 'anime_video_bloc.dart';
 
 @freezed
 class AnimeVideoEvent with _$AnimeVideoEvent {
-  const factory AnimeVideoEvent.getVideo({required String endpoint}) = _GetVideo;
+  const factory AnimeVideoEvent.getVideo({required String endpoint, required String baseUrl}) = _GetVideo;
 
   // const factory AnimeVideoEvent.showControll({required bool showControl}) =
   //     _ShowControl;

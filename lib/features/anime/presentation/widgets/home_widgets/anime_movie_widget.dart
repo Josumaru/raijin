@@ -67,7 +67,7 @@ class AnimeMovieWidget extends StatelessWidget {
                 ),
                 Column(
                   children: List.generate(
-                    animeModel!.length,
+                    animeModel!.length < 5 ? animeModel.length : 5,
                     (index) => Padding(
                       padding: kTopPadding,
                       child: AnimeMovieCard(animeModel: animeModel[index]),
@@ -155,7 +155,7 @@ class AnimeMovieCard extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  OutlinedButton(
+                  ElevatedButton(
                     onPressed: () {
                       _goToDetail(
                           endpoint: _animeModel.endpoint, context: context);
@@ -201,9 +201,9 @@ void _buildMore(BuildContext context) {
   moreUseCase(
     params: MoreUseCaseParams(
       context: context,
-      status: 'Currently+Airing',
-      order: 'latest',
-      type: '',
+      status: '',
+      order: '',
+      type: 'movie',
       genre: '',
       page: 1,
     ),

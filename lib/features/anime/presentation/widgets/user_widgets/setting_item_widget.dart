@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/core/constants/border_radius.dart';
@@ -11,19 +12,23 @@ class SettingItemWidget extends StatelessWidget {
     required String select,
     required String option,
     required IconData icon,
+    required VoidCallback callback,
     super.key,
   })  : _select = select,
         _option = option,
-        _icon = icon;
+        _icon = icon,
+        _callback = callback;
 
   final String _select;
   final String _option;
   final IconData _icon;
+  final VoidCallback _callback;
+
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: _callback,
       child: Padding(
         padding: kAllPadding,
         child: Row(
@@ -36,7 +41,7 @@ class SettingItemWidget extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               _select,
-              style: bodyLarge(context: context).copyWith(
+              style: bodyMedium(context: context).copyWith(
                 color: onBackgroundColor(context: context),
               ),
             ),

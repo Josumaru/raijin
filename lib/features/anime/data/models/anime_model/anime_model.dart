@@ -1,12 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:raijin/features/anime/data/models/episode_model/episode_model.dart';
-import 'package:raijin/features/anime/domain/entities/anime_entity.dart';
 
 part 'anime_model.freezed.dart';
 part 'anime_model.g.dart';
 
 @freezed
+@JsonSerializable(explicitToJson: true)
 abstract class AnimeModel with _$AnimeModel {
+  const AnimeModel._();
   const factory AnimeModel({
     required String title,
     required String endpoint,
@@ -30,13 +31,9 @@ abstract class AnimeModel with _$AnimeModel {
     int? totalEpisode,
   }) = _AnimeModel;
 
-  factory AnimeModel.fromEntity({required AnimeEntity animeEntity}) {
-    return AnimeModel(
-      title: animeEntity.title,
-      endpoint: animeEntity.endpoint,
-      poster: animeEntity.poster,
-    );
+  factory AnimeModel.fromJson(Map<String, dynamic> json) {
+    return _$AnimeModelFromJson(json);
   }
 
-  factory AnimeModel.fromJson(Map<String, dynamic> json) =>_$AnimeModelFromJson(json);
+  Map<String, dynamic> toJson() => _$AnimeModelToJson(this);
 }

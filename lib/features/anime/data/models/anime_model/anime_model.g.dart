@@ -6,8 +6,7 @@ part of 'anime_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$AnimeModelImpl _$$AnimeModelImplFromJson(Map<String, dynamic> json) =>
-    _$AnimeModelImpl(
+AnimeModel _$AnimeModelFromJson(Map<String, dynamic> json) => AnimeModel(
       title: json['title'] as String,
       endpoint: json['endpoint'] as String,
       poster: json['poster'] as String,
@@ -33,7 +32,7 @@ _$AnimeModelImpl _$$AnimeModelImplFromJson(Map<String, dynamic> json) =>
       totalEpisode: json['totalEpisode'] as int?,
     );
 
-Map<String, dynamic> _$$AnimeModelImplToJson(_$AnimeModelImpl instance) =>
+Map<String, dynamic> _$AnimeModelToJson(AnimeModel instance) =>
     <String, dynamic>{
       'title': instance.title,
       'endpoint': instance.endpoint,
@@ -53,6 +52,6 @@ Map<String, dynamic> _$$AnimeModelImplToJson(_$AnimeModelImpl instance) =>
       'studio': instance.studio,
       'producers': instance.producers,
       'trailer': instance.trailer,
-      'episodeList': instance.episodeList,
+      'episodeList': instance.episodeList?.map((e) => e.toJson()).toList(),
       'totalEpisode': instance.totalEpisode,
     };

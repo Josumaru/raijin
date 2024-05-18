@@ -260,7 +260,7 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
   }
 
   @override
-  Future<List<VideoModel>> animeVideo({required String endpoint}) async {
+  Future<List<VideoModel>> animeVideo({required String endpoint, required String baseUrl}) async {
     List<VideoModel> mirrorList = [];
     List<EpisodeModel> episodeList = [];
     List<String> genre = [];
@@ -351,7 +351,7 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
             VideoModel(
               quality: serverQuality,
               mirror: mirror,
-              endpoint: 'https:${mirrorAttributes.attributes['data-src-url']!}',
+              endpoint: endpoint,
               poster: poster,
               anotherEpisode: episodeList,
               nextEpisode: nextEpisode,
@@ -360,7 +360,8 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
               genre: genre,
               synopsis: synopsis,
               thumbnail: 'https:${mirrorAttributes.attributes['poster']!}',
-              baseUrl: endpoint,
+              baseUrl: baseUrl,
+              videoEndpoint: 'https:${mirrorAttributes.attributes['data-src-url']!}',
             ),
           );
         }

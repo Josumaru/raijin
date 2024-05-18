@@ -7,11 +7,14 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/core/constants/border_radius.dart';
 import 'package:raijin/core/constants/colors.dart';
+import 'package:raijin/core/constants/constants.dart';
 import 'package:raijin/core/constants/font.dart';
 import 'package:raijin/core/constants/padding.dart';
 import 'package:raijin/core/constants/sizes.dart';
+import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/data/models/schedule_model/schedule_model.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime_detail_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_bookmark_bloc/anime_bookmark_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_schedule_bloc/anime_schedule_bloc.dart'
     as bloc;
 import 'package:raijin/features/anime/presentation/cubits/anime_schedule_cubit/anime_schedule_cubit.dart'
@@ -51,8 +54,10 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                       7,
                       (index) {
                         final DateTime currentDate = DateTime.now();
-                        final DateTime date = currentDate.add(Duration(days: index));
-                        final String currentDay = DateFormat('EEEE').format(date);
+                        final DateTime date =
+                            currentDate.add(Duration(days: index));
+                        final String currentDay =
+                            DateFormat('EEEE').format(date);
                         return Padding(
                           padding: kMainPadding,
                           child: InkWell(
@@ -62,8 +67,9 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                                   .read<cubit.AnimeScheduleCubit>()
                                   .select(day: currentDay);
                               context.read<bloc.AnimeScheduleBloc>().add(
-                                  bloc.AnimeScheduleEvent.animeGetSchedule(
-                                      day: currentDay),);
+                                    bloc.AnimeScheduleEvent.animeGetSchedule(
+                                        day: currentDay),
+                                  );
                             },
                             child: BlocBuilder<cubit.AnimeScheduleCubit,
                                 cubit.AnimeScheduleState>(
@@ -275,7 +281,29 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                         Padding(
                           padding: kTopPadding,
                           child: OutlinedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              print(scheduleModel[index]
+                                  .url
+                                  .replaceAll('${kAnimeEndpoint}anime/', '')
+                                  .replaceAll('/', ''));
+                              context.read<AnimeBookmarkBloc>().add(
+                                    AnimeBookmarkEvent.addAnimeList(
+                                      anime: AnimeModel(
+                                        title: scheduleModel[index].title,
+                                        endpoint: scheduleModel[index]
+                                            .url
+                                            .replaceAll(
+                                                '${kAnimeEndpoint}anime/', '')
+                                            .replaceAll('/', ''),
+                                        poster: scheduleModel[index]
+                                            .featured_img_src,
+                                        description:
+                                            scheduleModel[index].content,
+                                        duration: '',
+                                      ),
+                                    ),
+                                  );
+                            },
                             child: Row(
                               mainAxisAlignment: kMainAxisAligmentCenter(),
                               children: [
