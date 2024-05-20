@@ -25,6 +25,7 @@ import 'package:raijin/features/anime/presentation/blocs/anime_movie_bloc/anime_
 import 'package:raijin/features/anime/presentation/blocs/anime_new_bloc/anime_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_ongoing_bloc/anime_ongoing_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_popular_bloc/anime_popular_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_preferences/anime_preferences_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_schedule_bloc/anime_schedule_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_search_bloc/anime_search_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_video_bloc/anime_video_bloc.dart';
@@ -107,14 +108,17 @@ Future<void> init() async {
     () => AnimeMoreBloc(animeGetMoreUseCase: sl()),
   );
   sl.registerFactory<AnimeMovieBloc>(
-    () => AnimeMovieBloc(
-      animeGetMovieUseCase: sl(),
-    ),
+    () => AnimeMovieBloc(animeGetMovieUseCase: sl()),
   );
   sl.registerFactory<AnimeHistoryBloc>(
     () => AnimeHistoryBloc(firestore: sl(), user: sl()),
   );
-  sl.registerFactory<AnimeBookmarkBloc>(() => AnimeBookmarkBloc(firestore: sl()),);
+  sl.registerFactory<AnimeBookmarkBloc>(
+    () => AnimeBookmarkBloc(firestore: sl()),
+  );
+  sl.registerFactory<AnimePreferencesBloc>(
+    () => AnimePreferencesBloc(firestore: sl(), user: sl()),
+  );
 
   // Datasource
   sl.registerSingleton<AuthRemoteDataSource>(

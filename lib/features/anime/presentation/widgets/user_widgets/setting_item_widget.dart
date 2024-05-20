@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/core/constants/border_radius.dart';
@@ -24,7 +23,6 @@ class SettingItemWidget extends StatelessWidget {
   final IconData _icon;
   final VoidCallback _callback;
 
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -46,27 +44,20 @@ class SettingItemWidget extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            InkWell(
-              borderRadius: kMainBorderRadius,
-              onTap: () {
-                // _buildMore(context);
-              },
-              child: Padding(
-                padding: kLeftPadding,
-                child: Row(
-                  children: [
-                    Text(
-                      _option,
-                      style: bodySmall(context: context),
-                    ),
-                    Icon(
-                      Iconsax.arrow_right_3,
-                      color:
-                          onBackgroundColor(context: context).withOpacity(0.5),
-                      size: 14,
-                    ),
-                  ],
-                ),
+            Padding(
+              padding: kLeftPadding,
+              child: Row(
+                children: [
+                  Text(
+                    _option,
+                    style: bodySmall(context: context),
+                  ),
+                  Icon(
+                    Iconsax.arrow_right_3,
+                    color: onBackgroundColor(context: context).withOpacity(0.5),
+                    size: 14,
+                  ),
+                ],
               ),
             ),
           ],

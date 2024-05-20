@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:raijin/core/constants/constants.dart';
 import 'package:raijin/features/anime/data/models/video_model/video_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

@@ -53,10 +53,10 @@ class AnimeCardWidget extends StatelessWidget {
                     child: Container(
                       width: mode == 'large'
                           ? 200
-                          : (widthMediaQuery(context: context) / 2) - (30 / 2),
+                          : (widthMediaQuery(context: context) / 3) - (40 / 3),
                       height: mode == 'large'
                           ? 300
-                          : heightMediaQuery(context: context) / 3.5,
+                          : heightMediaQuery(context: context) / 4.5,
                       decoration: BoxDecoration(
                         color: onBackgroundColor(context: context).withOpacity(
                           0.5,
@@ -209,7 +209,7 @@ class AnimeCardWidget extends StatelessWidget {
                   return Container();
                 }
                 return SizedBox(
-                  width: (widthMediaQuery(context: context) / 2) - (30 / 2),
+                  width: (widthMediaQuery(context: context) / 3) - (40 / 3),
                   height: 40,
                   child: Text(
                     animeModel.title,
@@ -235,10 +235,10 @@ class AnimeCardWidget extends StatelessWidget {
                   Container(
                     width: mode == 'large'
                         ? 200
-                        : (widthMediaQuery(context: context) / 2) - (30 / 2),
+                        : (widthMediaQuery(context: context) / 3) - (40 / 3),
                     height: mode == 'large'
                         ? 300
-                        : heightMediaQuery(context: context) / 2.5,
+                        : heightMediaQuery(context: context) / 4.5,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: imageProvider,
@@ -391,7 +391,7 @@ class AnimeCardWidget extends StatelessWidget {
                   return Container();
                 }
                 return SizedBox(
-                  width: (widthMediaQuery(context: context) / 2) - (30 / 2),
+                  width: (widthMediaQuery(context: context) / 3) - (40 / 3),
                   height: 40,
                   child: Text(
                     animeModel.title,

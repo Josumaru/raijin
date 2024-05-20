@@ -163,13 +163,15 @@ class AnimeMovieCard extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: kMainAxisAligmentCenter(),
                       children: [
-                        Icon(
+                        const Icon(
                           Iconsax.play,
-                          color: onBackgroundColor(context: context),
+                          color: Colors.white,
                         ),
                         Text(
                           'Play',
-                          style: bodyLarge(context: context),
+                          style: bodyLarge(context: context).copyWith(
+                            color: Colors.white,
+                          ),
                         ),
                       ],
                     ),

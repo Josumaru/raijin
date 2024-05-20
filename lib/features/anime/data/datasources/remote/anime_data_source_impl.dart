@@ -173,7 +173,7 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
         episode = int.parse(
             getTextByClass(element: item, className: 'eps').split(' ')[0]);
       } catch (e) {
-        episode = 0;
+        episode = 1;
       }
       final title = getTextByClass(element: item, className: 'lchx');
       final date = getTextByClass(element: item, className: 'date');
@@ -260,7 +260,8 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
   }
 
   @override
-  Future<List<VideoModel>> animeVideo({required String endpoint, required String baseUrl}) async {
+  Future<List<VideoModel>> animeVideo(
+      {required String endpoint, required String baseUrl}) async {
     List<VideoModel> mirrorList = [];
     List<EpisodeModel> episodeList = [];
     List<String> genre = [];
@@ -361,7 +362,8 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
               synopsis: synopsis,
               thumbnail: 'https:${mirrorAttributes.attributes['poster']!}',
               baseUrl: baseUrl,
-              videoEndpoint: 'https:${mirrorAttributes.attributes['data-src-url']!}',
+              videoEndpoint:
+                  'https:${mirrorAttributes.attributes['data-src-url']!}',
             ),
           );
         }

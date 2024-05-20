@@ -19,21 +19,21 @@ mixin _$AnimeBookmarkEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(AnimeModel anime) addAnimeList,
-    required TResult Function(String baseUrl) removeAnimeList,
+    required TResult Function(String poster) removeAnimeList,
     required TResult Function() getAnimeList,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(AnimeModel anime)? addAnimeList,
-    TResult? Function(String baseUrl)? removeAnimeList,
+    TResult? Function(String poster)? removeAnimeList,
     TResult? Function()? getAnimeList,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(AnimeModel anime)? addAnimeList,
-    TResult Function(String baseUrl)? removeAnimeList,
+    TResult Function(String poster)? removeAnimeList,
     TResult Function()? getAnimeList,
     required TResult orElse(),
   }) =>
@@ -155,7 +155,7 @@ class _$AddAnimeListImpl implements _AddAnimeList {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(AnimeModel anime) addAnimeList,
-    required TResult Function(String baseUrl) removeAnimeList,
+    required TResult Function(String poster) removeAnimeList,
     required TResult Function() getAnimeList,
   }) {
     return addAnimeList(anime);
@@ -165,7 +165,7 @@ class _$AddAnimeListImpl implements _AddAnimeList {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(AnimeModel anime)? addAnimeList,
-    TResult? Function(String baseUrl)? removeAnimeList,
+    TResult? Function(String poster)? removeAnimeList,
     TResult? Function()? getAnimeList,
   }) {
     return addAnimeList?.call(anime);
@@ -175,7 +175,7 @@ class _$AddAnimeListImpl implements _AddAnimeList {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(AnimeModel anime)? addAnimeList,
-    TResult Function(String baseUrl)? removeAnimeList,
+    TResult Function(String poster)? removeAnimeList,
     TResult Function()? getAnimeList,
     required TResult orElse(),
   }) {
@@ -236,7 +236,7 @@ abstract class _$$RemoveAnimeListImplCopyWith<$Res> {
           $Res Function(_$RemoveAnimeListImpl) then) =
       __$$RemoveAnimeListImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String baseUrl});
+  $Res call({String poster});
 }
 
 /// @nodoc
@@ -250,12 +250,12 @@ class __$$RemoveAnimeListImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? baseUrl = null,
+    Object? poster = null,
   }) {
     return _then(_$RemoveAnimeListImpl(
-      baseUrl: null == baseUrl
-          ? _value.baseUrl
-          : baseUrl // ignore: cast_nullable_to_non_nullable
+      poster: null == poster
+          ? _value.poster
+          : poster // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -264,14 +264,14 @@ class __$$RemoveAnimeListImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$RemoveAnimeListImpl implements _RemoveAnimeList {
-  const _$RemoveAnimeListImpl({required this.baseUrl});
+  const _$RemoveAnimeListImpl({required this.poster});
 
   @override
-  final String baseUrl;
+  final String poster;
 
   @override
   String toString() {
-    return 'AnimeBookmarkEvent.removeAnimeList(baseUrl: $baseUrl)';
+    return 'AnimeBookmarkEvent.removeAnimeList(poster: $poster)';
   }
 
   @override
@@ -279,11 +279,11 @@ class _$RemoveAnimeListImpl implements _RemoveAnimeList {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RemoveAnimeListImpl &&
-            (identical(other.baseUrl, baseUrl) || other.baseUrl == baseUrl));
+            (identical(other.poster, poster) || other.poster == poster));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, baseUrl);
+  int get hashCode => Object.hash(runtimeType, poster);
 
   @JsonKey(ignore: true)
   @override
@@ -296,32 +296,32 @@ class _$RemoveAnimeListImpl implements _RemoveAnimeList {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(AnimeModel anime) addAnimeList,
-    required TResult Function(String baseUrl) removeAnimeList,
+    required TResult Function(String poster) removeAnimeList,
     required TResult Function() getAnimeList,
   }) {
-    return removeAnimeList(baseUrl);
+    return removeAnimeList(poster);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(AnimeModel anime)? addAnimeList,
-    TResult? Function(String baseUrl)? removeAnimeList,
+    TResult? Function(String poster)? removeAnimeList,
     TResult? Function()? getAnimeList,
   }) {
-    return removeAnimeList?.call(baseUrl);
+    return removeAnimeList?.call(poster);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(AnimeModel anime)? addAnimeList,
-    TResult Function(String baseUrl)? removeAnimeList,
+    TResult Function(String poster)? removeAnimeList,
     TResult Function()? getAnimeList,
     required TResult orElse(),
   }) {
     if (removeAnimeList != null) {
-      return removeAnimeList(baseUrl);
+      return removeAnimeList(poster);
     }
     return orElse();
   }
@@ -362,10 +362,10 @@ class _$RemoveAnimeListImpl implements _RemoveAnimeList {
 }
 
 abstract class _RemoveAnimeList implements AnimeBookmarkEvent {
-  const factory _RemoveAnimeList({required final String baseUrl}) =
+  const factory _RemoveAnimeList({required final String poster}) =
       _$RemoveAnimeListImpl;
 
-  String get baseUrl;
+  String get poster;
   @JsonKey(ignore: true)
   _$$RemoveAnimeListImplCopyWith<_$RemoveAnimeListImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -410,7 +410,7 @@ class _$GetAnimeListImpl implements _GetAnimeList {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(AnimeModel anime) addAnimeList,
-    required TResult Function(String baseUrl) removeAnimeList,
+    required TResult Function(String poster) removeAnimeList,
     required TResult Function() getAnimeList,
   }) {
     return getAnimeList();
@@ -420,7 +420,7 @@ class _$GetAnimeListImpl implements _GetAnimeList {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(AnimeModel anime)? addAnimeList,
-    TResult? Function(String baseUrl)? removeAnimeList,
+    TResult? Function(String poster)? removeAnimeList,
     TResult? Function()? getAnimeList,
   }) {
     return getAnimeList?.call();
@@ -430,7 +430,7 @@ class _$GetAnimeListImpl implements _GetAnimeList {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(AnimeModel anime)? addAnimeList,
-    TResult Function(String baseUrl)? removeAnimeList,
+    TResult Function(String poster)? removeAnimeList,
     TResult Function()? getAnimeList,
     required TResult orElse(),
   }) {

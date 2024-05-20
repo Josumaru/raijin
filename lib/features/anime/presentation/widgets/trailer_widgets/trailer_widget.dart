@@ -25,6 +25,7 @@ class TrailerWidget extends StatelessWidget {
     }
     return Column(
       children: [
+        const SizedBox(height: 10),
         YoutubePlayer(
           controller: controller,
           bottomActions: const [],
@@ -39,7 +40,7 @@ class TrailerWidget extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: kTopPadding * 2,
+          padding: kTopPadding,
           child: ElevatedButton(
             onPressed: () {
               _launchUrl(_url);
@@ -50,7 +51,9 @@ class TrailerWidget extends StatelessWidget {
                 const Icon(Iconsax.play),
                 Text(
                   'Watch Trailer on YouTube',
-                  style: bodyLarge(context: context),
+                  style: bodyLarge(context: context).copyWith(
+                    color: Colors.white,
+                  ),
                 ),
               ],
             ),

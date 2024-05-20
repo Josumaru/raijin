@@ -13,8 +13,8 @@ import 'package:raijin/core/constants/padding.dart';
 import 'package:raijin/core/constants/sizes.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/data/models/schedule_model/schedule_model.dart';
-import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime_detail_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_bookmark_bloc/anime_bookmark_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime_detail_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_schedule_bloc/anime_schedule_bloc.dart'
     as bloc;
 import 'package:raijin/features/anime/presentation/cubits/anime_schedule_cubit/anime_schedule_cubit.dart'
@@ -76,7 +76,7 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                               builder: (context, state) {
                                 return state.when(
                                   initial: () => Container(),
-                                  loading: () => const Text('Loading'),
+                                  loading: () => const Text(''),
                                   loaded: (day) => ScheduleCardWidget(
                                     isSelected: currentDay.toLowerCase() ==
                                         day.toLowerCase(),
@@ -278,43 +278,83 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: kTopPadding,
-                          child: OutlinedButton(
-                            onPressed: () {
-                              print(scheduleModel[index]
-                                  .url
-                                  .replaceAll('${kAnimeEndpoint}anime/', '')
-                                  .replaceAll('/', ''));
-                              context.read<AnimeBookmarkBloc>().add(
-                                    AnimeBookmarkEvent.addAnimeList(
-                                      anime: AnimeModel(
-                                        title: scheduleModel[index].title,
-                                        endpoint: scheduleModel[index]
-                                            .url
-                                            .replaceAll(
-                                                '${kAnimeEndpoint}anime/', '')
-                                            .replaceAll('/', ''),
-                                        poster: scheduleModel[index]
-                                            .featured_img_src,
-                                        description:
-                                            scheduleModel[index].content,
-                                        duration: '',
-                                      ),
+                        BlocBuilder<AnimeBookmarkBloc, AnimeBookmarkState>(
+                          builder: (context, bookmarkState) {
+                            for (var bookmark in bookmarkState.animeList) {
+                              if (bookmark.poster ==
+                                  scheduleModel[index]
+                                      .featured_img_src
+                                      .replaceAll(kAnimeEndpoint, '')
+                                      .trim()) {
+                                return Padding(
+                                  padding: kTopPadding,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      context.read<AnimeBookmarkBloc>().add(
+                                            AnimeBookmarkEvent.removeAnimeList(
+                                              poster: scheduleModel[index]
+                                                  .featured_img_src
+                                                  .split('/')
+                                                  .last
+                                                  .trim(),
+                                            ),
+                                          );
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          kMainAxisAligmentCenter(),
+                                      children: const [
+                                        Icon(
+                                          Iconsax.archive_add1,
+                                          color: Colors.white,
+                                        ),
+                                        Text('Saved'),
+                                      ],
                                     ),
-                                  );
-                            },
-                            child: Row(
-                              mainAxisAlignment: kMainAxisAligmentCenter(),
-                              children: [
-                                Icon(
-                                  Iconsax.add,
-                                  color: onBackgroundColor(context: context),
+                                  ),
+                                );
+                              }
+                            }
+                            return Padding(
+                              padding: kTopPadding,
+                              child: OutlinedButton(
+                                onPressed: () {
+                                  context.read<AnimeBookmarkBloc>().add(
+                                        AnimeBookmarkEvent.addAnimeList(
+                                          anime: AnimeModel(
+                                            title: scheduleModel[index].title,
+                                            endpoint: scheduleModel[index]
+                                                .url
+                                                .replaceAll(
+                                                    '${kAnimeEndpoint}anime/',
+                                                    '')
+                                                .replaceAll('/', ''),
+                                            poster: scheduleModel[index]
+                                                .featured_img_src
+                                                .split(kAnimeEndpoint)
+                                                .last
+                                                .trim(),
+                                            description:
+                                                scheduleModel[index].content,
+                                            duration: '',
+                                          ),
+                                        ),
+                                      );
+                                },
+                                child: Row(
+                                  mainAxisAlignment: kMainAxisAligmentCenter(),
+                                  children: [
+                                    Icon(
+                                      Iconsax.archive_add,
+                                      color:
+                                          onBackgroundColor(context: context),
+                                    ),
+                                    const Text('Save'),
+                                  ],
                                 ),
-                                const Text('My List'),
-                              ],
-                            ),
-                          ),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),

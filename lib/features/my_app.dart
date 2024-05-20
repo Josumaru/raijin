@@ -16,6 +16,7 @@ import 'package:raijin/features/anime/presentation/blocs/anime_movie_bloc/anime_
 import 'package:raijin/features/anime/presentation/blocs/anime_new_bloc/anime_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_ongoing_bloc/anime_ongoing_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_popular_bloc/anime_popular_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_preferences/anime_preferences_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_schedule_bloc/anime_schedule_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_search_bloc/anime_search_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_video_bloc/anime_video_bloc.dart';
@@ -128,6 +129,16 @@ class _MyAppState extends State<MyApp> {
               const AnimeHistoryEvent.getAnimeHistory(),
             ),
         ),
+        BlocProvider<AnimeBookmarkBloc>(
+          create: (context) => sl<AnimeBookmarkBloc>()
+            ..add(
+              const AnimeBookmarkEvent.getAnimeList(),
+            ),
+        ),
+        BlocProvider<AnimePreferencesBloc>(
+          create: (context) => sl<AnimePreferencesBloc>()
+            ..add(const AnimePreferencesEvent.getPreferences()),
+        ),
         BlocProvider<AnimeMoreBloc>(
           create: (context) => sl<AnimeMoreBloc>(),
         ),
@@ -137,33 +148,43 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<AnimeVideoBloc>(
           create: (context) => sl<AnimeVideoBloc>(),
         ),
-        BlocProvider<AnimeBookmarkBloc>(
-          create: (context) => sl<AnimeBookmarkBloc>(),
-        ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: AppRoute.onGenerateRoute,
-        initialRoute: FirebaseAuth.instance.currentUser != null
-            ? RouteName.mainPage
-            : RouteName.authPage,
-        scrollBehavior: const ScrollBehavior().copyWith(
-          overscroll: false,
-          physics: const BouncingScrollPhysics(),
-        ),
-        theme: TAppTheme.lightTheme,
-        darkTheme: TAppTheme.darkTheme,
-        themeMode: ThemeMode.system,
-        builder: (context, child) => Overlay(
-          initialEntries: [
-            if (child != null) ...[
-              OverlayEntry(
-                builder: (context) => child,
-              )
-            ]
-          ],
-        ),
-        navigatorKey: navigatorKey,
+      child: BlocBuilder<AnimePreferencesBloc, AnimePreferencesState>(
+        builder: (context, state) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            onGenerateRoute: AppRoute.onGenerateRoute,
+            initialRoute: FirebaseAuth.instance.currentUser != null
+                ? RouteName.mainPage
+                : RouteName.authPage,
+            scrollBehavior: const ScrollBehavior().copyWith(
+              overscroll: false,
+              physics: const BouncingScrollPhysics(),
+            ),
+            theme: TAppTheme.lightTheme,
+            darkTheme: TAppTheme.darkTheme,
+            themeMode: () {
+              switch (state.preferences.theme) {
+                case 'dark':
+                  return ThemeMode.dark;
+                case 'light':
+                  return ThemeMode.light;
+                default:
+                  return ThemeMode.system;
+              }
+            }(),
+            builder: (context, child) => Overlay(
+              initialEntries: [
+                if (child != null) ...[
+                  OverlayEntry(
+                    builder: (context) => child,
+                  )
+                ]
+              ],
+            ),
+            navigatorKey: navigatorKey,
+          );
+        },
       ),
     );
   }
