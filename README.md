@@ -1,7 +1,12 @@
-# raijin
+# Raijin
 
-A new Flutter project.
+Download latest release [here](https://docs.flutter.dev/get-started/codelab)
 
+## ScreenShots
+
+<img src="https://github.com/Josumaru/raijin/blob/master/assets/screenshot/Screenshot_2024-05-27-05-23-58-024_com.example.raijin.jpg?raw=true" width ="50%"><img src="https://github.com/Josumaru/raijin/blob/master/assets/screenshot/Screenshot_2024-05-27-05-29-30-923_com.example.raijin.jpg?raw=true" width ="50%">
+<img src="https://github.com/Josumaru/raijin/blob/master/assets/screenshot/Screenshot_2024-05-27-05-28-08-879_com.example.raijin.jpg?raw=true" width ="50%"><img src="https://github.com/Josumaru/raijin/blob/master/assets/screenshot/Screenshot_2024-05-27-05-29-30-923_com.example.raijin.jpg?raw=true" width ="50%">
+<img src="https://github.com/Josumaru/raijin/blob/master/assets/screenshot/Screenshot_2024-05-27-05-27-39-162_com.example.raijin.jpg?raw=true" width ="100%">
 ## Getting Started
 
 This project is a starting point for a Flutter application.
