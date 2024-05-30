@@ -7,8 +7,10 @@ import 'package:raijin/core/routes/route.dart';
 import 'package:raijin/core/routes/route_name.dart';
 import 'package:raijin/core/services/injection_container.dart';
 import 'package:raijin/core/themes/theme.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_category_bloc/anime_category_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_complete_bloc/anime_complete_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime_detail_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_donwload_bloc/anime_download_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_history_bloc/anime_history_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_bookmark_bloc/anime_bookmark_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_more_bloc/anime_more_bloc.dart';
@@ -147,6 +149,11 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider<AnimeVideoBloc>(
           create: (context) => sl<AnimeVideoBloc>(),
+        ),
+        BlocProvider(create: (context) => sl<AnimeDownloadBloc>()),
+        BlocProvider(
+          create: (context) =>
+              sl<AnimeCategoryBloc>()..add(const AnimeCategoryEvent.getGenre()),
         ),
       ],
       child: BlocBuilder<AnimePreferencesBloc, AnimePreferencesState>(

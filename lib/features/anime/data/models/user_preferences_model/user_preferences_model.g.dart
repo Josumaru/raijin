@@ -14,6 +14,7 @@ UserPreferencesModel _$UserPreferencesModelFromJson(
       playback: (json['playback'] as num?)?.toDouble(),
       photoPath: json['photoPath'] as String?,
       username: json['username'] as String?,
+      server: json['server'] as String?,
     );
 
 Map<String, dynamic> _$UserPreferencesModelToJson(
@@ -24,4 +25,5 @@ Map<String, dynamic> _$UserPreferencesModelToJson(
       'playback': instance.playback,
       'photoPath': instance.photoPath,
       'username': instance.username,
+      'server': instance.server,
     };

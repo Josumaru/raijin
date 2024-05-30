@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:raijin/core/commons/widgets/anime_card_shimmer_widget.dart';
@@ -21,12 +22,14 @@ class AnimeOngoingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AnimeOngoingBloc, AnimeOngoingState>(
       builder: (context, state) {
-        return state.when(
-          initial: () => Container(),
-          loading: () => _buildLoading(),
-          loaded: (animeModel) => _buildLoaded(context, animeModel),
-          error: (message) => Text(message),
-        );
+        List<AnimeModel> animeModel = state.animeModel;
+        if (state.error) {
+          return const SizedBox();
+        } else if (state.loading) {
+          return _buildLoading();
+        } else {
+          return _buildLoaded(context, animeModel);
+        }
       },
     );
   }
@@ -103,7 +106,7 @@ class AnimeOngoingWidget extends StatelessWidget {
                   removeTitle: false,
                 ),
               ),
-            ),
+            ).animate(interval: .35.seconds).slideX(begin: 1),
           ),
         ),
       ],

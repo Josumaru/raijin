@@ -6,6 +6,7 @@ import 'package:raijin/core/constants/border_radius.dart';
 import 'package:raijin/core/constants/colors.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/data/models/episode_model/episode_model.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_preferences/anime_preferences_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_video_bloc/anime_video_bloc.dart';
 import 'package:raijin/features/anime/presentation/pages/video_page.dart';
 
@@ -33,6 +34,8 @@ class AnimeEpisodeCard extends StatelessWidget {
           endpoint: episodeModel.endpoint,
           animeModel: animeModel,
           context: context,
+          position: 0,
+          server: context.read<AnimePreferencesBloc>().state.preferences.server!,
         );
       },
       child: Container(
@@ -126,11 +129,21 @@ class AnimeEpisodeCard extends StatelessWidget {
   _play(
       {required String endpoint,
       required AnimeModel animeModel,
-      required BuildContext context}) {
-    context.read<AnimeVideoBloc>().add(AnimeVideoEvent.getVideo(
-        endpoint: endpoint, baseUrl: animeModel.endpoint));
+      required BuildContext context,
+      required int position,
+      required String server,
+      }) {
+    context.read<AnimeVideoBloc>().add(
+          AnimeVideoEvent.getVideo(
+            endpoint: endpoint,
+            baseUrl: animeModel.endpoint,
+            position: position,
+            server: server,
+          ),
+        );
     PersistentNavBarNavigator.pushNewScreenWithRouteSettings(
       context,
+      withNavBar: false,
       screen: const VideoPage(),
       settings: const RouteSettings(name: '/video'),
       pageTransitionAnimation: PageTransitionAnimation.cupertino,

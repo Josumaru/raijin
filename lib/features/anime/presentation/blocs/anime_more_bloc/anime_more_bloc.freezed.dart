@@ -16,13 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AnimeMoreEvent {
-  String get status => throw _privateConstructorUsedError;
-  String get order => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
-  String get genre => throw _privateConstructorUsedError;
-  int get page => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() animeResetMore,
     required TResult Function(
             String status, String order, String type, String genre, int page)
         animeGetMore,
@@ -30,6 +26,7 @@ mixin _$AnimeMoreEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? animeResetMore,
     TResult? Function(
             String status, String order, String type, String genre, int page)?
         animeGetMore,
@@ -37,6 +34,7 @@ mixin _$AnimeMoreEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? animeResetMore,
     TResult Function(
             String status, String order, String type, String genre, int page)?
         animeGetMore,
@@ -45,23 +43,22 @@ mixin _$AnimeMoreEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_AnimeResetMore value) animeResetMore,
     required TResult Function(_AnimeGetMore value) animeGetMore,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_AnimeResetMore value)? animeResetMore,
     TResult? Function(_AnimeGetMore value)? animeGetMore,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_AnimeResetMore value)? animeResetMore,
     TResult Function(_AnimeGetMore value)? animeGetMore,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $AnimeMoreEventCopyWith<AnimeMoreEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -70,8 +67,6 @@ abstract class $AnimeMoreEventCopyWith<$Res> {
   factory $AnimeMoreEventCopyWith(
           AnimeMoreEvent value, $Res Function(AnimeMoreEvent) then) =
       _$AnimeMoreEventCopyWithImpl<$Res, AnimeMoreEvent>;
-  @useResult
-  $Res call({String status, String order, String type, String genre, int page});
 }
 
 /// @nodoc
@@ -83,48 +78,121 @@ class _$AnimeMoreEventCopyWithImpl<$Res, $Val extends AnimeMoreEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? status = null,
-    Object? order = null,
-    Object? type = null,
-    Object? genre = null,
-    Object? page = null,
-  }) {
-    return _then(_value.copyWith(
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      order: null == order
-          ? _value.order
-          : order // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      genre: null == genre
-          ? _value.genre
-          : genre // ignore: cast_nullable_to_non_nullable
-              as String,
-      page: null == page
-          ? _value.page
-          : page // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$AnimeGetMoreImplCopyWith<$Res>
-    implements $AnimeMoreEventCopyWith<$Res> {
+abstract class _$$AnimeResetMoreImplCopyWith<$Res> {
+  factory _$$AnimeResetMoreImplCopyWith(_$AnimeResetMoreImpl value,
+          $Res Function(_$AnimeResetMoreImpl) then) =
+      __$$AnimeResetMoreImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$AnimeResetMoreImplCopyWithImpl<$Res>
+    extends _$AnimeMoreEventCopyWithImpl<$Res, _$AnimeResetMoreImpl>
+    implements _$$AnimeResetMoreImplCopyWith<$Res> {
+  __$$AnimeResetMoreImplCopyWithImpl(
+      _$AnimeResetMoreImpl _value, $Res Function(_$AnimeResetMoreImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$AnimeResetMoreImpl implements _AnimeResetMore {
+  const _$AnimeResetMoreImpl();
+
+  @override
+  String toString() {
+    return 'AnimeMoreEvent.animeResetMore()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$AnimeResetMoreImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() animeResetMore,
+    required TResult Function(
+            String status, String order, String type, String genre, int page)
+        animeGetMore,
+  }) {
+    return animeResetMore();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? animeResetMore,
+    TResult? Function(
+            String status, String order, String type, String genre, int page)?
+        animeGetMore,
+  }) {
+    return animeResetMore?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? animeResetMore,
+    TResult Function(
+            String status, String order, String type, String genre, int page)?
+        animeGetMore,
+    required TResult orElse(),
+  }) {
+    if (animeResetMore != null) {
+      return animeResetMore();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_AnimeResetMore value) animeResetMore,
+    required TResult Function(_AnimeGetMore value) animeGetMore,
+  }) {
+    return animeResetMore(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_AnimeResetMore value)? animeResetMore,
+    TResult? Function(_AnimeGetMore value)? animeGetMore,
+  }) {
+    return animeResetMore?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_AnimeResetMore value)? animeResetMore,
+    TResult Function(_AnimeGetMore value)? animeGetMore,
+    required TResult orElse(),
+  }) {
+    if (animeResetMore != null) {
+      return animeResetMore(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AnimeResetMore implements AnimeMoreEvent {
+  const factory _AnimeResetMore() = _$AnimeResetMoreImpl;
+}
+
+/// @nodoc
+abstract class _$$AnimeGetMoreImplCopyWith<$Res> {
   factory _$$AnimeGetMoreImplCopyWith(
           _$AnimeGetMoreImpl value, $Res Function(_$AnimeGetMoreImpl) then) =
       __$$AnimeGetMoreImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String status, String order, String type, String genre, int page});
 }
@@ -222,6 +290,7 @@ class _$AnimeGetMoreImpl implements _AnimeGetMore {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() animeResetMore,
     required TResult Function(
             String status, String order, String type, String genre, int page)
         animeGetMore,
@@ -232,6 +301,7 @@ class _$AnimeGetMoreImpl implements _AnimeGetMore {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? animeResetMore,
     TResult? Function(
             String status, String order, String type, String genre, int page)?
         animeGetMore,
@@ -242,6 +312,7 @@ class _$AnimeGetMoreImpl implements _AnimeGetMore {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? animeResetMore,
     TResult Function(
             String status, String order, String type, String genre, int page)?
         animeGetMore,
@@ -256,6 +327,7 @@ class _$AnimeGetMoreImpl implements _AnimeGetMore {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_AnimeResetMore value) animeResetMore,
     required TResult Function(_AnimeGetMore value) animeGetMore,
   }) {
     return animeGetMore(this);
@@ -264,6 +336,7 @@ class _$AnimeGetMoreImpl implements _AnimeGetMore {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_AnimeResetMore value)? animeResetMore,
     TResult? Function(_AnimeGetMore value)? animeGetMore,
   }) {
     return animeGetMore?.call(this);
@@ -272,6 +345,7 @@ class _$AnimeGetMoreImpl implements _AnimeGetMore {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_AnimeResetMore value)? animeResetMore,
     TResult Function(_AnimeGetMore value)? animeGetMore,
     required TResult orElse(),
   }) {
@@ -290,17 +364,11 @@ abstract class _AnimeGetMore implements AnimeMoreEvent {
       required final String genre,
       required final int page}) = _$AnimeGetMoreImpl;
 
-  @override
   String get status;
-  @override
   String get order;
-  @override
   String get type;
-  @override
   String get genre;
-  @override
   int get page;
-  @override
   @JsonKey(ignore: true)
   _$$AnimeGetMoreImplCopyWith<_$AnimeGetMoreImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -308,55 +376,13 @@ abstract class _AnimeGetMore implements AnimeMoreEvent {
 
 /// @nodoc
 mixin _$AnimeMoreState {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(List<AnimeModel>? animeModel) loaded,
-    required TResult Function(String message) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<AnimeModel>? animeModel)? loaded,
-    TResult? Function(String message)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<AnimeModel>? animeModel)? loaded,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) =>
+  bool get loading => throw _privateConstructorUsedError;
+  bool get error => throw _privateConstructorUsedError;
+  int get page => throw _privateConstructorUsedError;
+  List<AnimeModel> get animeList => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AnimeMoreStateCopyWith<AnimeMoreState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -365,6 +391,8 @@ abstract class $AnimeMoreStateCopyWith<$Res> {
   factory $AnimeMoreStateCopyWith(
           AnimeMoreState value, $Res Function(AnimeMoreState) then) =
       _$AnimeMoreStateCopyWithImpl<$Res, AnimeMoreState>;
+  @useResult
+  $Res call({bool loading, bool error, int page, List<AnimeModel> animeList});
 }
 
 /// @nodoc
@@ -376,532 +404,156 @@ class _$AnimeMoreStateCopyWithImpl<$Res, $Val extends AnimeMoreState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? loading = null,
+    Object? error = null,
+    Object? page = null,
+    Object? animeList = null,
+  }) {
+    return _then(_value.copyWith(
+      loading: null == loading
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: null == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as bool,
+      page: null == page
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
+      animeList: null == animeList
+          ? _value.animeList
+          : animeList // ignore: cast_nullable_to_non_nullable
+              as List<AnimeModel>,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$InitialImplCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$AnimeMoreStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$InitialImpl implements _Initial {
-  const _$InitialImpl();
-
+abstract class _$$AnimeMoreStateImplCopyWith<$Res>
+    implements $AnimeMoreStateCopyWith<$Res> {
+  factory _$$AnimeMoreStateImplCopyWith(_$AnimeMoreStateImpl value,
+          $Res Function(_$AnimeMoreStateImpl) then) =
+      __$$AnimeMoreStateImplCopyWithImpl<$Res>;
   @override
-  String toString() {
-    return 'AnimeMoreState.initial()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(List<AnimeModel>? animeModel) loaded,
-    required TResult Function(String message) error,
-  }) {
-    return initial();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<AnimeModel>? animeModel)? loaded,
-    TResult? Function(String message)? error,
-  }) {
-    return initial?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<AnimeModel>? animeModel)? loaded,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Initial implements AnimeMoreState {
-  const factory _Initial() = _$InitialImpl;
-}
-
-/// @nodoc
-abstract class _$$LoadingImplCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(
-          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
-      __$$LoadingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$AnimeMoreStateCopyWithImpl<$Res, _$LoadingImpl>
-    implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$LoadingImpl implements _Loading {
-  const _$LoadingImpl();
-
-  @override
-  String toString() {
-    return 'AnimeMoreState.loading()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(List<AnimeModel>? animeModel) loaded,
-    required TResult Function(String message) error,
-  }) {
-    return loading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<AnimeModel>? animeModel)? loaded,
-    TResult? Function(String message)? error,
-  }) {
-    return loading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<AnimeModel>? animeModel)? loaded,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loading implements AnimeMoreState {
-  const factory _Loading() = _$LoadingImpl;
-}
-
-/// @nodoc
-abstract class _$$LoadedImplCopyWith<$Res> {
-  factory _$$LoadedImplCopyWith(
-          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
-      __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<AnimeModel>? animeModel});
+  $Res call({bool loading, bool error, int page, List<AnimeModel> animeList});
 }
 
 /// @nodoc
-class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$AnimeMoreStateCopyWithImpl<$Res, _$LoadedImpl>
-    implements _$$LoadedImplCopyWith<$Res> {
-  __$$LoadedImplCopyWithImpl(
-      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
+class __$$AnimeMoreStateImplCopyWithImpl<$Res>
+    extends _$AnimeMoreStateCopyWithImpl<$Res, _$AnimeMoreStateImpl>
+    implements _$$AnimeMoreStateImplCopyWith<$Res> {
+  __$$AnimeMoreStateImplCopyWithImpl(
+      _$AnimeMoreStateImpl _value, $Res Function(_$AnimeMoreStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? animeModel = freezed,
+    Object? loading = null,
+    Object? error = null,
+    Object? page = null,
+    Object? animeList = null,
   }) {
-    return _then(_$LoadedImpl(
-      animeModel: freezed == animeModel
-          ? _value._animeModel
-          : animeModel // ignore: cast_nullable_to_non_nullable
-              as List<AnimeModel>?,
+    return _then(_$AnimeMoreStateImpl(
+      loading: null == loading
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: null == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as bool,
+      page: null == page
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
+      animeList: null == animeList
+          ? _value._animeList
+          : animeList // ignore: cast_nullable_to_non_nullable
+              as List<AnimeModel>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl({final List<AnimeModel>? animeModel})
-      : _animeModel = animeModel;
+class _$AnimeMoreStateImpl extends _AnimeMoreState {
+  const _$AnimeMoreStateImpl(
+      {required this.loading,
+      required this.error,
+      required this.page,
+      required final List<AnimeModel> animeList})
+      : _animeList = animeList,
+        super._();
 
-  final List<AnimeModel>? _animeModel;
   @override
-  List<AnimeModel>? get animeModel {
-    final value = _animeModel;
-    if (value == null) return null;
-    if (_animeModel is EqualUnmodifiableListView) return _animeModel;
+  final bool loading;
+  @override
+  final bool error;
+  @override
+  final int page;
+  final List<AnimeModel> _animeList;
+  @override
+  List<AnimeModel> get animeList {
+    if (_animeList is EqualUnmodifiableListView) return _animeList;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_animeList);
   }
 
   @override
   String toString() {
-    return 'AnimeMoreState.loaded(animeModel: $animeModel)';
+    return 'AnimeMoreState(loading: $loading, error: $error, page: $page, animeList: $animeList)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LoadedImpl &&
+            other is _$AnimeMoreStateImpl &&
+            (identical(other.loading, loading) || other.loading == loading) &&
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.page, page) || other.page == page) &&
             const DeepCollectionEquality()
-                .equals(other._animeModel, _animeModel));
+                .equals(other._animeList, _animeList));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_animeModel));
+  int get hashCode => Object.hash(runtimeType, loading, error, page,
+      const DeepCollectionEquality().hash(_animeList));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(List<AnimeModel>? animeModel) loaded,
-    required TResult Function(String message) error,
-  }) {
-    return loaded(animeModel);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<AnimeModel>? animeModel)? loaded,
-    TResult? Function(String message)? error,
-  }) {
-    return loaded?.call(animeModel);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<AnimeModel>? animeModel)? loaded,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(animeModel);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-  }) {
-    return loaded(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-  }) {
-    return loaded?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(this);
-    }
-    return orElse();
-  }
+  _$$AnimeMoreStateImplCopyWith<_$AnimeMoreStateImpl> get copyWith =>
+      __$$AnimeMoreStateImplCopyWithImpl<_$AnimeMoreStateImpl>(
+          this, _$identity);
 }
 
-abstract class _Loaded implements AnimeMoreState {
-  const factory _Loaded({final List<AnimeModel>? animeModel}) = _$LoadedImpl;
+abstract class _AnimeMoreState extends AnimeMoreState {
+  const factory _AnimeMoreState(
+      {required final bool loading,
+      required final bool error,
+      required final int page,
+      required final List<AnimeModel> animeList}) = _$AnimeMoreStateImpl;
+  const _AnimeMoreState._() : super._();
 
-  List<AnimeModel>? get animeModel;
+  @override
+  bool get loading;
+  @override
+  bool get error;
+  @override
+  int get page;
+  @override
+  List<AnimeModel> get animeList;
+  @override
   @JsonKey(ignore: true)
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$ErrorImplCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
-      __$$ErrorImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String message});
-}
-
-/// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$AnimeMoreStateCopyWithImpl<$Res, _$ErrorImpl>
-    implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? message = null,
-  }) {
-    return _then(_$ErrorImpl(
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$ErrorImpl implements _Error {
-  const _$ErrorImpl({required this.message});
-
-  @override
-  final String message;
-
-  @override
-  String toString() {
-    return 'AnimeMoreState.error(message: $message)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl &&
-            (identical(other.message, message) || other.message == message));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, message);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(List<AnimeModel>? animeModel) loaded,
-    required TResult Function(String message) error,
-  }) {
-    return error(message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<AnimeModel>? animeModel)? loaded,
-    TResult? Function(String message)? error,
-  }) {
-    return error?.call(message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<AnimeModel>? animeModel)? loaded,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(message);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Error implements AnimeMoreState {
-  const factory _Error({required final String message}) = _$ErrorImpl;
-
-  String get message;
-  @JsonKey(ignore: true)
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
+  _$$AnimeMoreStateImplCopyWith<_$AnimeMoreStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

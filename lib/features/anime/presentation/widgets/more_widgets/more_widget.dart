@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:raijin/core/commons/widgets/anime_card_widget.dart';
 import 'package:raijin/core/constants/border_radius.dart';
 import 'package:raijin/core/constants/colors.dart';
+import 'package:raijin/core/constants/font.dart';
 import 'package:raijin/core/constants/padding.dart';
 import 'package:raijin/core/constants/sizes.dart';
 import 'package:raijin/core/usecases/more_usecase/more_use_case.dart';
@@ -21,34 +23,27 @@ class MoreWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<AnimeModel> animeModelList = [];
-    int page = 0;
-
+    context.read<AnimeMoreBloc>().add(const AnimeMoreEvent.animeResetMore());
+    _pullUp(context: context, page: 0);
     return SafeArea(
       child: Scaffold(
         body: BlocBuilder<AnimeMoreBloc, AnimeMoreState>(
           builder: (context, state) {
-            page = page + 1;
-            return state.when(
-              initial: () => Container(),
-              loading: () => page == 1
-                  ? _initial(context)
-                  : _loaded(
-                      animeModel: animeModelList,
-                      context: context,
-                      page: page,
-                    ),
-              loaded: (animeModel) {
-                for (int i = 0; i < animeModel!.length; i++) {
-                  animeModelList.add(animeModel[i]);
-                }
-                return _loaded(
-                  animeModel: animeModelList,
-                  context: context,
-                  page: page,
-                );
-              },
-              error: (message) => Text(message),
+            if (state.error) {
+              return Center(
+                child: Text(
+                  'Something Wrong',
+                  style: bodySmall(context: context),
+                ),
+              );
+            } else if (state.animeList.isEmpty) {
+              return _initial(context);
+            }
+
+            return _loaded(
+              animeModel: state.animeList,
+              context: context,
+              page: state.page,
             );
           },
         ),
@@ -67,38 +62,25 @@ class MoreWidget extends StatelessWidget {
             (index) => Padding(
               padding: kTopPadding,
               child: Row(
-                children: List.generate(
-                  3,
-                  (index) => Padding(
-                    padding: index == 0 ? kHorizontalPadding : kRightPadding,
-                    child: Column(
-                      children: [
-                        Container(
-                          width: (widthMediaQuery(context: context) / 3) -
-                              (40 / 3),
-                          height: heightMediaQuery(context: context) / 4.5,
-                          decoration: BoxDecoration(
-                            borderRadius: kMainBorderRadius,
-                            color: backgroundColor(context: context),
-                          ),
+                  children: List.generate(
+                3,
+                (index) => Padding(
+                  padding: index == 0 ? kHorizontalPadding : kRightPadding,
+                  child: Column(
+                    children: [
+                      Container(
+                        width:
+                            (widthMediaQuery(context: context) / 3) - (40 / 3),
+                        height: heightMediaQuery(context: context) / 4.5 + 40,
+                        decoration: BoxDecoration(
+                          borderRadius: kMainBorderRadius,
+                          color: backgroundColor(context: context),
                         ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        Container(
-                          width: (widthMediaQuery(context: context) / 3) -
-                              (40 / 3),
-                          height: 36,
-                          decoration: BoxDecoration(
-                            borderRadius: kMainBorderRadius,
-                            color: backgroundColor(context: context),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
+              )),
             ),
           ),
         ),
@@ -158,7 +140,9 @@ class MoreWidget extends StatelessWidget {
                         ),
                       );
                     },
-                  ),
+                  )
+                      .animate(delay: 0.15.seconds, interval: 0.095.seconds)
+                      .slideY(begin: 1),
                 ),
               );
             },

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:raijin/core/errors/failure.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/data/models/schedule_model/schedule_model.dart';
@@ -21,6 +22,8 @@ abstract class AnimeRepository {
   Future<Either<Failure<String>, List<VideoModel>>> animeGetVideo({
     required String endpoint,
     required String baseUrl,
+    required int position,
+    required String server,
   });
   Future<Either<Failure<String>, List<ScheduleModel>>> animeGetSchedule({
     required String day,
@@ -28,4 +31,6 @@ abstract class AnimeRepository {
   Future<Either<Failure<String>, List<AnimeModel>>> animeGetSearch({
     required String query,
   });
+  Future<Either<Failure<String>, List<DownloadTask>>> animeGetDownload();
+  Future<Either<Failure<String>, List<String>>> animeGetGenre();
 }

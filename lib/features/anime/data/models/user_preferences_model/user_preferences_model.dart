@@ -13,6 +13,7 @@ abstract class UserPreferencesModel with _$UserPreferencesModel {
     double? playback,
     String? photoPath,
     String? username,
+    String? server,
   }) = _UserPreferencesModel;
 
   factory UserPreferencesModel.fromJson(Map<String, dynamic> json) {

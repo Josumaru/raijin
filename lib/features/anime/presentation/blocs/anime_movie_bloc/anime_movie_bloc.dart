@@ -35,6 +35,7 @@ class AnimeMovieBloc extends Bloc<AnimeMovieEvent, AnimeMovieState> {
     required String genre,
     required int page,
   }) async {
+    emit(const AnimeMovieState.loading());
     final data = await _animeGetMovieUseCase(
       genre: genre,
       status: status,

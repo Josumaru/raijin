@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -12,6 +13,7 @@ import 'package:raijin/core/constants/padding.dart';
 import 'package:raijin/core/constants/sizes.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_new_bloc/anime_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_preferences/anime_preferences_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_video_bloc/anime_video_bloc.dart';
 import 'package:raijin/features/anime/presentation/pages/video_page.dart';
 import 'package:shimmer/shimmer.dart';
@@ -37,7 +39,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
           loaded: (animeModel) => CarouselLoaded(
             animeModel: animeModel!,
           ),
-          error: (message) => Text(message),
+          error: (message) => Container(),
         );
       },
     );
@@ -194,15 +196,19 @@ class _CarouselLoadedState extends State<CarouselLoaded> {
             ),
           ),
         ),
-      ],
+      ].animate(interval: .055.seconds).slideX(begin: 1),
     );
   }
 
   _play({required String endpoint, required AnimeModel animeModel}) {
-    context
-        .read<AnimeVideoBloc>()
-        .add(AnimeVideoEvent.getVideo(endpoint: endpoint, baseUrl: animeModel.endpoint));
+    context.read<AnimeVideoBloc>().add(AnimeVideoEvent.getVideo(
+        endpoint: endpoint,
+        baseUrl: animeModel.endpoint,
+        position: 0,
+        server:
+            context.read<AnimePreferencesBloc>().state.preferences.server!));
     PersistentNavBarNavigator.pushNewScreenWithRouteSettings(context,
+        withNavBar: false,
         screen: const VideoPage(),
         settings: const RouteSettings(name: '/video'),
         pageTransitionAnimation: PageTransitionAnimation.cupertino);
@@ -254,8 +260,9 @@ class CarouselLoading extends StatelessWidget {
                     Positioned.fill(
                       child: Container(
                         decoration: BoxDecoration(
-                            borderRadius: kMainBorderRadius,
-                            color: backgroundColor(context: context)),
+                          borderRadius: kMainBorderRadius,
+                          color: backgroundColor(context: context),
+                        ),
                       ),
                     ),
                     const Positioned(

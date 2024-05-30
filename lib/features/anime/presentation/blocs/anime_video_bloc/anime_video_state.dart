@@ -4,8 +4,11 @@ part of 'anime_video_bloc.dart';
 class AnimeVideoState with _$AnimeVideoState {
   const AnimeVideoState._();
   const factory AnimeVideoState({
+    String? videoPath,
     required bool error,
     required bool loading,
+    required String endpoint,
+    required String baseUrl,
     required List<VideoModel> videoList,
   }) = _AnimeVideoState;
 
@@ -14,6 +17,9 @@ class AnimeVideoState with _$AnimeVideoState {
       error: false,
       loading: false,
       videoList: [],
+      videoPath: null,
+      baseUrl: '',
+      endpoint: '',
     );
   }
 }

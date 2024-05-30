@@ -63,9 +63,9 @@ class AnimeHistoryBloc extends Bloc<AnimeHistoryEvent, AnimeHistoryState> {
   }
 
   _getAnimeHistory({required Emitter emit}) async {
+    emit(state.copyWith(loading: true));
     final String uid = user.currentUser!.uid;
 
-    emit(state.copyWith(loading: true));
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     final collectionRef = firestore
         .collection('history')

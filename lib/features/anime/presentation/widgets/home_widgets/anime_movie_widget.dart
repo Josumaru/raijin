@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -24,7 +25,7 @@ class AnimeMovieWidget extends StatelessWidget {
       builder: (context, state) {
         return state.when(
           initial: () => Container(),
-          loading: () => const Text('Loading'),
+          loading: () => Container(),
           loaded: (animeModel) => Padding(
             padding: kHorizontalPadding,
             child: Column(
@@ -72,13 +73,13 @@ class AnimeMovieWidget extends StatelessWidget {
                       padding: kTopPadding,
                       child: AnimeMovieCard(animeModel: animeModel[index]),
                     ),
-                  ),
+                  ).animate(interval: .35.seconds).slideY(begin: 1),
                 ),
                 const SizedBox(height: 10),
               ],
             ),
           ),
-          error: (message) => Text(message),
+          error: (message) => Container(),
         );
       },
     );
@@ -150,7 +151,7 @@ class AnimeMovieCard extends StatelessWidget {
                     child: Text(
                       _animeModel.description!,
                       style: bodySmall(context: context),
-                      maxLines: 4,
+                      maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),

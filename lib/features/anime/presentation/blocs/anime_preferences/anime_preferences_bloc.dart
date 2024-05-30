@@ -62,7 +62,6 @@ class AnimePreferencesBloc
         preferences: preferencess,
       ),
     );
-    emit(state.copyWith(loading: false));
   }
 
   _getPreferences({required Emitter emit}) async {

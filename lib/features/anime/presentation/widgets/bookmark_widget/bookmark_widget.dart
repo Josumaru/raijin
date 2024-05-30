@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/core/constants/border_radius.dart';
 import 'package:raijin/core/constants/colors.dart';
@@ -11,7 +13,9 @@ import 'package:raijin/core/constants/sizes.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/data/models/video_model/video_model.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_bookmark_bloc/anime_bookmark_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime_detail_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_history_bloc/anime_history_bloc.dart';
+import 'package:raijin/features/anime/presentation/pages/detail_page.dart';
 import 'package:swipeable_tile/swipeable_tile.dart';
 
 class BookmarkWidget extends StatelessWidget {
@@ -78,7 +82,7 @@ class BookmarkWidget extends StatelessWidget {
                             ),
                           );
                         },
-                      ),
+                      ).animate(interval: .055.seconds).slideY(begin: 1),
                     );
                   },
                 ),
@@ -103,20 +107,23 @@ class BookmarkCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int progress = 0;
-    String lastWatched = '0';
+    late String lastWatched = '0';
+    late String historyTitle;
+    late String animeTitle;
+    late String historyBaseUrl;
+    late String animeBaseUrl;
+    late String historyPoster;
+    late String animePoster;
 
     for (var history in List.from(_videoModelList.reversed)) {
-      final String historyTitle = history.title.split('Episode').first.trim();
-      // print('== ${history.baseUrl}');
-      final String animeTitle = _animeModel.title;
-      final String historyBaseUrl =
+      historyTitle = history.title.split('Episode').first.trim();
+      animeTitle = _animeModel.title;
+      historyBaseUrl =
           history.baseUrl.split(kAnimeEndpoint).last.replaceAll('/', '');
-      final String animeBaseUrl = _animeModel.endpoint;
-      final String historyPoster = history.poster;
-      final String animePoster = _animeModel.poster;
+      animeBaseUrl = _animeModel.endpoint;
+      historyPoster = history.poster;
+      animePoster = _animeModel.poster;
 
-      // print(
-      // '${history.title.split('Episode').first.trim()} == ${_animeModel.title}');
       if (historyTitle == animeTitle ||
           historyBaseUrl == animeBaseUrl ||
           historyPoster == animePoster) {
@@ -125,7 +132,9 @@ class BookmarkCard extends StatelessWidget {
       }
     }
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        _goToDetail(endpoint: animeBaseUrl, context: context);
+      },
       borderRadius: kMainBorderRadius,
       child: CachedNetworkImage(
         imageUrl: '$kAnimeEndpoint${_animeModel.poster}',
@@ -158,6 +167,12 @@ class BookmarkCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
+                      _animeModel.endpoint,
+                      style: bodyLarge(context: context),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
                       lastWatched == '0'
                           ? ''
                           : 'Last Watch Episode $lastWatched | $progress%',
@@ -174,4 +189,16 @@ class BookmarkCard extends StatelessWidget {
       ),
     );
   }
+}
+
+_goToDetail({required String endpoint, required BuildContext context}) {
+  context.read<AnimeDetailBloc>().add(
+        AnimeDetailEvent.animeGetDetail(endpoint: '$kAnimeEndpoint$endpoint'),
+      );
+  PersistentNavBarNavigator.pushNewScreenWithRouteSettings(
+    context,
+    screen: const DetailPage(),
+    settings: const RouteSettings(name: '/detail'),
+    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+  );
 }

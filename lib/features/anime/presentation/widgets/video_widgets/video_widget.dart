@@ -5,21 +5,25 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raijin/core/commons/widgets/anime_video_description_button.dart';
 import 'package:raijin/core/commons/widgets/anime_video_icon_button.dart';
 import 'package:raijin/core/constants/constants.dart';
-import 'package:raijin/core/usecases/download_usecase/download_use_case.dart';
+import 'package:raijin/features/anime/data/models/user_preferences_model/user_preferences_model.dart';
+import 'package:raijin/features/anime/domain/usecases/anime_download_use_case.dart';
 import 'package:raijin/core/usecases/more_usecase/more_use_case.dart';
 import 'package:raijin/core/usecases/url_launcher_use_case/url_launcher_use_case.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/data/models/video_model/video_model.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_bookmark_bloc/anime_bookmark_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_donwload_bloc/anime_download_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_history_bloc/anime_history_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_preferences/anime_preferences_bloc.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 import 'package:raijin/core/commons/widgets/loading_widget.dart';
 import 'package:raijin/core/constants/alignment.dart';
@@ -42,6 +46,7 @@ class VideoWidget extends StatefulWidget {
 class _VideoWidgetState extends State<VideoWidget> {
   late AnimeVideoBloc _bloc;
   late VideoPlayerController _controller;
+  late WebViewController webController;
   late Timer _timer;
   late Timer _historyTimer;
   late double _devicesWidth;
@@ -63,11 +68,13 @@ class _VideoWidgetState extends State<VideoWidget> {
   late int _duration;
   late int _position;
   late String _quality;
+  late String _server;
   late String _title;
   late String _videoEndpoint;
   late String _thumbnail;
   late String _navigation;
   late Orientation _orientation;
+  late bool _error;
 
   @override
   void initState() {
@@ -85,19 +92,27 @@ class _VideoWidgetState extends State<VideoWidget> {
     _buffering = false;
     _complete = false;
     _shifting = false;
+    _error = true;
     _firstInstance = true;
     _quality = '720p';
     _title = 'Raijin Anime';
+    _server = '';
     _thumbnail = '';
     super.initState();
   }
 
   @override
   void dispose() {
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: SystemUiOverlay.values,
+    );
     SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp],
     );
-    _controller.dispose();
+    if (_initialized) {
+      _controller.dispose();
+    }
     super.dispose();
   }
 
@@ -111,8 +126,6 @@ class _VideoWidgetState extends State<VideoWidget> {
         .read<AnimeBookmarkBloc>()
         .add(const AnimeBookmarkEvent.getAnimeList());
 
-    // Set user preferences
-
     // change width and height when orientation is changed, trigered when rebuild widget
     if (MediaQuery.of(context).orientation == Orientation.landscape) {
       _width = widthMediaQuery(context: context);
@@ -122,57 +135,161 @@ class _VideoWidgetState extends State<VideoWidget> {
       _height = null;
     }
 
-    return SafeArea(
+    return PopScope(
+      canPop: _orientation == Orientation.portrait,
+      onPopInvoked: (didPop) {
+        if (!didPop) {
+          _setOrientation();
+        }
+      },
       child: Scaffold(
-        body: Column(
-          children: [
-            Stack(
-              children: [
-                _buildVideoPlayer(),
-                Positioned.fill(
-                  child: () {
-                    if (_buffering) {
-                      return ClipRRect(
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-                          child: const Center(
-                            child: LoadingWidget(),
+        body: SafeArea(
+          bottom: false,
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  _buildVideoPlayer(),
+                  Positioned.fill(
+                    child: () {
+                      if (_buffering) {
+                        return ClipRRect(
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                            child: const Center(
+                              child: LoadingWidget(),
+                            ),
+                          ),
+                        );
+                      }
+                      return const SizedBox();
+                    }(),
+                  ),
+                  _buildVideoControll(),
+                  () {
+                    if (_server.toLowerCase() == 'webview' &&
+                        _orientation == Orientation.portrait &&
+                        !_loading) {
+                      return SizedBox(
+                        height: (widthMediaQuery(context: context) / 16) * 9,
+                        child: InkWell(
+                          onTap: () {
+                            _setOrientation();
+                          },
+                          child: Center(
+                            child: Icon(
+                              Iconsax.play,
+                              color: onBackgroundColor(context: context),
+                              size: 24,
+                            ),
                           ),
                         ),
                       );
                     }
                     return const SizedBox();
-                  }(),
-                ),
-                _buildVideoControll(),
-              ],
-            ),
-            BlocBuilder<AnimePreferencesBloc, AnimePreferencesState>(
-              builder: (context, state) {
-                _quality = state.preferences.resolution!;
-                _playbackSpeed = state.preferences.playback!;
-                return const SizedBox();
-              },
-            ),
-            BlocBuilder<AnimeVideoBloc, AnimeVideoState>(
-              bloc: BlocProvider.of<AnimeVideoBloc>(context),
-              builder: (context, state) {
-                return Column(
-                  children: [
-                    () {
-                      if (_loading && !_shifting) {
-                        return _buildLoading();
-                      } else {
-                        return _buildLoaded(state);
-                      }
-                    }()
-                  ],
-                );
-              },
-            ),
-          ],
+                  }()
+                ],
+              ),
+              BlocBuilder<AnimeVideoBloc, AnimeVideoState>(
+                bloc: BlocProvider.of<AnimeVideoBloc>(context),
+                builder: (context, state) {
+                  return Column(
+                    children: [
+                      () {
+                        if (state.error) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            _changeServer(context: context);
+                          });
+                        }
+                        if (_loading && !_shifting) {
+                          return _buildLoading();
+                        } else {
+                          return _buildLoaded(state);
+                        }
+                      }()
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  void _changeServer({required BuildContext context}) async {
+    return WoltModalSheet.show(
+      context: context,
+      pageListBuilder: (context) {
+        final List<String> serverList = [
+          'pixeldrain',
+          'kraken',
+          'Webview',
+        ];
+        return [
+          SliverWoltModalSheetPage(
+            backgroundColor: backgroundColor(
+              context: context,
+            ),
+            surfaceTintColor: onBackgroundColor(
+              context: context,
+            ),
+            mainContentSlivers: [
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: serverList.length,
+                  (context, index) {
+                    String server = serverList[index];
+                    return InkWell(
+                      onTap: () async {
+                        if (server != _server) {
+                          Navigator.of(context).pop();
+                          _server = server;
+                          final videoEndpoint =
+                              context.read<AnimeVideoBloc>().state;
+                          context
+                              .read<AnimeVideoBloc>()
+                              .add(AnimeVideoEvent.getVideo(
+                                endpoint: videoEndpoint.endpoint,
+                                baseUrl: videoEndpoint.baseUrl,
+                                position: 0,
+                                server: server,
+                              ));
+                          setState(() {});
+                        }
+                      },
+                      borderRadius: kMainBorderRadius,
+                      child: Center(
+                        child: Padding(
+                          padding: kAllPadding,
+                          child: Text(
+                            server.replaceFirst(
+                                server[0], server[0].toUpperCase()),
+                            style: TextStyle(
+                              color: () {
+                                if (_server == server) {
+                                  return primaryColor(
+                                    context: context,
+                                  );
+                                } else {
+                                  return onBackgroundColor(
+                                    context: context,
+                                  );
+                                }
+                              }(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          )
+        ];
+      },
     );
   }
 
@@ -290,11 +407,146 @@ class _VideoWidgetState extends State<VideoWidget> {
               child: AspectRatio(
                 aspectRatio: 16 / 9,
                 child: () {
-                  if (!_initialized && !_loading || _shifting) {
+                  if (_server.toLowerCase() == 'webview') {
+                    void injectJavaScript(controller) {
+                      controller.runJavaScript('''
+                        document.querySelectorAll('img').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('header').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('ol').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('disqus_thread').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('commentarea').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('.commentarea').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('.pencenter').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('.widget').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('noscript').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('meta').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('.logo-container').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('.video-nav').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('footer').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('#footer').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('.copyright_eastheme').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('aside').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('a').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('.nav-eps').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('.whites').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('.naveps').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('br').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.querySelectorAll('.player-area').id = '';
+
+                        const widget = document.querySelectorAll('.widget_senction');
+                        widget.forEach((element)=>{element.classList.remove('widget_senction')})
+                        document.querySelectorAll('.has-post-thumbnail').forEach((element)=>{
+                          element.classList.remove('has-post-thumbnail')
+                        })
+
+                        document.querySelectorAll('#breadcrumbs').forEach((el)=>{
+                            el.remove()
+                        });
+
+                        document.getElementById('container').id = ''
+                        document.getElementById('infoarea').id = ''
+
+                      ''');
+                    }
+
+                    webController = WebViewController()
+                      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                      ..setBackgroundColor(backgroundColor(context: context))
+                      ..setNavigationDelegate(
+                        NavigationDelegate(
+                          onNavigationRequest: (NavigationRequest request) {
+                            return NavigationDecision.prevent;
+                          },
+                          onProgress: (progress) {
+                            if (progress == 100) {
+                              injectJavaScript(webController);
+                            }
+                          },
+                        ),
+                      )
+                      ..loadRequest(Uri.parse(state.endpoint));
+
+                    // injectJavaScript();
+
+                    return SizedBox(
+                      width: _width,
+                      height: _height,
+                      child: WebViewWidget(controller: webController),
+                    );
+                  } else if (!_initialized && !_loading || _shifting) {
                     return Stack(
                       children: [
                         Center(
-                          child: CachedNetworkImage(imageUrl: _thumbnail),
+                          child: CachedNetworkImage(
+                            imageUrl: _thumbnail,
+                            errorWidget: (context, url, error) => Text(
+                              'Unable to Load Image',
+                              style: bodySmall(context: context),
+                            ),
+                          ),
                         ),
                         const Positioned.fill(child: LoadingWidget()),
                         Positioned.fill(
@@ -319,162 +571,172 @@ class _VideoWidgetState extends State<VideoWidget> {
                     );
                   } else {
                     if (_showControll) {
-                      return Stack(
-                        children: [
-                          Positioned.fill(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                gradient: gradientColor(context: context),
+                      return SizedBox(
+                        width: widthMediaQuery(context: context),
+                        child: Stack(
+                          children: [
+                            Positioned.fill(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  gradient: gradientColor(context: context),
+                                ),
                               ),
                             ),
-                          ),
-                          Positioned.fill(
-                            child: Row(
-                              crossAxisAlignment: kCrossAxisAlignmentCenter(),
-                              mainAxisAlignment: kMainAxisAligmentSpaceEvenly(),
-                              children: [
-                                SizedBox(
-                                  height: 30,
-                                  width: 30,
-                                  child: InkWell(
-                                    borderRadius: kMainBorderRadius,
-                                    onTap: () {
-                                      _controller.seekTo(
-                                        Duration(seconds: _position - 15),
-                                      );
-                                    },
-                                    child: const Icon(
-                                      Iconsax.backward_15_seconds,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 30,
-                                  width: 30,
-                                  child: InkWell(
-                                    onTap: play,
-                                    child: () {
-                                      // Show when the video is not buffering
-                                      if (_playing && !_buffering) {
-                                        return const Icon(
-                                          Iconsax.pause,
-                                          color: Colors.white,
-                                        );
-                                      } else {
-                                        return const Icon(
-                                          Iconsax.play,
-                                          color: Colors.white,
-                                        );
-                                      }
-                                    }(),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 30,
-                                  width: 30,
-                                  child: InkWell(
-                                    onTap: () {
-                                      _controller.seekTo(
-                                        Duration(seconds: _position + 15),
-                                      );
-                                    },
-                                    child: const Icon(
-                                      Iconsax.forward_15_seconds,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          _buildBottomControll(
-                            context,
-                            _landscape,
-                            _position,
-                            _sliderPosition,
-                            _bloc,
-                            _duration,
-                            _setOrientation,
-                            state,
-                          ),
-                          Positioned(
-                            child: Padding(
-                              padding: kHorizontalTopPadding,
+                            Positioned.fill(
                               child: Row(
                                 crossAxisAlignment: kCrossAxisAlignmentCenter(),
+                                mainAxisAlignment:
+                                    kMainAxisAligmentSpaceEvenly(),
                                 children: [
-                                  InkWell(
-                                    borderRadius: kMainBorderRadius,
-                                    onTap: () {
-                                      if (_landscape) {
-                                        _setOrientation();
-                                      } else {
-                                        Navigator.of(context).pop();
-                                      }
-                                    },
-                                    child: const Icon(
-                                      Iconsax.arrow_left_2,
-                                      color: Colors.white,
+                                  SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: InkWell(
+                                      borderRadius: kMainBorderRadius,
+                                      onTap: () {
+                                        _controller.seekTo(
+                                          Duration(seconds: _position - 15),
+                                        );
+                                      },
+                                      child: const Icon(
+                                        Iconsax.backward_15_seconds,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
-                                  () {
-                                    if (_landscape) {
-                                      return Text(
-                                        state.videoList.first.title,
-                                        style: bodyLarge(context: context)
-                                            .copyWith(
-                                          color: Colors.white,
-                                        ),
-                                      );
-                                    }
-                                    return const SizedBox();
-                                  }(),
-                                  const Spacer(),
-                                  InkWell(
-                                    onTap: () {
-                                      _buildPlaybakModalSheet(state: state);
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          '${_playbackSpeed}X',
-                                          style: const TextStyle(
+                                  SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: InkWell(
+                                      onTap: play,
+                                      child: () {
+                                        // Show when the video is not buffering
+                                        if (_playing && !_buffering) {
+                                          return const Icon(
+                                            Iconsax.pause,
                                             color: Colors.white,
-                                          ),
-                                        ),
-                                        const Icon(
-                                          Iconsax.timer_start,
-                                          color: Colors.white,
-                                        ),
-                                      ],
+                                          );
+                                        } else {
+                                          return const Icon(
+                                            Iconsax.play,
+                                            color: Colors.white,
+                                          );
+                                        }
+                                      }(),
                                     ),
                                   ),
-                                  const SizedBox(width: 10),
-                                  InkWell(
-                                    onTap: () {
-                                      _buildModalSheet(state: state);
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          _quality,
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        const Icon(
-                                          Iconsax.setting,
-                                          color: Colors.white,
-                                        ),
-                                      ],
+                                  SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: InkWell(
+                                      onTap: () {
+                                        _controller.seekTo(
+                                          Duration(seconds: _position + 15),
+                                        );
+                                      },
+                                      child: const Icon(
+                                        Iconsax.forward_15_seconds,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                          )
-                        ],
+                            _buildBottomControll(
+                              context,
+                              _landscape,
+                              _position,
+                              _sliderPosition,
+                              _bloc,
+                              _duration,
+                              _setOrientation,
+                              state,
+                            ),
+                            Positioned(
+                              right: 0,
+                              left: 0,
+                              child: Padding(
+                                padding: kHorizontalTopPadding,
+                                child: Row(
+                                  crossAxisAlignment:
+                                      kCrossAxisAlignmentCenter(),
+                                  children: [
+                                    InkWell(
+                                      borderRadius: kMainBorderRadius,
+                                      onTap: () {
+                                        if (_landscape) {
+                                          _setOrientation();
+                                        } else {
+                                          Navigator.of(context).pop();
+                                        }
+                                      },
+                                      child: const Icon(
+                                        Iconsax.arrow_left_2,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    () {
+                                      if (_landscape) {
+                                        return Text(
+                                          state.videoList.first.title,
+                                          style: bodyLarge(context: context)
+                                              .copyWith(
+                                            color: Colors.white,
+                                          ),
+                                        );
+                                      }
+                                      return const SizedBox();
+                                    }(),
+                                    const Spacer(),
+                                    InkWell(
+                                      onTap: () {
+                                        _buildPlaybakModalSheet(state: state);
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            '${_playbackSpeed}X',
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          const Icon(
+                                            Iconsax.timer_start,
+                                            color: Colors.white,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    InkWell(
+                                      onTap: () {
+                                        _buildModalSheet(state: state);
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            _quality,
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: kRightPadding,
+                                            child: const Icon(
+                                              Iconsax.setting,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ).animate(delay: .1.seconds).slideY(),
+                              ),
+                            )
+                          ],
+                        ),
                       );
                     } else {
                       return GestureDetector(
@@ -483,26 +745,6 @@ class _VideoWidgetState extends State<VideoWidget> {
                           _showControlDuration = 3;
                           _autoHideControl();
                         },
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              bottom: 0,
-                              child: AnimatedContainer(
-                                duration: const Duration(seconds: 2),
-                                height: 3,
-                                width: widthMediaQuery(context: context) *
-                                    () {
-                                      final sp = _sliderPosition;
-                                      if (sp >= 0 && sp <= 1) {
-                                        return sp;
-                                      }
-                                      return 0;
-                                    }(),
-                                color: primaryColor(context: context),
-                              ),
-                            ),
-                          ],
-                        ),
                       );
                     }
                   }
@@ -519,19 +761,19 @@ class _VideoWidgetState extends State<VideoWidget> {
   void _setOrientation() {
     if (_orientation == Orientation.portrait) {
       SystemChrome.setEnabledSystemUIMode(
-        SystemUiMode.immersiveSticky,
-        overlays: [SystemUiOverlay.bottom],
+        SystemUiMode.immersive,
+        overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom],
       );
       SystemChrome.setPreferredOrientations(
         [DeviceOrientation.landscapeRight, DeviceOrientation.landscapeLeft],
       );
     } else {
+      SystemChrome.setEnabledSystemUIMode(
+        SystemUiMode.manual,
+        overlays: SystemUiOverlay.values,
+      );
       SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp],
-      );
-      SystemChrome.setEnabledSystemUIMode(
-        SystemUiMode.edgeToEdge,
-        overlays: [SystemUiOverlay.bottom],
       );
     }
   }
@@ -548,6 +790,7 @@ class _VideoWidgetState extends State<VideoWidget> {
   ) {
     return Positioned(
       bottom: 0,
+      right: 0,
       left: 0,
       child: Column(
         crossAxisAlignment: kCrossAxisAlignmentStart(),
@@ -573,44 +816,40 @@ class _VideoWidgetState extends State<VideoWidget> {
                     ),
                   ),
                   Expanded(
-                    child: Stack(
-                      children: [
-                        SliderTheme(
-                          data: SliderTheme.of(context).copyWith(
-                            trackHeight: 3,
-                            overlayShape: const RoundSliderOverlayShape(
-                              overlayRadius: 0,
-                            ),
-                            thumbShape: const RoundSliderThumbShape(
-                              elevation: 0,
-                              enabledThumbRadius: 5,
-                              disabledThumbRadius: 3,
-                            ),
-                            activeTrackColor: primaryColor(
-                              context: context,
-                            ),
-                            inactiveTrackColor: Colors.white.withOpacity(0.5),
-                            thumbColor: primaryColor(
-                              context: context,
-                            ),
-                          ),
-                          child: Slider(
-                            value: _sliderPosition,
-                            onChanged: (value) {
-                              if (value % 0.02 > 0.015) {
-                                setState(() {
-                                  _sliderPosition = value;
-                                });
-                              }
-                            },
-                            onChangeEnd: (value) {
-                              _controller.seekTo(
-                                Duration(seconds: (value * _duration).round()),
-                              );
-                            },
-                          ),
+                    child: SliderTheme(
+                      data: SliderTheme.of(context).copyWith(
+                        trackHeight: 3,
+                        overlayShape: const RoundSliderOverlayShape(
+                          overlayRadius: 0,
                         ),
-                      ],
+                        thumbShape: const RoundSliderThumbShape(
+                          elevation: 0,
+                          enabledThumbRadius: 5,
+                          disabledThumbRadius: 3,
+                        ),
+                        activeTrackColor: primaryColor(
+                          context: context,
+                        ),
+                        inactiveTrackColor: Colors.white.withOpacity(0.5),
+                        thumbColor: primaryColor(
+                          context: context,
+                        ),
+                      ),
+                      child: Slider(
+                        value: _sliderPosition,
+                        onChanged: (value) {
+                          if (value % 0.02 > 0.015) {
+                            setState(() {
+                              _sliderPosition = value;
+                            });
+                          }
+                        },
+                        onChangeEnd: (value) {
+                          _controller.seekTo(
+                            Duration(seconds: (value * _duration).round()),
+                          );
+                        },
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -650,97 +889,94 @@ class _VideoWidgetState extends State<VideoWidget> {
           ),
           () {
             if (landscape) {
-              return Stack(
-                children: [
-                  SizedBox(
-                    height: 65,
-                    width: widthMediaQuery(context: context),
-                    child: Padding(
-                      padding: kHorizontalPadding,
-                      child: Row(
-                        children: [
-                          AnimeVideoIconButton(
-                            text: 'Share',
-                            icon: Iconsax.send_2,
-                            callback: () {
-                              _shareWhatsApp(state: state);
-                            },
-                          ),
-                          AnimeVideoIconButton(
-                            text: 'Open',
-                            icon: Iconsax.maximize_2,
-                            callback: () {
-                              UrlLauncherUseCase().call(
-                                params: state.videoList.first.baseUrl,
-                              );
-                            },
-                          ),
-                          AnimeVideoIconButton(
-                            text: 'Download',
-                            icon: Iconsax.direct_down,
-                            callback: () {
-                              _downloadVideo(
-                                title: state.videoList.first.title,
-                                quality: _quality,
-                                endpoint: state.videoList.first.endpoint,
-                              );
-                            },
-                          ),
-                          AnimeVideoIconButton(
-                            text: '+90 S',
-                            icon: Iconsax.forward,
-                            callback: () {
-                              _controller.seekTo(
-                                Duration(
-                                  seconds: position + 88,
-                                ),
-                              );
-                            },
-                          ),
-                          const Spacer(),
-                          AnimeVideoIconButton(
-                            text: () {
-                              _navigation = state.videoList.first.nextEpisode!;
-                              if (_navigation == '#') {
-                                _navigation =
-                                    state.videoList.first.prevEpisode!;
-                                return 'Play Episode ${state.videoList.first.prevEpisode!.replaceAll('/', '').split('').last}';
-                              } else {
-                                _navigation =
-                                    state.videoList.first.nextEpisode!;
-                                return 'Play Episode ${state.videoList.first.nextEpisode!.replaceAll('/', '').split('').last}';
-                              }
-                            }(),
-                            icon: () {
-                              if (state.videoList.first.nextEpisode == '#') {
-                                return Iconsax.previous;
-                              }
-                              return Iconsax.previous;
-                            }(),
-                            callback: () {
-                              _changeEpisode(
-                                endpoint: _navigation,
-                                title: _title,
-                                thumbnail: _thumbnail,
-                                baseUrl: state.videoList.first.baseUrl,
-                              );
-                            },
-                          ),
-                          AnimeVideoIconButton(
-                            icon: Iconsax.maximize_4,
-                            callback: setOrientation,
-                          ),
-                        ],
+              return SizedBox(
+                height: 65,
+                width: widthMediaQuery(context: context),
+                child: Padding(
+                  padding: kHorizontalPadding,
+                  child: Row(
+                    children: [
+                      AnimeVideoIconButton(
+                        text: 'Share',
+                        icon: Iconsax.send_2,
+                        callback: () {
+                          _shareWhatsApp(state: state);
+                        },
                       ),
-                    ),
+                      AnimeVideoIconButton(
+                        text: 'Open',
+                        icon: Iconsax.maximize_2,
+                        callback: () {
+                          UrlLauncherUseCase().call(
+                            params:
+                                '$kAnimeEndpoint${state.videoList.first.baseUrl}',
+                          );
+                        },
+                      ),
+                      AnimeVideoIconButton(
+                        text: 'Download',
+                        icon: Iconsax.directbox_receive,
+                        callback: () {
+                          _downloadVideo(
+                            title: state.videoList.first.title,
+                            quality: _quality,
+                            endpoint: _videoEndpoint,
+                          );
+                        },
+                      ),
+                      AnimeVideoIconButton(
+                        text: '+90 S',
+                        icon: Iconsax.forward,
+                        callback: () {
+                          _controller.seekTo(
+                            Duration(
+                              seconds: position + 88,
+                            ),
+                          );
+                        },
+                      ),
+                      const Spacer(),
+                      AnimeVideoIconButton(
+                        text: () {
+                          _navigation = state.videoList.first.nextEpisode!;
+                          if (_navigation == '#') {
+                            _navigation = state.videoList.first.prevEpisode!;
+                            return 'Play Episode ${state.videoList.first.prevEpisode!.replaceAll('/', '').split('').last}';
+                          } else {
+                            _navigation = state.videoList.first.nextEpisode!;
+                            return 'Play Episode ${state.videoList.first.nextEpisode!.replaceAll('/', '').split('').last}';
+                          }
+                        }(),
+                        icon: () {
+                          if (state.videoList.first.nextEpisode == '#') {
+                            return Iconsax.previous;
+                          }
+                          return Iconsax.previous;
+                        }(),
+                        callback: () {
+                          _changeEpisode(
+                            endpoint: _navigation,
+                            title: _title,
+                            thumbnail: _thumbnail,
+                            baseUrl: state.videoList.first.baseUrl,
+                          );
+                        },
+                      ),
+                      AnimeVideoIconButton(
+                        icon: Iconsax.maximize_4,
+                        callback: setOrientation,
+                      ),
+                    ],
                   ),
-                ],
+                ),
               );
             }
             return const SizedBox();
           }(),
         ],
-      ),
+      ).animate(delay: .1.milliseconds).slideY(
+            begin: 1,
+          ),
     );
   }
 
@@ -772,6 +1008,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                           Navigator.of(context).pop();
                           final uri = Uri.parse(videoEndpoint);
                           if (!(videoEndpoint == _controller.dataSource)) {
+                            _videoEndpoint = videoEndpoint;
                             VideoPlayerController newController =
                                 VideoPlayerController.contentUri(uri);
                             await newController.initialize().then((value) {
@@ -903,8 +1140,88 @@ class _VideoWidgetState extends State<VideoWidget> {
 
   // Video Player
   _buildVideoPlayer() {
+    changeServer() {
+      return WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        WoltModalSheet.show(
+          context: context,
+          pageListBuilder: (context) {
+            final List<String> serverList = ['Pixeldrain', 'Kraken', 'Webview'];
+            return [
+              SliverWoltModalSheetPage(
+                backgroundColor: backgroundColor(
+                  context: context,
+                ),
+                surfaceTintColor: onBackgroundColor(
+                  context: context,
+                ),
+                mainContentSlivers: [
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      childCount: serverList.length,
+                      (context, index) {
+                        String server = serverList[index];
+                        return InkWell(
+                          onTap: () async {
+                            if (server == 'Webview') {
+                              setState(() {
+                                _server = 'webview';
+                              });
+                              if (server.toLowerCase() == 'webview') {
+                                _controller.dispose();
+                              }
+                              Navigator.of(context).pop();
+                            } else if (server != _server) {
+                              Navigator.of(context).pop();
+                              _server = server.toLowerCase();
+                              final videoEndpoint =
+                                  context.read<AnimeVideoBloc>().state;
+                              context
+                                  .read<AnimeVideoBloc>()
+                                  .add(AnimeVideoEvent.getVideo(
+                                    endpoint: videoEndpoint.endpoint,
+                                    baseUrl: videoEndpoint.baseUrl,
+                                    position: 0,
+                                    server: server.toLowerCase(),
+                                  ));
+                              setState(() {});
+                            }
+                          },
+                          borderRadius: kMainBorderRadius,
+                          child: Center(
+                            child: Padding(
+                              padding: kAllPadding,
+                              child: Text(
+                                server,
+                                style: TextStyle(
+                                  color: () {
+                                    if (_server.toLowerCase() ==
+                                        server.toLowerCase()) {
+                                      return primaryColor(
+                                        context: context,
+                                      );
+                                    } else {
+                                      return onBackgroundColor(
+                                        context: context,
+                                      );
+                                    }
+                                  }(),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              )
+            ];
+          },
+        );
+      });
+    }
+
     return BlocBuilder<AnimeVideoBloc, AnimeVideoState>(
-      bloc: BlocProvider.of<AnimeVideoBloc>(context),
       builder: (context, state) {
         if (_firstInstance) {
           if (_loading != state.loading) {
@@ -919,19 +1236,33 @@ class _VideoWidgetState extends State<VideoWidget> {
           return const SizedBox();
         } else {
           if (!_initialized && _title != state.videoList.first.title) {
+            final UserPreferencesModel preferences =
+                context.read<AnimePreferencesBloc>().state.preferences;
+            _server = preferences.server!;
+            _quality = preferences.resolution!;
+            _playbackSpeed = preferences.playback!;
             _title = state.videoList.first.title;
+            _server = preferences.server!;
             // initialize the endpoint
             _videoEndpoint = state.videoList.first.videoEndpoint;
             // change quality based on state
             for (var element in state.videoList) {
+              if (element.videoEndpoint == '' &&
+                  _server.toLowerCase() != 'webview') {
+                changeServer();
+                break;
+              } else if (element.videoEndpoint != '') {
+                // _title = state.videoList.first.title;
+                _error = false;
+              }
               if (element.quality == _quality) {
                 _videoEndpoint = element.videoEndpoint;
-                // break;
               }
             }
             if (_shifting) {
               _controller.dispose();
             }
+
             final uri = Uri.parse(_videoEndpoint);
             _controller = VideoPlayerController.contentUri(uri)
               ..initialize().then(
@@ -939,6 +1270,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                   _controller.play();
                   _controller.setPlaybackSpeed(_playbackSpeed);
                   _addAnimeHistory(state: state);
+                  _position = state.videoList.first.position!;
                   WidgetsBinding.instance.addPostFrameCallback((_) async {
                     setState(() {
                       _initialized = true;
@@ -950,6 +1282,9 @@ class _VideoWidgetState extends State<VideoWidget> {
                       _playing = true;
                     });
                   });
+                  if (_position != 0) {
+                    _controller.seekTo(Duration(seconds: _position));
+                  }
                   _controller.addListener(
                     () {
                       _duration = _controller.value.duration.inSeconds;
@@ -968,6 +1303,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                 },
               );
           }
+
           return SizedBox(
             width: _width,
             height: _height,
@@ -1022,21 +1358,25 @@ class _VideoWidgetState extends State<VideoWidget> {
               ),
             );
           },
-        ),
+        )
+            .animate(delay: 0.25.seconds, interval: 0.095.seconds)
+            .slideX(begin: 1),
       ),
     );
   }
 
   _buildLoaded(AnimeVideoState state) {
     List<EpisodeModel> anotherEpisode = state.videoList.first.anotherEpisode;
-    final double maxHeight = (heightMediaQuery(context: context) - 56);
+    final double maxHeight = (heightMediaQuery(context: context));
     final double videoPlayerHeight =
         (widthMediaQuery(context: context) / 16 * 9);
-    final double paddingHeight = paddingMediaQuery(context: context).top;
+    final double paddingHeight = paddingMediaQuery(context: context).vertical;
     double remainingHeight = maxHeight - videoPlayerHeight - paddingHeight;
+    // kBottomNavigationBarHeight;
     if (_height != null) {
       remainingHeight = 0;
     }
+
     return SizedBox(
       height: remainingHeight,
       child: CustomScrollView(
@@ -1146,7 +1486,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                                           .split('Episode')
                                           .first
                                           .trim(),
-                                      endpoint: state.videoList.first.endpoint
+                                      endpoint: state.videoList.first.baseUrl
                                           .replaceAll(kAnimeEndpoint, '')
                                           .trim(),
                                       poster: state.videoList.first.poster
@@ -1168,6 +1508,12 @@ class _VideoWidgetState extends State<VideoWidget> {
                     children: [
                       CachedNetworkImage(
                         imageUrl: state.videoList.first.poster,
+                        errorWidget: (context, url, error) => Center(
+                            child: Icon(
+                          Iconsax.danger,
+                          color: backgroundColor(context: context)
+                              .withOpacity(0.5),
+                        )),
                         imageBuilder: (context, imageProvider) {
                           return CircleAvatar(
                             backgroundImage: imageProvider,
@@ -1177,7 +1523,8 @@ class _VideoWidgetState extends State<VideoWidget> {
                       Padding(
                         padding: kLeftPadding,
                         child: Text(
-                          state.videoList.first.mirror,
+                          _server.replaceFirst(
+                              _server[0], _server[0].toUpperCase()),
                           style: bodyMedium(context: context),
                         ),
                       ),
@@ -1188,21 +1535,19 @@ class _VideoWidgetState extends State<VideoWidget> {
                           style: bodySmall(context: context),
                         ),
                       ),
-                      // const Spacer(),
-                      // ElevatedButton(
-                      //   style: ElevatedButton.styleFrom(
-                      //     padding: const EdgeInsets.symmetric(vertical: 0),
-                      //   ),
-                      //   onPressed: () {},
-                      //   child: Padding(
-                      //     padding: kHorizontalPadding,
-                      //     child: const Row(
-                      //       children: [
-                      //         Icon(Iconsax.notification),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // )
+                      const Spacer(),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 0),
+                        ),
+                        onPressed: () {
+                          _changeServer(context: context);
+                        },
+                        child: Padding(
+                          padding: kHorizontalPadding,
+                          child: const Text('Change Server'),
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -1219,66 +1564,77 @@ class _VideoWidgetState extends State<VideoWidget> {
                     (index) {
                       return Stack(
                         children: [
-                          CachedNetworkImage(
-                            imageUrl: anotherEpisode[index].thumbnail!,
-                            imageBuilder: (context, imageProvider) {
-                              return Column(
-                                children: [
-                                  Stack(
-                                    children: [
-                                      Image(image: imageProvider),
-                                      Positioned.fill(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              colors: gradientListColor(
-                                                context: context,
-                                              ),
-                                              begin: Alignment.topCenter,
-                                              end: Alignment.bottomCenter,
-                                            ),
+                          Positioned(
+                            child: CachedNetworkImage(
+                              progressIndicatorBuilder:
+                                  (context, url, progress) {
+                                return _buildLoadingEpisode(
+                                    context, anotherEpisode, index);
+                              },
+                              errorWidget: (context, url, error) {
+                                return _buildLoadingEpisode(
+                                    context, anotherEpisode, index);
+                              },
+                              imageUrl: anotherEpisode[index].thumbnail!,
+                              imageBuilder: (context, imageProvider) {
+                                return Column(
+                                  children: [
+                                    Image(image: imageProvider),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: gradientListColor(
+                                            context: context,
                                           ),
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: kAllPadding,
-                                    child: Row(
-                                      children: [
-                                        // CircleAvatar(
-                                        //   backgroundImage: imageProvider,
-                                        // ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              kCrossAxisAlignmentStart(),
-                                          children: [
-                                            Text(
-                                              anotherEpisode[index]
-                                                  .title
-                                                  .replaceAll(
-                                                    'Episode ${anotherEpisode[index].episode}',
-                                                    '',
-                                                  ),
-                                              style: bodyMedium(
-                                                context: context,
-                                              ),
-                                            ),
-                                            Text(
-                                              '${anotherEpisode[index].date} | Episode ${anotherEpisode[index].episode}',
-                                              style: bodySmall(
-                                                context: context,
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
                                     ),
-                                  )
-                                ],
-                              );
-                            },
+                                    Padding(
+                                      padding: kAllPadding,
+                                      child: Row(
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                kCrossAxisAlignmentStart(),
+                                            children: [
+                                              SizedBox(
+                                                width: widthMediaQuery(
+                                                      context: context,
+                                                    ) -
+                                                    2 * kPadding,
+                                                child: Text(
+                                                  anotherEpisode[index]
+                                                      .title
+                                                      .replaceAll(
+                                                        'Episode ${anotherEpisode[index].episode}',
+                                                        '',
+                                                      ),
+                                                  style: bodyMedium(
+                                                    context: context,
+                                                  ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                ),
+                                              ),
+                                              Text(
+                                                '${anotherEpisode[index].date} | Episode ${anotherEpisode[index].episode}',
+                                                style: bodySmall(
+                                                  context: context,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                );
+                              },
+                            ),
                           ),
                           Positioned.fill(
                             child: Material(
@@ -1404,13 +1760,73 @@ class _VideoWidgetState extends State<VideoWidget> {
                         ],
                       );
                     },
-                  ),
+                  )
+                      .animate(delay: 0.25.seconds, interval: 0.095.seconds)
+                      .slideY(begin: 1),
                 ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Column _buildLoadingEpisode(
+      BuildContext context, List<EpisodeModel> anotherEpisode, int index) {
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: gradientListColor(
+                context: context,
+              ),
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
+        Padding(
+          padding: kAllPadding,
+          child: Row(
+            children: [
+              // CircleAvatar(
+              //   backgroundImage: imageProvider,
+              // ),
+              SizedBox(
+                width: widthMediaQuery(
+                      context: context,
+                    ) -
+                    2 * kPadding,
+                child: Column(
+                  crossAxisAlignment: kCrossAxisAlignmentStart(),
+                  children: [
+                    Text(
+                      anotherEpisode[index].title.replaceAll(
+                            'Episode ${anotherEpisode[index].episode}',
+                            '',
+                          ),
+                      style: bodyMedium(
+                        context: context,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    Text(
+                      '${anotherEpisode[index].date} | Episode ${anotherEpisode[index].episode}',
+                      style: bodySmall(
+                        context: context,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 
@@ -1429,9 +1845,11 @@ class _VideoWidgetState extends State<VideoWidget> {
     });
     _bloc.add(
       AnimeVideoEvent.getVideo(
-        endpoint: endpoint,
-        baseUrl: baseUrl,
-      ),
+          endpoint: endpoint,
+          baseUrl: baseUrl,
+          position: 0,
+          server:
+              context.read<AnimePreferencesBloc>().state.preferences.server!),
     );
   }
 
@@ -1444,12 +1862,14 @@ class _VideoWidgetState extends State<VideoWidget> {
       fileName: '$title ($quality)',
       url: endpoint,
     );
-    DownloadUseCase().call(params: params);
+    context
+        .read<AnimeDownloadBloc>()
+        .add(AnimeDownloadEvent.download(params: params));
   }
 
   void _shareWhatsApp({required AnimeVideoState state}) {
     final String message =
-        'Watch *${state.videoList.first.title}* on Raijin App and *Samehadaku.care*.\n\nTreat yourself to the ultimate anime experience—all in one app.\n\nExplore over *1000* captivating anime titles, all available on *samehadaku.care*.\n\nWatch on Samehadaku.care:\n${state.videoList.first.baseUrl}\n\nWatch and Download on Krakenfiles:\n${state.videoList.first.videoEndpoint}\n\nVisit Samehadaku:\nhttps://samehadaku.care';
+        'Watch *${state.videoList.first.title}* on Raijin App and *Samehadaku.care*.\n\nTreat yourself to the ultimate anime experience—all in one app.\n\nExplore over *1000* captivating anime titles, all available on *samehadaku.care*.\n\nWatch on Samehadaku.care:\n$kAnimeEndpoint${state.videoList.first.baseUrl}\n\nWatch and Download:\n${state.videoList.first.videoEndpoint}\n\nVisit Samehadaku:\nhttps://samehadaku.care';
     final String encoded = Uri.encodeComponent(
       message,
     );
@@ -1459,24 +1879,102 @@ class _VideoWidgetState extends State<VideoWidget> {
   }
 
   _buildLoading() {
-    return AspectRatio(
-      aspectRatio: 16 / 9,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: Shimmer.fromColors(
-              baseColor: onBackgroundColor(context: context).withOpacity(0.05),
-              highlightColor:
-                  onBackgroundColor(context: context).withOpacity(0.1),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: onBackgroundColor(context: context),
+    final double maxHeight = (heightMediaQuery(context: context));
+    final double paddingHeight = paddingMediaQuery(context: context).vertical;
+    double remainingHeight = maxHeight - paddingHeight;
+    return Shimmer.fromColors(
+      baseColor: onBackgroundColor(context: context).withOpacity(0.05),
+      highlightColor: onBackgroundColor(context: context).withOpacity(0.1),
+      child: SizedBox(
+        height: remainingHeight,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: kCrossAxisAlignmentStart(),
+            mainAxisAlignment: kMainAxisAligmentStart(),
+            children: [
+              AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: onBackgroundColor(context: context),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
+              Padding(
+                padding: kAllPadding,
+                child: Container(
+                  width: 190,
+                  height: 18,
+                  decoration: BoxDecoration(
+                    borderRadius: kMainBorderRadius,
+                    color: onBackgroundColor(context: context),
+                  ),
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: List.generate(
+                    5,
+                    (index) => Padding(
+                      padding: kLeftPadding,
+                      child: Container(
+                        padding: kAllPadding,
+                        width: 90,
+                        decoration: BoxDecoration(
+                          color: onBackgroundColor(context: context),
+                          borderRadius: kMainBorderRadius,
+                        ),
+                        child: Text(
+                          '',
+                          style: headlineMedium(context: context),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: kAllPadding,
+                child: Container(
+                  width: 140,
+                  height: 18,
+                  decoration: BoxDecoration(
+                    borderRadius: kMainBorderRadius,
+                    color: onBackgroundColor(context: context),
+                  ),
+                ),
+              ),
+              Column(
+                children: List.generate(
+                  3,
+                  (index) => Padding(
+                    padding: kBottomPadding,
+                    child: AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: onBackgroundColor(context: context),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
-          const LoadingWidget(),
-        ],
+        ),
       ),
     );
   }

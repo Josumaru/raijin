@@ -1,14 +1,13 @@
-import 'dart:typed_data';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:raijin/core/constants/border_radius.dart';
 import 'package:raijin/core/constants/colors.dart';
+import 'package:raijin/core/constants/font.dart';
 import 'package:raijin/core/services/injection_container.dart';
 import 'package:raijin/core/usecases/toast_usecase/toas_use_case.dart';
 import 'package:raijin/features/anime/data/models/user_preferences_model/user_preferences_model.dart';
@@ -26,10 +25,10 @@ class _UserEditWidgetState extends State<UserEditWidget> {
   late TextEditingController _nameController;
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
-  late TextEditingController _confirmController;
   late GlobalKey<FormState> _formState;
   late User _user;
   late String? _downloadUrl;
+  late bool _loading;
 
   @override
   void initState() {
@@ -37,8 +36,9 @@ class _UserEditWidgetState extends State<UserEditWidget> {
     _nameController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
-    _confirmController = TextEditingController();
     _formState = GlobalKey<FormState>();
+    _downloadUrl = null;
+    _loading = false;
   }
 
   @override
@@ -47,7 +47,6 @@ class _UserEditWidgetState extends State<UserEditWidget> {
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _confirmController.dispose();
   }
 
   void _upload() async {
@@ -57,6 +56,8 @@ class _UserEditWidgetState extends State<UserEditWidget> {
       source: ImageSource.gallery,
     );
     if (image == null) return;
+    _loading = true;
+    setState(() {});
     final file = await image.readAsBytes();
 
     final storageRef = FirebaseStorage.instance.ref();
@@ -64,6 +65,8 @@ class _UserEditWidgetState extends State<UserEditWidget> {
     final uploadTask = await imageRef.putData(file);
     final TaskSnapshot snapshot = uploadTask;
     _downloadUrl = await snapshot.ref.getDownloadURL();
+    _loading = false;
+    setState(() {});
     _alert(message: 'Images Uploaded');
   }
 
@@ -77,7 +80,7 @@ class _UserEditWidgetState extends State<UserEditWidget> {
               _user = sl<FirebaseAuth>().currentUser!;
               _nameController.text = _user.displayName!;
               _emailController.text = _user.email!;
-              _downloadUrl = state.preferences.photoPath;
+              _downloadUrl ??= state.preferences.photoPath!;
               return Padding(
                 padding: const EdgeInsets.all(20),
                 child: SizedBox(
@@ -87,15 +90,49 @@ class _UserEditWidgetState extends State<UserEditWidget> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        _downloadUrl != null
+                        _downloadUrl != null && _downloadUrl != ''
                             ? CachedNetworkImage(
                                 errorWidget: (context, url, error) {
                                   return Text(error.toString());
                                 },
+                                progressIndicatorBuilder:
+                                    (context, url, progress) {
+                                  return CircleAvatar(
+                                    backgroundColor:
+                                        onBackgroundColor(context: context),
+                                    // backgroundImage: imageProvider,
+                                    radius: 80,
+                                    child: Stack(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: CircleAvatar(
+                                            radius: 20,
+                                            backgroundColor: backgroundColor(
+                                              context: context,
+                                            ),
+                                            child: InkWell(
+                                              onTap: _upload,
+                                              borderRadius: kMainBorderRadius,
+                                              child: Icon(
+                                                Iconsax.gallery_edit,
+                                                color: onBackgroundColor(
+                                                  context: context,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
                                 imageUrl: _downloadUrl!,
                                 imageBuilder: (context, imageProvider) {
                                   return CircleAvatar(
-                                    // backgroundImage: imageProvider,
+                                    backgroundColor:
+                                        onBackgroundColor(context: context),
+                                    backgroundImage: imageProvider,
                                     radius: 80,
                                     child: Stack(
                                       children: [
@@ -126,8 +163,21 @@ class _UserEditWidgetState extends State<UserEditWidget> {
                               )
                             : CircleAvatar(
                                 radius: 80,
+                                backgroundColor:
+                                    onBackgroundColor(context: context),
                                 child: Stack(
                                   children: [
+                                    Center(
+                                      child: Text(
+                                        _user.displayName![0].toUpperCase(),
+                                        style: bodySmall(context: context)
+                                            .copyWith(
+                                          color:
+                                              backgroundColor(context: context),
+                                          fontSize: 40,
+                                        ),
+                                      ),
+                                    ),
                                     Align(
                                       alignment: Alignment.bottomRight,
                                       child: CircleAvatar(
@@ -162,7 +212,7 @@ class _UserEditWidgetState extends State<UserEditWidget> {
                             prefixIcon: Icon(
                               Iconsax.user,
                             ),
-                            label: Text("Username"),
+                            label: Text("Name"),
                           ),
                         ),
                         const SizedBox(
@@ -171,8 +221,6 @@ class _UserEditWidgetState extends State<UserEditWidget> {
                         TextFormField(
                           controller: _emailController,
                           readOnly: true,
-                          validator: (value) =>
-                              value!.isEmpty ? 'Email cannot empty' : null,
                           decoration: const InputDecoration(
                             prefixIcon: Icon(
                               Iconsax.direct_normal,
@@ -193,13 +241,13 @@ class _UserEditWidgetState extends State<UserEditWidget> {
                                     UserPreferencesModel(
                                   photoPath: _downloadUrl!,
                                   username: name,
-                                  resolution:
-                                      state.preferences.resolution ?? '720p',
-                                  theme: state.preferences.theme ?? 'dark',
-                                  playback: state.preferences.playback ?? 1,
+                                  resolution: state.preferences.resolution,
+                                  theme: state.preferences.theme,
+                                  playback: state.preferences.playback,
+                                  server: state.preferences.server,
                                 );
 
-                                if (_downloadUrl != null) {
+                                if (_downloadUrl != null && !_loading) {
                                   context.read<AnimePreferencesBloc>().add(
                                         AnimePreferencesEvent.setPreferences(
                                           preferences: preferences,
@@ -211,7 +259,16 @@ class _UserEditWidgetState extends State<UserEditWidget> {
                                 }
                               }
                             },
-                            child: const Text('Save'),
+                            child: _loading
+                                ? Center(
+                                    child:
+                                        LoadingAnimationWidget.discreteCircle(
+                                      color:
+                                          onBackgroundColor(context: context),
+                                      size: 24,
+                                    ),
+                                  )
+                                : const Text('Save'),
                           ),
                         ),
                       ],

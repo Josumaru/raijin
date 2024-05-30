@@ -4,21 +4,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:raijin/core/commons/widgets/anime_card_widget.dart';
-import 'package:raijin/core/commons/widgets/loading_widget.dart';
 import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/core/constants/border_radius.dart';
 import 'package:raijin/core/constants/colors.dart';
-import 'package:raijin/core/constants/constants.dart';
 import 'package:raijin/core/constants/font.dart';
 import 'package:raijin/core/constants/padding.dart';
 import 'package:raijin/core/constants/sizes.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
-import 'package:raijin/features/anime/data/models/episode_model/episode_model.dart';
-import 'package:raijin/features/anime/presentation/blocs/anime_bookmark_bloc/anime_bookmark_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime_detail_bloc.dart';
+import 'package:raijin/features/anime/presentation/blocs/anime_preferences/anime_preferences_bloc.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_video_bloc/anime_video_bloc.dart';
 import 'package:raijin/features/anime/presentation/pages/video_page.dart';
 import 'package:raijin/features/anime/presentation/widgets/trailer_widgets/trailer_widget.dart';
+import 'package:shimmer/shimmer.dart';
 
 class DetailWidget extends StatefulWidget {
   const DetailWidget({super.key});
@@ -29,12 +27,12 @@ class DetailWidget extends StatefulWidget {
 
 class _DetailWidgetState extends State<DetailWidget> {
   late int _episodeLength;
-  late List<EpisodeModel> episodeList;
+  late bool _reversed;
 
   @override
   void initState() {
     _episodeLength = 12;
-    episodeList = [];
+    _reversed = false;
     super.initState();
   }
 
@@ -51,7 +49,7 @@ class _DetailWidgetState extends State<DetailWidget> {
           builder: (context, state) {
             return state.when(
               initial: () => Container(),
-              loading: () => const Center(child: LoadingWidget()),
+              loading: () => _buildLoading(),
               loaded: (animeModel) {
                 return _buildLoaded(animeModel, context);
               },
@@ -64,6 +62,78 @@ class _DetailWidgetState extends State<DetailWidget> {
             );
           },
         ),
+      ),
+    );
+  }
+
+  _buildLoading() {
+    return Shimmer.fromColors(
+      baseColor: onBackgroundColor(context: context).withOpacity(0.1),
+      highlightColor: onBackgroundColor(context: context).withOpacity(0.3),
+      child: Stack(
+        children: [
+          CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                leading: Container(),
+                foregroundColor: onBackgroundColor(context: context),
+                bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(20),
+                  child: Container(
+                    width: double.maxFinite,
+                    padding: kAllPadding,
+                    decoration: BoxDecoration(
+                      borderRadius: kTopBorderRadius,
+                    ),
+                    child: Center(
+                      child: Container(
+                        width: 60,
+                        height: 4,
+                        decoration: BoxDecoration(
+                          color: onBackgroundColor(context: context),
+                          borderRadius: kMainBorderRadius,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                backgroundColor: Colors.transparent,
+                scrolledUnderElevation: 0,
+                expandedHeight: heightMediaQuery(context: context) * 0.5,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Stack(
+                    children: [
+                      Positioned(
+                        bottom: 50,
+                        left: 25,
+                        child: Container(
+                          width: 200,
+                          height: 300,
+                          decoration: BoxDecoration(
+                            color: onBackgroundColor(context: context)
+                                .withOpacity(0.3),
+                            borderRadius: kMainBorderRadius,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    Container(
+                      height: heightMediaQuery(context: context),
+                      color:
+                          onBackgroundColor(context: context).withOpacity(0.3),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -219,18 +289,43 @@ class _DetailWidgetState extends State<DetailWidget> {
               padding: kVerticalPadding,
               child: Text(
                 animeModel.description!,
-                // overflow: TextOverflow.ellipsis,
-                // maxLines: 14,
                 style: bodySmall(context: context).copyWith(
-                    color:
-                        onBackgroundColor(context: context).withOpacity(0.6)),
+                  color: onBackgroundColor(context: context).withOpacity(0.6),
+                ),
               ),
             ),
             Padding(
               padding: kVerticalPadding,
-              child: Text(
-                'Episode',
-                style: bodyLarge(context: context),
+              child: Row(
+                children: [
+                  Text(
+                    'Episode',
+                    style: bodyLarge(context: context),
+                  ),
+                  const Spacer(),
+                  InkWell(
+                    onTap: () => setState(() {
+                      _reversed = !_reversed;
+                    }),
+                    borderRadius: kMainBorderRadius,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: kHorizontalPadding,
+                          child: Text(
+                            'Reverse',
+                            style: bodySmall(context: context),
+                          ),
+                        ),
+                        Icon(
+                          Iconsax.arrange_circle_2,
+                          color: onBackgroundColor(context: context)
+                              .withOpacity(.5),
+                        )
+                      ],
+                    ),
+                  )
+                ],
               ),
             ),
             SizedBox(
@@ -280,16 +375,26 @@ class _DetailWidgetState extends State<DetailWidget> {
                                 onTap: () {
                                   context.read<AnimeVideoBloc>().add(
                                         AnimeVideoEvent.getVideo(
-                                          endpoint: animeModel
-                                              .episodeList!.reversed
+                                          endpoint: (_reversed
+                                                  ? animeModel
+                                                      .episodeList!.reversed
+                                                  : animeModel.episodeList!)
                                               .toList()[index]
                                               .endpoint,
                                           baseUrl: animeModel.endpoint,
+                                          position: 0,
+                                          server: context
+                                                  .read<AnimePreferencesBloc>()
+                                                  .state
+                                                  .preferences
+                                                  .server ??
+                                              'kraken',
                                         ),
                                       );
                                   PersistentNavBarNavigator
                                       .pushNewScreenWithRouteSettings(
                                     context,
+                                    withNavBar: false,
                                     screen: const VideoPage(),
                                     settings: const RouteSettings(
                                       name: '/video',
@@ -298,13 +403,17 @@ class _DetailWidgetState extends State<DetailWidget> {
                                         PageTransitionAnimation.cupertino,
                                   );
                                 },
-                                child: Text(
-                                  animeModel.episodeList!.reversed
-                                      .toList()[index]
-                                      .episode
-                                      .toString(),
-                                  style: bodyLarge(context: context)
-                                      .copyWith(fontSize: 20),
+                                child: Center(
+                                  child: Text(
+                                    (_reversed
+                                            ? animeModel.episodeList!.reversed
+                                            : animeModel.episodeList!)
+                                        .toList()[index]
+                                        .episode
+                                        .toString(),
+                                    style: bodyLarge(context: context)
+                                        .copyWith(fontSize: 20),
+                                  ),
                                 ),
                               ),
                       ),

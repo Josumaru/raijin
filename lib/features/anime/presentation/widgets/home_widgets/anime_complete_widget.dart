@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:raijin/core/commons/widgets/anime_card_shimmer_widget.dart';
@@ -25,7 +26,7 @@ class AnimeCompleteWidget extends StatelessWidget {
           loaded: (animeModel) {
             return _buildLoaded(context, animeModel);
           },
-          error: (message) => Text(message),
+          error: (message) => const SizedBox(),
         );
       },
     );
@@ -103,7 +104,7 @@ class AnimeCompleteWidget extends StatelessWidget {
                   removeTitle: false,
                 ),
               ),
-            ),
+            ).animate(interval: .35.seconds).slideX(begin: 1),
           ),
         ),
       ],

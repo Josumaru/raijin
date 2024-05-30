@@ -1,3 +1,4 @@
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:dio/dio.dart';
@@ -260,11 +261,17 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
   }
 
   @override
-  Future<List<VideoModel>> animeVideo(
-      {required String endpoint, required String baseUrl}) async {
+  Future<List<VideoModel>> animeVideo({
+    required String endpoint,
+    required String baseUrl,
+    required int position,
+    required String server,
+  }) async {
     List<VideoModel> mirrorList = [];
     List<EpisodeModel> episodeList = [];
     List<String> genre = [];
+    String videoEndpoint = '';
+    String thumbnail = '';
 
     int getEpisode(String title) {
       final reqExp = RegExp(r'Episode (\d+)');
@@ -338,37 +345,100 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
       genre.add(element.text.trim());
     }
 
-    for (final element in downloadElement) {
-      String serverQuality =
-          element.getElementsByTagName('strong').first.text.trim();
-      for (final server in element.getElementsByTagName('> span > a')) {
-        String mirror = server.text.trim().toLowerCase();
-        if (mirror.contains('kraken')) {
-          final Response mirrorResponse =
-              await dio.get(server.attributes['href']!);
-          final Element mirrorAttributes =
-              parse(mirrorResponse.data).getElementById('my-video')!;
-          mirrorList.add(
-            VideoModel(
-              quality: serverQuality,
-              mirror: mirror,
-              endpoint: endpoint,
-              poster: poster,
-              anotherEpisode: episodeList,
-              nextEpisode: nextEpisode,
-              prevEpisode: prevEpisode,
-              title: title,
-              genre: genre,
-              synopsis: synopsis,
-              thumbnail: 'https:${mirrorAttributes.attributes['poster']!}',
-              baseUrl: baseUrl,
-              videoEndpoint:
-                  'https:${mirrorAttributes.attributes['data-src-url']!}',
-            ),
-          );
+    if (server == 'kraken') {
+      // Kraken server
+      for (final element in downloadElement) {
+        String serverQuality =
+            element.getElementsByTagName('strong').first.text.trim();
+        for (final videoServer in element.getElementsByTagName('> span > a')) {
+          String mirror = videoServer.text.trim().toLowerCase();
+          if (mirror.contains(server)) {
+            final Response mirrorResponse =
+                await dio.get(videoServer.attributes['href']!);
+            final Element mirrorAttributes =
+                parse(mirrorResponse.data).getElementById('my-video')!;
+            videoEndpoint =
+                'https:${mirrorAttributes.attributes['data-src-url']!}';
+            if (thumbnail == '') {
+              thumbnail = 'https:${mirrorAttributes.attributes['poster']}';
+            }
+            mirrorList.add(
+              VideoModel(
+                quality: serverQuality,
+                mirror: mirror,
+                endpoint: endpoint,
+                poster: poster,
+                anotherEpisode: episodeList,
+                nextEpisode: nextEpisode,
+                prevEpisode: prevEpisode,
+                title: title,
+                genre: genre,
+                synopsis: synopsis,
+                thumbnail: thumbnail,
+                baseUrl: baseUrl,
+                position: position,
+                videoEndpoint: videoEndpoint,
+              ),
+            );
+          }
+        }
+      }
+    } else if (server == 'pixeldrain') {
+      for (final element in downloadElement) {
+        String serverQuality =
+            element.getElementsByTagName('strong').first.text.trim();
+        for (final videoServer in element.getElementsByTagName('> span > a')) {
+          String mirror = videoServer.text.trim().toLowerCase();
+          if (thumbnail == '' && mirror.contains('kraken')) {
+            final Response mirrorResponse =
+                await dio.get(videoServer.attributes['href']!);
+            final Element mirrorAttributes =
+                parse(mirrorResponse.data).getElementById('my-video')!;
+            thumbnail = 'https:${mirrorAttributes.attributes['poster']}';
+          } else if (mirror.contains(server)) {
+            videoEndpoint =
+                videoServer.attributes['href']!.replaceAll('/u/', '/api/file/');
+            mirrorList.add(
+              VideoModel(
+                quality: serverQuality,
+                mirror: mirror,
+                endpoint: endpoint,
+                poster: poster,
+                anotherEpisode: episodeList,
+                nextEpisode: nextEpisode,
+                prevEpisode: prevEpisode,
+                title: title,
+                genre: genre,
+                synopsis: synopsis,
+                thumbnail: thumbnail,
+                baseUrl: baseUrl,
+                position: position,
+                videoEndpoint: videoEndpoint,
+              ),
+            );
+          }
         }
       }
     }
+    mirrorList.add(
+      VideoModel(
+        quality: '',
+        mirror: '',
+        endpoint: endpoint,
+        poster: poster,
+        anotherEpisode: episodeList,
+        nextEpisode: nextEpisode,
+        prevEpisode: prevEpisode,
+        title: title,
+        genre: genre,
+        synopsis: synopsis,
+        thumbnail: thumbnail,
+        baseUrl: baseUrl,
+        position: position,
+        videoEndpoint: videoEndpoint,
+      ),
+    );
+
     return mirrorList;
   }
 
@@ -433,5 +503,34 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
       ));
     }
     return animeList;
+  }
+
+  @override
+  Future<List<DownloadTask>> animeGetDownload() async {
+    final List<DownloadTask> downloadList = [];
+
+    final existingTask = await FlutterDownloader.loadTasks();
+    for (var element in existingTask!) {
+      downloadList.add(element);
+    }
+    return downloadList;
+  }
+
+  @override
+  Future<List<String>> animeGetGenre() async {
+    const endpoint =
+        'https://samehadaku.email/daftar-anime-2/?order=latest&status=&type=';
+    final List<String> genres = [];
+    final response = await dio.get(endpoint);
+    final responseBody = parse(response.data);
+    final elements = responseBody.body!.getElementsByClassName('tax_fil');
+    for (var element in elements) {
+      genres.add(element
+          .getElementsByTagName('input')
+          .first
+          .attributes['value']!
+          .trim());
+    }
+    return genres;
   }
 }

@@ -21,6 +21,7 @@ mixin _$UserPreferencesModel {
   double? get playback => throw _privateConstructorUsedError;
   String? get photoPath => throw _privateConstructorUsedError;
   String? get username => throw _privateConstructorUsedError;
+  String? get server => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserPreferencesModelCopyWith<UserPreferencesModel> get copyWith =>
@@ -38,7 +39,8 @@ abstract class $UserPreferencesModelCopyWith<$Res> {
       String? resolution,
       double? playback,
       String? photoPath,
-      String? username});
+      String? username,
+      String? server});
 }
 
 /// @nodoc
@@ -60,6 +62,7 @@ class _$UserPreferencesModelCopyWithImpl<$Res,
     Object? playback = freezed,
     Object? photoPath = freezed,
     Object? username = freezed,
+    Object? server = freezed,
   }) {
     return _then(_value.copyWith(
       theme: freezed == theme
@@ -82,6 +85,10 @@ class _$UserPreferencesModelCopyWithImpl<$Res,
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String?,
+      server: freezed == server
+          ? _value.server
+          : server // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -99,7 +106,8 @@ abstract class _$$UserPreferencesModelImplCopyWith<$Res>
       String? resolution,
       double? playback,
       String? photoPath,
-      String? username});
+      String? username,
+      String? server});
 }
 
 /// @nodoc
@@ -118,6 +126,7 @@ class __$$UserPreferencesModelImplCopyWithImpl<$Res>
     Object? playback = freezed,
     Object? photoPath = freezed,
     Object? username = freezed,
+    Object? server = freezed,
   }) {
     return _then(_$UserPreferencesModelImpl(
       theme: freezed == theme
@@ -140,6 +149,10 @@ class __$$UserPreferencesModelImplCopyWithImpl<$Res>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String?,
+      server: freezed == server
+          ? _value.server
+          : server // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -152,7 +165,8 @@ class _$UserPreferencesModelImpl extends _UserPreferencesModel {
       this.resolution,
       this.playback,
       this.photoPath,
-      this.username})
+      this.username,
+      this.server})
       : super._();
 
   @override
@@ -165,10 +179,12 @@ class _$UserPreferencesModelImpl extends _UserPreferencesModel {
   final String? photoPath;
   @override
   final String? username;
+  @override
+  final String? server;
 
   @override
   String toString() {
-    return 'UserPreferencesModel(theme: $theme, resolution: $resolution, playback: $playback, photoPath: $photoPath, username: $username)';
+    return 'UserPreferencesModel(theme: $theme, resolution: $resolution, playback: $playback, photoPath: $photoPath, username: $username, server: $server)';
   }
 
   @override
@@ -184,12 +200,13 @@ class _$UserPreferencesModelImpl extends _UserPreferencesModel {
             (identical(other.photoPath, photoPath) ||
                 other.photoPath == photoPath) &&
             (identical(other.username, username) ||
-                other.username == username));
+                other.username == username) &&
+            (identical(other.server, server) || other.server == server));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, theme, resolution, playback, photoPath, username);
+      runtimeType, theme, resolution, playback, photoPath, username, server);
 
   @JsonKey(ignore: true)
   @override
@@ -206,7 +223,8 @@ abstract class _UserPreferencesModel extends UserPreferencesModel {
       final String? resolution,
       final double? playback,
       final String? photoPath,
-      final String? username}) = _$UserPreferencesModelImpl;
+      final String? username,
+      final String? server}) = _$UserPreferencesModelImpl;
   const _UserPreferencesModel._() : super._();
 
   @override
@@ -219,6 +237,8 @@ abstract class _UserPreferencesModel extends UserPreferencesModel {
   String? get photoPath;
   @override
   String? get username;
+  @override
+  String? get server;
   @override
   @JsonKey(ignore: true)
   _$$UserPreferencesModelImplCopyWith<_$UserPreferencesModelImpl>

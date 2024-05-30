@@ -12,7 +12,6 @@ import 'package:raijin/core/constants/sizes.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_detail_bloc/anime_detail_bloc.dart';
 import 'package:raijin/features/anime/presentation/pages/detail_page.dart';
-import 'package:shimmer/shimmer.dart';
 
 class AnimeCardWidget extends StatelessWidget {
   const AnimeCardWidget({
@@ -28,386 +27,390 @@ class AnimeCardWidget extends StatelessWidget {
   final bool removeTitle;
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: kMainBorderRadius,
-      onTap: () {
-        _goToDetail(endpoint: animeModel.endpoint, context: context);
-      },
-      child: CachedNetworkImage(
-        imageUrl: animeModel.poster,
-        progressIndicatorBuilder: (context, url, progress) {
-          return Column(
-            mainAxisAlignment: kMainAxisAligmentStart(),
-            crossAxisAlignment: kCrossAxisAlignmentStart(),
-            children: [
-              Stack(
+    return Stack(
+      children: [
+        Positioned(
+          child: CachedNetworkImage(
+            imageUrl: animeModel.poster,
+            progressIndicatorBuilder: (context, url, progress) {
+              return Column(
+                mainAxisAlignment: kMainAxisAligmentStart(),
+                crossAxisAlignment: kCrossAxisAlignmentStart(),
                 children: [
-                  Shimmer.fromColors(
-                    baseColor: onBackgroundColor(context: context).withOpacity(
-                      0.1,
-                    ),
-                    highlightColor:
-                        onBackgroundColor(context: context).withOpacity(
-                      0.3,
-                    ),
-                    child: Container(
-                      width: mode == 'large'
-                          ? 200
-                          : (widthMediaQuery(context: context) / 3) - (40 / 3),
-                      height: mode == 'large'
-                          ? 300
-                          : heightMediaQuery(context: context) / 4.5,
-                      decoration: BoxDecoration(
-                        color: onBackgroundColor(context: context).withOpacity(
-                          0.5,
+                  Stack(
+                    children: [
+                      Container(
+                        width: mode == 'large'
+                            ? 200
+                            : (widthMediaQuery(context: context) / 3) -
+                                (40 / 3),
+                        height: mode == 'large'
+                            ? 300
+                            : heightMediaQuery(context: context) / 4.5,
+                        decoration: BoxDecoration(
+                          color: onBackgroundColor(context: context)
+                              .withOpacity(0.3),
+                          borderRadius: kMainBorderRadius,
                         ),
-                        borderRadius: kMainBorderRadius,
                       ),
-                    ),
-                  ),
-                  animeModel.status! == 'Completed'
-                      ? Positioned(
-                          right: 5,
-                          top: 5,
-                          child: Container(
-                            padding: kHorizontalPadding,
-                            decoration: BoxDecoration(
-                              color: primaryColor(context: context),
-                              borderRadius: kMainBorderRadius / 4,
-                            ),
-                            child: Text(
-                              'END',
-                              style: bodyMedium(context: context).copyWith(
-                                color: Colors.white,
+                      animeModel.status! == 'Completed'
+                          ? Positioned(
+                              right: 5,
+                              top: 5,
+                              child: Container(
+                                padding: kHorizontalPadding,
+                                decoration: BoxDecoration(
+                                  color: primaryColor(context: context),
+                                  borderRadius: kMainBorderRadius / 4,
+                                ),
+                                child: Text(
+                                  'END',
+                                  style: bodyMedium(context: context).copyWith(
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
+                            )
+                          : Container(),
+                      Positioned.fill(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: kMainBorderRadius,
+                            gradient: LinearGradient(
+                              colors: gradientListColor(context: context),
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
                             ),
                           ),
-                        )
-                      : Container(),
-                  Positioned.fill(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: kMainBorderRadius,
-                        gradient: LinearGradient(
-                          colors: gradientListColor(context: context),
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
                         ),
                       ),
-                    ),
-                  ),
-                  index == null
-                      ? Positioned(
-                          left: () {
-                            switch (mode) {
-                              case 'large':
-                                return 20.0;
-                              default:
-                                return 5.0;
-                            }
-                          }(),
-                          bottom: () {
-                            switch (mode) {
-                              case 'large':
-                                return 20.0;
-                              default:
-                                return 5.0;
-                            }
-                          }(),
-                          child: Container(
-                            width: 50,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              borderRadius: kTopLeftBottomRightBorderRadius,
-                              color: () {
-                                switch (animeModel.type!.trim().toUpperCase()) {
-                                  case 'TV':
-                                    return Colors.redAccent;
-                                  case 'OVA':
-                                    return Colors.amberAccent;
-                                  case 'ONA':
-                                    return Colors.greenAccent;
-                                  case 'SPECIAL':
-                                    return Colors.purpleAccent;
-                                  case 'MOVIE':
-                                    return Colors.blueAccent;
+                      index == null
+                          ? Positioned(
+                              left: () {
+                                switch (mode) {
+                                  case 'large':
+                                    return 20.0;
                                   default:
-                                    return primaryColor(context: context);
+                                    return 5.0;
                                 }
                               }(),
-                            ),
-                            child: Center(
-                              child: Text(
-                                animeModel.type!,
-                                style: bodyLarge(context: context).copyWith(
-                                  color: kMainDarkTextColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-                      : Positioned(
-                          child: Container(
-                            width: 35,
-                            height: 35,
-                            decoration: BoxDecoration(
-                              borderRadius: kTopLeftBottomRightBorderRadius,
-                              color: primaryColor(
-                                context: context,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                '$index',
-                                style: bodyLarge(context: context).copyWith(
-                                  color: kMainDarkTextColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                  Positioned(
-                    bottom: mode == 'large' ? 20 : 5,
-                    left: () {
-                      switch (mode) {
-                        case 'large':
-                          return index == null ? null : 20.0;
-                        default:
-                          return index == null ? null : 5.0;
-                      }
-                    }(),
-                    right: () {
-                      switch (mode) {
-                        case 'large':
-                          return index == null ? 20.0 : null;
-                        default:
-                          return index == null ? 5.0 : null;
-                      }
-                    }(),
-                    child: Row(
-                      mainAxisAlignment: kMainAxisAligmentCenter(),
-                      crossAxisAlignment: kCrossAxisAlignmentCenter(),
-                      children: [
-                        const Icon(
-                          Iconsax.star1,
-                          color: Colors.amber,
-                          size: 14,
-                        ),
-                        Text(
-                          '${animeModel.score}',
-                          style: bodyMedium(context: context).copyWith(
-                            color: kMainDarkTextColor,
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              () {
-                if (removeTitle) {
-                  return Container();
-                }
-                return SizedBox(
-                  width: (widthMediaQuery(context: context) / 3) - (40 / 3),
-                  height: 40,
-                  child: Text(
-                    animeModel.title,
-                    style: titleMedium(context: context).copyWith(
-                      color:
-                          onBackgroundColor(context: context).withOpacity(0.6),
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
-                );
-              }()
-            ],
-          );
-        },
-        imageBuilder: (context, imageProvider) {
-          return Column(
-            mainAxisAlignment: kMainAxisAligmentStart(),
-            crossAxisAlignment: kCrossAxisAlignmentStart(),
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    width: mode == 'large'
-                        ? 200
-                        : (widthMediaQuery(context: context) / 3) - (40 / 3),
-                    height: mode == 'large'
-                        ? 300
-                        : heightMediaQuery(context: context) / 4.5,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: kMainBorderRadius,
-                    ),
-                  ),
-                  animeModel.status! == 'Completed'
-                      ? Positioned(
-                          right: 5,
-                          top: 5,
-                          child: Container(
-                            padding: kHorizontalPadding,
-                            decoration: BoxDecoration(
-                              color: primaryColor(context: context),
-                              borderRadius: kMainBorderRadius / 4,
-                            ),
-                            child: Text(
-                              'END',
-                              style: bodyMedium(context: context).copyWith(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        )
-                      : Container(),
-                  Positioned.fill(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: kMainBorderRadius,
-                        gradient: LinearGradient(
-                          colors: gradientListColor(context: context),
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                      ),
-                    ),
-                  ),
-                  index == null
-                      ? Positioned(
-                          left: () {
-                            switch (mode) {
-                              case 'large':
-                                return 20.0;
-                              default:
-                                return 5.0;
-                            }
-                          }(),
-                          bottom: () {
-                            switch (mode) {
-                              case 'large':
-                                return 20.0;
-                              default:
-                                return 5.0;
-                            }
-                          }(),
-                          child: Container(
-                            width: 50,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              borderRadius: kTopLeftBottomRightBorderRadius,
-                              color: () {
-                                switch (animeModel.type!.trim().toUpperCase()) {
-                                  case 'TV':
-                                    return Colors.redAccent;
-                                  case 'OVA':
-                                    return Colors.amberAccent;
-                                  case 'ONA':
-                                    return Colors.greenAccent;
-                                  case 'SPECIAL':
-                                    return Colors.purpleAccent;
-                                  case 'MOVIE':
-                                    return Colors.blueAccent;
+                              bottom: () {
+                                switch (mode) {
+                                  case 'large':
+                                    return 20.0;
                                   default:
-                                    return primaryColor(context: context);
+                                    return 5.0;
                                 }
                               }(),
-                            ),
-                            child: Center(
-                              child: Text(
-                                animeModel.type!,
-                                style: bodyLarge(context: context).copyWith(
-                                  color: kMainDarkTextColor,
+                              child: Container(
+                                width: 60,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  borderRadius: kTopLeftBottomRightBorderRadius,
+                                  color: () {
+                                    switch (
+                                        animeModel.type!.trim().toUpperCase()) {
+                                      case 'TV':
+                                        return Colors.redAccent;
+                                      case 'OVA':
+                                        return Colors.amberAccent;
+                                      case 'ONA':
+                                        return Colors.greenAccent;
+                                      case 'SPECIAL':
+                                        return Colors.purpleAccent;
+                                      case 'MOVIE':
+                                        return Colors.blueAccent;
+                                      default:
+                                        return primaryColor(context: context);
+                                    }
+                                  }(),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    animeModel.type!,
+                                    style: bodyLarge(context: context).copyWith(
+                                      color: kMainDarkTextColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Positioned(
+                              child: Container(
+                                width: 35,
+                                height: 35,
+                                decoration: BoxDecoration(
+                                  borderRadius: kTopLeftBottomRightBorderRadius,
+                                  color: primaryColor(
+                                    context: context,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '$index',
+                                    style: bodyLarge(context: context).copyWith(
+                                      color: kMainDarkTextColor,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        )
-                      : Positioned(
-                          child: Container(
-                            width: 35,
-                            height: 35,
-                            decoration: BoxDecoration(
-                              borderRadius: kTopLeftBottomRightBorderRadius,
-                              color: primaryColor(
-                                context: context,
-                              ),
+                      Positioned(
+                        bottom: mode == 'large' ? 20 : 7,
+                        left: () {
+                          switch (mode) {
+                            case 'large':
+                              return index == null ? null : 20.0;
+                            default:
+                              return index == null ? null : 10.0;
+                          }
+                        }(),
+                        right: () {
+                          switch (mode) {
+                            case 'large':
+                              return index == null ? 10.0 : null;
+                            default:
+                              return index == null ? 5.0 : null;
+                          }
+                        }(),
+                        child: Row(
+                          mainAxisAlignment: kMainAxisAligmentCenter(),
+                          crossAxisAlignment: kCrossAxisAlignmentCenter(),
+                          children: [
+                            const Icon(
+                              Iconsax.star1,
+                              color: Colors.amber,
+                              size: 14,
                             ),
-                            child: Center(
-                              child: Text(
-                                '$index',
-                                style: bodyLarge(context: context).copyWith(
-                                  color: kMainDarkTextColor,
-                                ),
+                            Text(
+                              '${animeModel.score}',
+                              style: bodyMedium(context: context).copyWith(
+                                color: kMainDarkTextColor,
                               ),
-                            ),
-                          ),
+                            )
+                          ],
                         ),
-                  Positioned(
-                    bottom: mode == 'large' ? 20 : 5,
-                    left: () {
-                      switch (mode) {
-                        case 'large':
-                          return index == null ? null : 20.0;
-                        default:
-                          return index == null ? null : 5.0;
-                      }
-                    }(),
-                    right: () {
-                      switch (mode) {
-                        case 'large':
-                          return index == null ? 20.0 : null;
-                        default:
-                          return index == null ? 5.0 : null;
-                      }
-                    }(),
-                    child: Row(
-                      mainAxisAlignment: kMainAxisAligmentCenter(),
-                      crossAxisAlignment: kCrossAxisAlignmentCenter(),
-                      children: [
-                        const Icon(
-                          Iconsax.star1,
-                          color: Colors.amber,
-                          size: 14,
-                        ),
-                        Text(
-                          '${animeModel.score}',
-                          style: bodyMedium(context: context).copyWith(
-                            color: kMainDarkTextColor,
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              () {
-                if (removeTitle) {
-                  return Container();
-                }
-                return SizedBox(
-                  width: (widthMediaQuery(context: context) / 3) - (40 / 3),
-                  height: 40,
-                  child: Text(
-                    animeModel.title,
-                    style: titleMedium(context: context).copyWith(
-                      color:
-                          onBackgroundColor(context: context).withOpacity(0.6),
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
+                      )
+                    ],
                   ),
-                );
-              }()
-            ],
-          );
-        },
-      ),
+                  () {
+                    if (removeTitle) {
+                      return Container();
+                    }
+                    return SizedBox(
+                      width: (widthMediaQuery(context: context) / 3) - (40 / 3),
+                      height: 40,
+                      child: Text(
+                        animeModel.title,
+                        style: titleMedium(context: context).copyWith(
+                          color: onBackgroundColor(context: context)
+                              .withOpacity(1),
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    );
+                  }()
+                ],
+              );
+            },
+            imageBuilder: (context, imageProvider) {
+              return Column(
+                mainAxisAlignment: kMainAxisAligmentStart(),
+                crossAxisAlignment: kCrossAxisAlignmentStart(),
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        width: mode == 'large'
+                            ? 200
+                            : (widthMediaQuery(context: context) / 3) -
+                                (40 / 3),
+                        height: mode == 'large'
+                            ? 300
+                            : heightMediaQuery(context: context) / 4.5,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: kMainBorderRadius,
+                        ),
+                      ),
+                      animeModel.status! == 'Completed'
+                          ? Positioned(
+                              right: 5,
+                              top: 5,
+                              child: Container(
+                                padding: kHorizontalPadding,
+                                decoration: BoxDecoration(
+                                  color: primaryColor(context: context),
+                                  borderRadius: kMainBorderRadius / 4,
+                                ),
+                                child: Text(
+                                  'END',
+                                  style: bodyMedium(context: context).copyWith(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Container(),
+                      Positioned.fill(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: kMainBorderRadius,
+                            gradient: LinearGradient(
+                              colors: gradientListColor(context: context),
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                          ),
+                        ),
+                      ),
+                      index == null
+                          ? Positioned(
+                              left: () {
+                                switch (mode) {
+                                  case 'large':
+                                    return 20.0;
+                                  default:
+                                    return 5.0;
+                                }
+                              }(),
+                              bottom: () {
+                                switch (mode) {
+                                  case 'large':
+                                    return 20.0;
+                                  default:
+                                    return 5.0;
+                                }
+                              }(),
+                              child: Container(
+                                width: 60,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  borderRadius: kTopLeftBottomRightBorderRadius,
+                                  color: () {
+                                    switch (
+                                        animeModel.type!.trim().toUpperCase()) {
+                                      case 'TV':
+                                        return Colors.redAccent;
+                                      case 'OVA':
+                                        return Colors.amberAccent;
+                                      case 'ONA':
+                                        return Colors.greenAccent;
+                                      case 'SPECIAL':
+                                        return Colors.purpleAccent;
+                                      case 'MOVIE':
+                                        return Colors.blueAccent;
+                                      default:
+                                        return primaryColor(context: context);
+                                    }
+                                  }(),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    animeModel.type!,
+                                    style: bodyLarge(context: context).copyWith(
+                                      color: kMainDarkTextColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Positioned(
+                              child: Container(
+                                width: 35,
+                                height: 35,
+                                decoration: BoxDecoration(
+                                  borderRadius: kTopLeftBottomRightBorderRadius,
+                                  color: primaryColor(
+                                    context: context,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '$index',
+                                    style: bodyLarge(context: context).copyWith(
+                                      color: kMainDarkTextColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                      Positioned(
+                        bottom: mode == 'large' ? 20 : 7,
+                        left: () {
+                          switch (mode) {
+                            case 'large':
+                              return index == null ? null : 20.0;
+                            default:
+                              return index == null ? null : 10.0;
+                          }
+                        }(),
+                        right: () {
+                          switch (mode) {
+                            case 'large':
+                              return index == null ? 10.0 : null;
+                            default:
+                              return index == null ? 5.0 : null;
+                          }
+                        }(),
+                        child: Row(
+                          mainAxisAlignment: kMainAxisAligmentCenter(),
+                          crossAxisAlignment: kCrossAxisAlignmentCenter(),
+                          children: [
+                            const Icon(
+                              Iconsax.star1,
+                              color: Colors.amber,
+                              size: 14,
+                            ),
+                            Text(
+                              '${animeModel.score}',
+                              style: bodyMedium(context: context).copyWith(
+                                color: kMainDarkTextColor,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  () {
+                    if (removeTitle) {
+                      return Container();
+                    }
+                    return SizedBox(
+                      width: (widthMediaQuery(context: context) / 3) - (40 / 3),
+                      height: 40,
+                      child: Text(
+                        animeModel.title,
+                        style: titleMedium(context: context).copyWith(
+                          color: onBackgroundColor(context: context)
+                              .withOpacity(1),
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    );
+                  }()
+                ],
+              );
+            },
+          ),
+        ),
+        Positioned.fill(
+          child: InkWell(
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            borderRadius: kMainBorderRadius,
+            onTap: () {
+              _goToDetail(endpoint: animeModel.endpoint, context: context);
+            },
+          ),
+        )
+      ],
     );
   }
 

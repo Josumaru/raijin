@@ -1,5 +1,3 @@
-// ignore_for_file: invalid_use_of_visible_for_testing_member
-
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
@@ -12,37 +10,40 @@ part 'anime_ongoing_bloc.freezed.dart';
 class AnimeOngoingBloc extends Bloc<AnimeOngoingEvent, AnimeOngoingState> {
   final AnimeGetUseCase animeGetUseCase;
   AnimeOngoingBloc({required this.animeGetUseCase})
-      : super(const AnimeOngoingState.initial()) {
-    on<AnimeOngoingEvent>((event, emit) {
-      event.when(
-        animeGetOngoing: (status, order, type, genre, page) => _animeGetPopular(
-          status: status,
-          order: order,
-          type: type,
-          genre: genre,
-          page: page
+      : super(AnimeOngoingState.started()) {
+    on<AnimeOngoingEvent>((event, emit) async {
+      await event.map(
+        animeGetOngoing: (value) => _animeGetOngoing(
+          status: value.status,
+          order: value.order,
+          type: value.type,
+          genre: value.genre,
+          page: value.page,
+          emit: emit,
         ),
       );
+
     });
   }
-  Future _animeGetPopular({
+  _animeGetOngoing({
     required String status,
     required String order,
     required String type,
     required String genre,
     required int page,
+    required Emitter emit,
   }) async {
-    emit(const AnimeOngoingState.loading());
+    emit(state.copyWith(loading: true));
     final data = await animeGetUseCase(
       order: order,
       status: status,
       type: type,
-      genre:genre,
+      genre: genre,
       page: page,
     );
     data.fold(
-      (l) => emit(AnimeOngoingState.error(message: l.toString())),
-      (r) => emit(AnimeOngoingState.loaded(animeModel: r)),
+      (l) => emit(state.copyWith(error: true)),
+      (r) => emit(state.copyWith(loading: false, animeModel: r)),
     );
   }
 }

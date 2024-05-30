@@ -18,19 +18,28 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AnimeVideoEvent {
   String get endpoint => throw _privateConstructorUsedError;
   String get baseUrl => throw _privateConstructorUsedError;
+  int get position => throw _privateConstructorUsedError;
+  String get server => throw _privateConstructorUsedError;
+  String? get videoPath => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String endpoint, String baseUrl) getVideo,
+    required TResult Function(String endpoint, String baseUrl, int position,
+            String server, String? videoPath)
+        getVideo,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String endpoint, String baseUrl)? getVideo,
+    TResult? Function(String endpoint, String baseUrl, int position,
+            String server, String? videoPath)?
+        getVideo,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String endpoint, String baseUrl)? getVideo,
+    TResult Function(String endpoint, String baseUrl, int position,
+            String server, String? videoPath)?
+        getVideo,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -62,7 +71,12 @@ abstract class $AnimeVideoEventCopyWith<$Res> {
           AnimeVideoEvent value, $Res Function(AnimeVideoEvent) then) =
       _$AnimeVideoEventCopyWithImpl<$Res, AnimeVideoEvent>;
   @useResult
-  $Res call({String endpoint, String baseUrl});
+  $Res call(
+      {String endpoint,
+      String baseUrl,
+      int position,
+      String server,
+      String? videoPath});
 }
 
 /// @nodoc
@@ -80,6 +94,9 @@ class _$AnimeVideoEventCopyWithImpl<$Res, $Val extends AnimeVideoEvent>
   $Res call({
     Object? endpoint = null,
     Object? baseUrl = null,
+    Object? position = null,
+    Object? server = null,
+    Object? videoPath = freezed,
   }) {
     return _then(_value.copyWith(
       endpoint: null == endpoint
@@ -90,6 +107,18 @@ class _$AnimeVideoEventCopyWithImpl<$Res, $Val extends AnimeVideoEvent>
           ? _value.baseUrl
           : baseUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      position: null == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as int,
+      server: null == server
+          ? _value.server
+          : server // ignore: cast_nullable_to_non_nullable
+              as String,
+      videoPath: freezed == videoPath
+          ? _value.videoPath
+          : videoPath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -102,7 +131,12 @@ abstract class _$$GetVideoImplCopyWith<$Res>
       __$$GetVideoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String endpoint, String baseUrl});
+  $Res call(
+      {String endpoint,
+      String baseUrl,
+      int position,
+      String server,
+      String? videoPath});
 }
 
 /// @nodoc
@@ -118,6 +152,9 @@ class __$$GetVideoImplCopyWithImpl<$Res>
   $Res call({
     Object? endpoint = null,
     Object? baseUrl = null,
+    Object? position = null,
+    Object? server = null,
+    Object? videoPath = freezed,
   }) {
     return _then(_$GetVideoImpl(
       endpoint: null == endpoint
@@ -128,6 +165,18 @@ class __$$GetVideoImplCopyWithImpl<$Res>
           ? _value.baseUrl
           : baseUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      position: null == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as int,
+      server: null == server
+          ? _value.server
+          : server // ignore: cast_nullable_to_non_nullable
+              as String,
+      videoPath: freezed == videoPath
+          ? _value.videoPath
+          : videoPath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -135,16 +184,27 @@ class __$$GetVideoImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$GetVideoImpl implements _GetVideo {
-  const _$GetVideoImpl({required this.endpoint, required this.baseUrl});
+  const _$GetVideoImpl(
+      {required this.endpoint,
+      required this.baseUrl,
+      required this.position,
+      required this.server,
+      this.videoPath});
 
   @override
   final String endpoint;
   @override
   final String baseUrl;
+  @override
+  final int position;
+  @override
+  final String server;
+  @override
+  final String? videoPath;
 
   @override
   String toString() {
-    return 'AnimeVideoEvent.getVideo(endpoint: $endpoint, baseUrl: $baseUrl)';
+    return 'AnimeVideoEvent.getVideo(endpoint: $endpoint, baseUrl: $baseUrl, position: $position, server: $server, videoPath: $videoPath)';
   }
 
   @override
@@ -154,11 +214,17 @@ class _$GetVideoImpl implements _GetVideo {
             other is _$GetVideoImpl &&
             (identical(other.endpoint, endpoint) ||
                 other.endpoint == endpoint) &&
-            (identical(other.baseUrl, baseUrl) || other.baseUrl == baseUrl));
+            (identical(other.baseUrl, baseUrl) || other.baseUrl == baseUrl) &&
+            (identical(other.position, position) ||
+                other.position == position) &&
+            (identical(other.server, server) || other.server == server) &&
+            (identical(other.videoPath, videoPath) ||
+                other.videoPath == videoPath));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, endpoint, baseUrl);
+  int get hashCode =>
+      Object.hash(runtimeType, endpoint, baseUrl, position, server, videoPath);
 
   @JsonKey(ignore: true)
   @override
@@ -169,27 +235,33 @@ class _$GetVideoImpl implements _GetVideo {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String endpoint, String baseUrl) getVideo,
+    required TResult Function(String endpoint, String baseUrl, int position,
+            String server, String? videoPath)
+        getVideo,
   }) {
-    return getVideo(endpoint, baseUrl);
+    return getVideo(endpoint, baseUrl, position, server, videoPath);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String endpoint, String baseUrl)? getVideo,
+    TResult? Function(String endpoint, String baseUrl, int position,
+            String server, String? videoPath)?
+        getVideo,
   }) {
-    return getVideo?.call(endpoint, baseUrl);
+    return getVideo?.call(endpoint, baseUrl, position, server, videoPath);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String endpoint, String baseUrl)? getVideo,
+    TResult Function(String endpoint, String baseUrl, int position,
+            String server, String? videoPath)?
+        getVideo,
     required TResult orElse(),
   }) {
     if (getVideo != null) {
-      return getVideo(endpoint, baseUrl);
+      return getVideo(endpoint, baseUrl, position, server, videoPath);
     }
     return orElse();
   }
@@ -226,12 +298,21 @@ class _$GetVideoImpl implements _GetVideo {
 abstract class _GetVideo implements AnimeVideoEvent {
   const factory _GetVideo(
       {required final String endpoint,
-      required final String baseUrl}) = _$GetVideoImpl;
+      required final String baseUrl,
+      required final int position,
+      required final String server,
+      final String? videoPath}) = _$GetVideoImpl;
 
   @override
   String get endpoint;
   @override
   String get baseUrl;
+  @override
+  int get position;
+  @override
+  String get server;
+  @override
+  String? get videoPath;
   @override
   @JsonKey(ignore: true)
   _$$GetVideoImplCopyWith<_$GetVideoImpl> get copyWith =>
@@ -240,8 +321,11 @@ abstract class _GetVideo implements AnimeVideoEvent {
 
 /// @nodoc
 mixin _$AnimeVideoState {
+  String? get videoPath => throw _privateConstructorUsedError;
   bool get error => throw _privateConstructorUsedError;
   bool get loading => throw _privateConstructorUsedError;
+  String get endpoint => throw _privateConstructorUsedError;
+  String get baseUrl => throw _privateConstructorUsedError;
   List<VideoModel> get videoList => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -255,7 +339,13 @@ abstract class $AnimeVideoStateCopyWith<$Res> {
           AnimeVideoState value, $Res Function(AnimeVideoState) then) =
       _$AnimeVideoStateCopyWithImpl<$Res, AnimeVideoState>;
   @useResult
-  $Res call({bool error, bool loading, List<VideoModel> videoList});
+  $Res call(
+      {String? videoPath,
+      bool error,
+      bool loading,
+      String endpoint,
+      String baseUrl,
+      List<VideoModel> videoList});
 }
 
 /// @nodoc
@@ -271,11 +361,18 @@ class _$AnimeVideoStateCopyWithImpl<$Res, $Val extends AnimeVideoState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? videoPath = freezed,
     Object? error = null,
     Object? loading = null,
+    Object? endpoint = null,
+    Object? baseUrl = null,
     Object? videoList = null,
   }) {
     return _then(_value.copyWith(
+      videoPath: freezed == videoPath
+          ? _value.videoPath
+          : videoPath // ignore: cast_nullable_to_non_nullable
+              as String?,
       error: null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -284,6 +381,14 @@ class _$AnimeVideoStateCopyWithImpl<$Res, $Val extends AnimeVideoState>
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
               as bool,
+      endpoint: null == endpoint
+          ? _value.endpoint
+          : endpoint // ignore: cast_nullable_to_non_nullable
+              as String,
+      baseUrl: null == baseUrl
+          ? _value.baseUrl
+          : baseUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       videoList: null == videoList
           ? _value.videoList
           : videoList // ignore: cast_nullable_to_non_nullable
@@ -300,7 +405,13 @@ abstract class _$$AnimeVideoStateImplCopyWith<$Res>
       __$$AnimeVideoStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool error, bool loading, List<VideoModel> videoList});
+  $Res call(
+      {String? videoPath,
+      bool error,
+      bool loading,
+      String endpoint,
+      String baseUrl,
+      List<VideoModel> videoList});
 }
 
 /// @nodoc
@@ -314,11 +425,18 @@ class __$$AnimeVideoStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? videoPath = freezed,
     Object? error = null,
     Object? loading = null,
+    Object? endpoint = null,
+    Object? baseUrl = null,
     Object? videoList = null,
   }) {
     return _then(_$AnimeVideoStateImpl(
+      videoPath: freezed == videoPath
+          ? _value.videoPath
+          : videoPath // ignore: cast_nullable_to_non_nullable
+              as String?,
       error: null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -327,6 +445,14 @@ class __$$AnimeVideoStateImplCopyWithImpl<$Res>
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
               as bool,
+      endpoint: null == endpoint
+          ? _value.endpoint
+          : endpoint // ignore: cast_nullable_to_non_nullable
+              as String,
+      baseUrl: null == baseUrl
+          ? _value.baseUrl
+          : baseUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       videoList: null == videoList
           ? _value._videoList
           : videoList // ignore: cast_nullable_to_non_nullable
@@ -339,16 +465,25 @@ class __$$AnimeVideoStateImplCopyWithImpl<$Res>
 
 class _$AnimeVideoStateImpl extends _AnimeVideoState {
   const _$AnimeVideoStateImpl(
-      {required this.error,
+      {this.videoPath,
+      required this.error,
       required this.loading,
+      required this.endpoint,
+      required this.baseUrl,
       required final List<VideoModel> videoList})
       : _videoList = videoList,
         super._();
 
   @override
+  final String? videoPath;
+  @override
   final bool error;
   @override
   final bool loading;
+  @override
+  final String endpoint;
+  @override
+  final String baseUrl;
   final List<VideoModel> _videoList;
   @override
   List<VideoModel> get videoList {
@@ -359,7 +494,7 @@ class _$AnimeVideoStateImpl extends _AnimeVideoState {
 
   @override
   String toString() {
-    return 'AnimeVideoState(error: $error, loading: $loading, videoList: $videoList)';
+    return 'AnimeVideoState(videoPath: $videoPath, error: $error, loading: $loading, endpoint: $endpoint, baseUrl: $baseUrl, videoList: $videoList)';
   }
 
   @override
@@ -367,15 +502,20 @@ class _$AnimeVideoStateImpl extends _AnimeVideoState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AnimeVideoStateImpl &&
+            (identical(other.videoPath, videoPath) ||
+                other.videoPath == videoPath) &&
             (identical(other.error, error) || other.error == error) &&
             (identical(other.loading, loading) || other.loading == loading) &&
+            (identical(other.endpoint, endpoint) ||
+                other.endpoint == endpoint) &&
+            (identical(other.baseUrl, baseUrl) || other.baseUrl == baseUrl) &&
             const DeepCollectionEquality()
                 .equals(other._videoList, _videoList));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, error, loading,
-      const DeepCollectionEquality().hash(_videoList));
+  int get hashCode => Object.hash(runtimeType, videoPath, error, loading,
+      endpoint, baseUrl, const DeepCollectionEquality().hash(_videoList));
 
   @JsonKey(ignore: true)
   @override
@@ -387,15 +527,24 @@ class _$AnimeVideoStateImpl extends _AnimeVideoState {
 
 abstract class _AnimeVideoState extends AnimeVideoState {
   const factory _AnimeVideoState(
-      {required final bool error,
+      {final String? videoPath,
+      required final bool error,
       required final bool loading,
+      required final String endpoint,
+      required final String baseUrl,
       required final List<VideoModel> videoList}) = _$AnimeVideoStateImpl;
   const _AnimeVideoState._() : super._();
 
   @override
+  String? get videoPath;
+  @override
   bool get error;
   @override
   bool get loading;
+  @override
+  String get endpoint;
+  @override
+  String get baseUrl;
   @override
   List<VideoModel> get videoList;
   @override

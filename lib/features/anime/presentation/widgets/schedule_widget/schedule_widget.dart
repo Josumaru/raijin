@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
@@ -102,8 +103,20 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                         scheduleModel: scheduleModel,
                         day: day,
                       ),
-                      error: (message) => const Center(
-                        child: Icon(Iconsax.danger),
+                      error: (message) => SizedBox(
+                        height: heightMediaQuery(context: context) * 0.4,
+                        child: Center(
+                          child: Column(
+                            children: [
+                              const Spacer(),
+                              Icon(
+                                Iconsax.danger,
+                                color: onBackgroundColor(context: context)
+                                    .withOpacity(0.5),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     );
                   },
@@ -131,11 +144,19 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                 mainAxisAlignment: kMainAxisAligmentStart(),
                 crossAxisAlignment: kCrossAxisAlignmentStart(),
                 children: [
-                  Padding(
-                    padding: kHorizontalPadding,
-                    child: Text(
-                      '00:00',
-                      style: bodyLarge(context: context),
+                  Container(
+                    width: widthMediaQuery(context: context) / 5,
+                    padding: kRightPadding,
+                    child: Padding(
+                      padding: kBottomPadding,
+                      child: Container(
+                        width: double.maxFinite,
+                        height: 18,
+                        decoration: BoxDecoration(
+                          borderRadius: kMainBorderRadius / 2,
+                          color: backgroundColor(context: context),
+                        ),
+                      ),
                     ),
                   ),
                   Container(
@@ -207,9 +228,10 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
     return SizedBox(
       width: widthMediaQuery(context: context),
       child: Column(
-        children: List.generate(
-          scheduleModel.length,
-          (index) => Padding(
+        children: List.generate(scheduleModel.length, (index) {
+          double width = widthMediaQuery(context: context) / 3;
+
+          return Padding(
             padding: kMainPadding,
             child: Row(
               mainAxisAlignment: kMainAxisAligmentStart(),
@@ -217,7 +239,7 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
               children: [
                 Container(
                   width: widthMediaQuery(context: context) / 5,
-                  padding: kHorizontalPadding,
+                  padding: kLeftPadding,
                   child: Text(
                     scheduleModel[index].east_time,
                     style: bodyLarge(context: context),
@@ -225,8 +247,29 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                 ),
                 CachedNetworkImage(
                   imageUrl: scheduleModel[index].featured_img_src,
+                  progressIndicatorBuilder: (context, url, progress) {
+                    return Container(
+                      width: width,
+                      height: width * 1.4,
+                      decoration: BoxDecoration(
+                        color: onBackgroundColor(context: context)
+                            .withOpacity(0.3),
+                        borderRadius: kMainBorderRadius,
+                      ),
+                    );
+                  },
+                  errorWidget: (context, url, error) {
+                    return Container(
+                      width: width,
+                      height: width * 1.4,
+                      decoration: BoxDecoration(
+                        color: onBackgroundColor(context: context)
+                            .withOpacity(0.3),
+                        borderRadius: kMainBorderRadius,
+                      ),
+                    );
+                  },
                   imageBuilder: (context, imageProvider) {
-                    double width = widthMediaQuery(context: context) / 3;
                     return Container(
                       width: width,
                       height: width * 1.4,
@@ -362,8 +405,8 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                 ),
               ],
             ),
-          ),
-        ),
+          );
+        }).animate(interval: .05.seconds).slideY(begin: 1),
       ),
     );
   }

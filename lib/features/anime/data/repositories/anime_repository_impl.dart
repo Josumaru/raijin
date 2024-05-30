@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:raijin/core/errors/failure.dart';
 import 'package:raijin/features/anime/data/datasources/remote/anime_data_source.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
@@ -64,15 +65,19 @@ class AnimeRepositoryImpl implements AnimeRepository {
   Future<Either<Failure<String>, List<VideoModel>>> animeGetVideo({
     required String endpoint,
     required String baseUrl,
+    required int position,
+    required String server,
   }) async {
     try {
       final List<VideoModel> r = await animeRemoteDataSource.animeVideo(
         endpoint: endpoint,
         baseUrl: baseUrl,
+        position: position,
+        server: server,
       );
       if (r.isEmpty) {
-        return Left(
-          const Failure.serverError(message: 'Kraken Server not Available'),
+        return const Left(
+          Failure.serverError(message: 'Error'),
         );
       }
       return Right(r);
@@ -101,6 +106,27 @@ class AnimeRepositoryImpl implements AnimeRepository {
     try {
       final List<AnimeModel> r =
           await animeRemoteDataSource.animeSearch(query: query);
+      return Right(r);
+    } catch (e) {
+      return Left(Failure.serverError(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure<String>, List<DownloadTask>>> animeGetDownload() async {
+    try {
+      final List<DownloadTask> r =
+          await animeRemoteDataSource.animeGetDownload();
+      return Right(r);
+    } catch (e) {
+      return Left(Failure.serverError(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure<String>, List<String>>> animeGetGenre() async {
+    try {
+      final List<String> r = await animeRemoteDataSource.animeGetGenre();
       return Right(r);
     } catch (e) {
       return Left(Failure.serverError(message: e.toString()));

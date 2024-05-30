@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:raijin/core/commons/widgets/anime_card_widget.dart';
 import 'package:raijin/core/constants/alignment.dart';
 import 'package:raijin/core/constants/border_radius.dart';
@@ -13,6 +15,7 @@ import 'package:raijin/core/constants/sizes.dart';
 import 'package:raijin/core/usecases/more_usecase/more_use_case.dart';
 import 'package:raijin/features/anime/data/models/anime_model/anime_model.dart';
 import 'package:raijin/features/anime/presentation/blocs/anime_search_bloc/anime_search_bloc.dart';
+import 'package:raijin/features/anime/presentation/pages/filter_page.dart';
 
 class DiscoverWidget extends StatelessWidget {
   DiscoverWidget({super.key});
@@ -148,7 +151,9 @@ class DiscoverWidget extends StatelessWidget {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _goToFilter(context: context);
+                        },
                         child: const Text('See more category'),
                       )
                     ],
@@ -170,7 +175,11 @@ class DiscoverWidget extends StatelessWidget {
                   loaded: (animeModel) => _loaded(animeModel),
                   error: (message) => Padding(
                     padding: kMainPadding,
-                    child: const Text('Something wrong'),
+                    child: Center(
+                        child: Text(
+                      'Something wrong',
+                      style: bodySmall(context: context),
+                    )),
                   ),
                 ),
               ),
@@ -235,7 +244,9 @@ class DiscoverWidget extends StatelessWidget {
                       }(),
                     );
                   },
-                ),
+                )
+                    .animate(delay: 0.25.seconds, interval: 0.095.seconds)
+                    .slideY(begin: 1),
               ),
             );
           },
@@ -257,6 +268,16 @@ class Debounce {
     }
     _timer = Timer(Duration(milliseconds: _millisecond), action);
   }
+}
+
+_goToFilter({required BuildContext context}) {
+  PersistentNavBarNavigator.pushNewScreenWithRouteSettings(
+    context,
+    withNavBar: false,
+    screen: const FilterPage(),
+    settings: const RouteSettings(name: '/filter'),
+    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+  );
 }
 
 _buildMore({required BuildContext context, required String genre}) {

@@ -6,6 +6,6 @@ class UserPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return UserWidget();
+    return const UserWidget();
   }
 }

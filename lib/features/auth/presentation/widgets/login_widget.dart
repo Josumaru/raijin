@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:raijin/core/commons/widgets/auth_loading_widget.dart';
+import 'package:raijin/core/constants/border_radius.dart';
 import 'package:raijin/core/constants/colors.dart';
 import 'package:raijin/core/constants/navigators.dart';
 import 'package:raijin/core/routes/route_name.dart';
@@ -25,6 +26,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   late bool _isChecked;
+  late bool _obscureText;
 
   @override
   void initState() {
@@ -32,6 +34,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     _isChecked = false;
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    _obscureText = true;
   }
 
   @override
@@ -109,6 +112,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         height: 20,
                       ),
                       TextFormField(
+                        obscureText: _obscureText,
                         controller: _passwordController,
                         validator: (value) {
                           if (value == '') {
@@ -116,14 +120,23 @@ class _LoginWidgetState extends State<LoginWidget> {
                           }
                           return null;
                         },
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(
                             Iconsax.lock,
                           ),
-                          suffixIcon: Icon(
-                            Iconsax.eye_slash,
+                          suffixIcon: InkWell(
+                            onTap: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                            splashColor: Colors.transparent,
+                            borderRadius: kMainBorderRadius,
+                            child: Icon(
+                              _obscureText ? Iconsax.eye : Iconsax.eye_slash,
+                            ),
                           ),
-                          label: Text("Password"),
+                          label: const Text("Password"),
                         ),
                       ),
                       Row(
@@ -178,7 +191,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                             ),
                           ),
                           Text(
-                            'Or Signin with',
+                            'Or Create New Account',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!
@@ -197,38 +210,38 @@ class _LoginWidgetState extends State<LoginWidget> {
                       const SizedBox(
                         height: 20,
                       ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: OutlinedButton(
-                          onPressed: () {},
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 25,
-                                width: 25,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  image: const DecorationImage(
-                                    image: AssetImage(
-                                      'assets/images/google.png',
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  'Sign in with Google',
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      // SizedBox(
+                      //   width: double.infinity,
+                      //   child: OutlinedButton(
+                      //     onPressed: () {},
+                      //     child: Row(
+                      //       crossAxisAlignment: CrossAxisAlignment.center,
+                      //       mainAxisAlignment: MainAxisAlignment.center,
+                      //       children: [
+                      //         Container(
+                      //           height: 25,
+                      //           width: 25,
+                      //           decoration: BoxDecoration(
+                      //             borderRadius: BorderRadius.circular(50),
+                      //             image: const DecorationImage(
+                      //               image: AssetImage(
+                      //                 'assets/images/google.png',
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ),
+                      //         Padding(
+                      //           padding:
+                      //               const EdgeInsets.symmetric(horizontal: 10),
+                      //           child: Text(
+                      //             'Sign in with Google',
+                      //             style: Theme.of(context).textTheme.bodySmall,
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
