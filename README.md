@@ -1,6 +1,6 @@
 # Raijin
 
-Download latest release [here](https://docs.flutter.dev/get-started/codelab)
+Download latest release [here](https://github.com/Josumaru/raijin/releases/)
 
 ## ScreenShots
 
